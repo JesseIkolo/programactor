@@ -1,7 +1,16 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  Facebook01Icon,
+  NewTwitterIcon,
+  InstagramIcon,
+  WhatsappIcon,
+  Mail01Icon,
+  Call02Icon,
+} from "hugeicons-react";
 import { Mark, Wordmark } from "./ui";
 import type { Content, Lang } from "@/lib/content";
 
@@ -12,6 +21,39 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
   const isRealisations = pathname?.includes("/realisations");
   const otherLangHref = isRealisations ? `/${other}/realisations` : `/${other}`;
 
+  // État local synchronisé avec l'API de contact
+  const [contactInfo, setContactInfo] = useState({
+    email: c.contact.email,
+    phone: "+237 6 99 00 00 00",
+    whatsapp: c.contact.whatsapp,
+    facebook: "https://facebook.com/programactor",
+    twitter: "https://x.com/programactor",
+    instagram: c.contact.instagram,
+    cities: c.cities,
+  });
+
+  useEffect(() => {
+    fetch("/api/settings/contact")
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success && res.data) {
+          setContactInfo((prev) => ({
+            ...prev,
+            email: res.data.email || prev.email,
+            phone: res.data.phone || prev.phone,
+            whatsapp: res.data.whatsapp || prev.whatsapp,
+            facebook: res.data.facebook || prev.facebook,
+            twitter: res.data.twitter || prev.twitter,
+            instagram: res.data.instagram || prev.instagram,
+            cities: res.data.cities || prev.cities,
+          }));
+        }
+      })
+      .catch(() => {
+        // En cas d'erreur, conserve les valeurs par défaut
+      });
+  }, []);
+
   const getLinkHref = (rawHref: string) => {
     if (rawHref === "#realisations") {
       return `/${lang}/realisations`;
@@ -21,6 +63,8 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
     }
     return rawHref;
   };
+
+  const cleanWaNumber = contactInfo.whatsapp.replace(/[^0-9]/g, "");
 
   return (
     <footer className="border-t border-[color:var(--color-hairline)] pb-10 pt-16 md:pt-20">
@@ -38,6 +82,61 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
             <p className="t-lead mt-6 max-w-[30ch] text-[color:var(--color-muted)]">
               {c.footer.tagline}
             </p>
+
+            {/* Rangée Réseaux Sociaux Hugeicons */}
+            <div className="mt-8 flex items-center gap-3">
+              {contactInfo.whatsapp && (
+                <a
+                  href={`https://wa.me/${cleanWaNumber}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="WhatsApp Studio"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-[color:var(--color-muted)] transition-all hover:border-[#EBFF72] hover:bg-[#EBFF72]/10 hover:text-[#EBFF72]"
+                  title="WhatsApp"
+                >
+                  <WhatsappIcon size={17} />
+                </a>
+              )}
+
+              {contactInfo.facebook && (
+                <a
+                  href={contactInfo.facebook}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook Programactor"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-[color:var(--color-muted)] transition-all hover:border-[#EBFF72] hover:bg-[#EBFF72]/10 hover:text-[#EBFF72]"
+                  title="Facebook"
+                >
+                  <Facebook01Icon size={17} />
+                </a>
+              )}
+
+              {contactInfo.twitter && (
+                <a
+                  href={contactInfo.twitter}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="X / Twitter Programactor"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-[color:var(--color-muted)] transition-all hover:border-[#EBFF72] hover:bg-[#EBFF72]/10 hover:text-[#EBFF72]"
+                  title="X (Twitter)"
+                >
+                  <NewTwitterIcon size={16} />
+                </a>
+              )}
+
+              {contactInfo.instagram && (
+                <a
+                  href={contactInfo.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram Programactor"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-[color:var(--color-muted)] transition-all hover:border-[#EBFF72] hover:bg-[#EBFF72]/10 hover:text-[#EBFF72]"
+                  title="Instagram"
+                >
+                  <InstagramIcon size={17} />
+                </a>
+              )}
+            </div>
           </div>
 
           <div>
@@ -62,34 +161,39 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
             <p className="t-mono mb-6 text-[color:var(--color-muted-2)]">
               {c.footer.contactLabel}
             </p>
-            <ul className="flex flex-col gap-3 text-[15px]">
+            <ul className="flex flex-col gap-3.5 text-[15px]">
               <li>
                 <a
-                  href={`mailto:${c.contact.email}`}
-                  className="text-[color:var(--color-muted)] transition-colors hover:text-paper"
+                  href={`mailto:${contactInfo.email}`}
+                  className="flex items-center gap-2.5 text-[color:var(--color-muted)] transition-colors hover:text-paper"
                 >
-                  {c.contact.email}
+                  <Mail01Icon size={15} className="text-[#EBFF72]/80" />
+                  <span>{contactInfo.email}</span>
                 </a>
               </li>
               <li>
                 <a
-                  href={`https://wa.me/${c.contact.whatsapp.replace(/[^0-9]/g, "")}`}
-                  className="text-[color:var(--color-muted)] transition-colors hover:text-paper"
-                >
-                  WhatsApp
-                </a>
-              </li>
-              <li>
-                <a
-                  href={c.contact.instagram}
-                  className="text-[color:var(--color-muted)] transition-colors hover:text-paper"
-                  rel="noreferrer"
+                  href={`https://wa.me/${cleanWaNumber}`}
                   target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2.5 text-[color:var(--color-muted)] transition-colors hover:text-paper"
                 >
-                  Instagram
+                  <WhatsappIcon size={15} className="text-[#EBFF72]/80" />
+                  <span>{contactInfo.whatsapp}</span>
                 </a>
               </li>
-              <li className="text-[color:var(--color-muted-2)]">{c.cities}</li>
+              {contactInfo.phone && contactInfo.phone !== contactInfo.whatsapp && (
+                <li>
+                  <a
+                    href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, "")}`}
+                    className="flex items-center gap-2.5 text-[color:var(--color-muted)] transition-colors hover:text-paper"
+                  >
+                    <Call02Icon size={15} className="text-[#EBFF72]/80" />
+                    <span>{contactInfo.phone}</span>
+                  </a>
+                </li>
+              )}
+              <li className="pt-1 text-[color:var(--color-muted-2)]">{contactInfo.cities}</li>
             </ul>
           </div>
         </div>

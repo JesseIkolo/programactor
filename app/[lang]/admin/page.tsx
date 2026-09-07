@@ -14,6 +14,12 @@ import {
   Tick01Icon,
   Calendar01Icon,
   Globe02Icon,
+  Call02Icon,
+  Facebook01Icon,
+  NewTwitterIcon,
+  InstagramIcon,
+  WhatsappIcon,
+  Mail01Icon,
 } from 'hugeicons-react';
 import { Mark, Wordmark } from '@/components/ui';
 import { XPRESITE_CONFIG, formatFCFA } from '@/lib/xpresite-data';
@@ -52,7 +58,7 @@ export default function AdminDashboardPage() {
   const [isAuthChecking, setIsAuthChecking] = useState(true);
 
   // État UI & Navigation
-  const [activeTab, setActiveTab] = useState<'quotes' | 'bookings' | 'projects' | 'settings'>('quotes');
+  const [activeTab, setActiveTab] = useState<'quotes' | 'bookings' | 'projects' | 'settings' | 'contact'>('quotes');
   const [quotes, setQuotes] = useState<QuoteItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,6 +67,19 @@ export default function AdminDashboardPage() {
   const [noteText, setNoteText] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
   const [vpsStatus, setVpsStatus] = useState<'connected' | 'checking' | 'fallback'>('checking');
+
+  // État Gestion Coordonnées & Réseaux Sociaux
+  const [contactForm, setContactForm] = useState({
+    phone: '+237 6 99 00 00 00',
+    whatsapp: '+237 6 99 00 00 00',
+    email: 'hello@programactor.pro',
+    facebook: 'https://facebook.com/programactor',
+    twitter: 'https://x.com/programactor',
+    instagram: 'https://www.instagram.com/programactor/',
+    cities: 'Douala · Libreville',
+  });
+  const [isSavingContact, setIsSavingContact] = useState(false);
+  const [isLoadingContact, setIsLoadingContact] = useState(false);
 
   // Système de Toast Notifications UX
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
@@ -153,11 +172,65 @@ export default function AdminDashboardPage() {
     }
   };
 
+  // Charger la configuration des contacts
+  const fetchContactSettings = async () => {
+    try {
+      setIsLoadingContact(true);
+      const res = await fetch('/api/settings/contact');
+      const json = await res.json();
+      if (json.success && json.data) {
+        setContactForm({
+          phone: json.data.phone || '+237 6 99 00 00 00',
+          whatsapp: json.data.whatsapp || '+237 6 99 00 00 00',
+          email: json.data.email || 'hello@programactor.pro',
+          facebook: json.data.facebook || 'https://facebook.com/programactor',
+          twitter: json.data.twitter || 'https://x.com/programactor',
+          instagram: json.data.instagram || 'https://www.instagram.com/programactor/',
+          cities: json.data.cities || 'Douala · Libreville',
+        });
+      }
+    } catch {
+      // Conserver valeurs actuelles
+    } finally {
+      setIsLoadingContact(false);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       fetchQuotes();
+      fetchContactSettings();
     }
   }, [token]);
+
+  // Sauvegarder les coordonnées & réseaux sociaux
+  const handleSaveContact = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingContact(true);
+    try {
+      const res = await fetch('/api/settings/contact', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactForm),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(
+          isEn ? 'Contact & social media updated' : 'Coordonnées & réseaux mis à jour avec succès',
+          'success'
+        );
+      } else {
+        showToast(
+          isEn ? 'Failed to update contact info' : 'Erreur lors de la sauvegarde des coordonnées',
+          'error'
+        );
+      }
+    } catch {
+      showToast(isEn ? 'Network error' : 'Erreur réseau', 'error');
+    } finally {
+      setIsSavingContact(false);
+    }
+  };
 
   // 4. Mettre à jour le statut d'un devis
   const handleUpdateStatus = async (reference: string, newStatus: string) => {
@@ -451,6 +524,19 @@ export default function AdminDashboardPage() {
             }`}
           >
             {isEn ? 'Pricing Config' : 'Configuration Tarifs'}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('contact')}
+            className={`py-3.5 text-xs font-mono font-semibold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+              activeTab === 'contact'
+                ? 'border-[#EBFF72] text-[#EBFF72]'
+                : 'border-transparent text-white/60 hover:text-white'
+            }`}
+          >
+            <Call02Icon size={14} />
+            <span>{isEn ? 'Contact & Socials' : 'Coordonnées & Réseaux'}</span>
           </button>
         </div>
       </div>
@@ -848,6 +934,219 @@ export default function AdminDashboardPage() {
                   <div className="text-white/50 text-[11px]">Offert avec chaque pack</div>
                 </div>
                 <div className="text-base font-bold text-white">1 An Inclus</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ONGLET 5 : COORDONNÉES & RÉSEAUX SOCIAUX */}
+        {activeTab === 'contact' && (
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-1">
+                {isEn ? 'Studio Contact & Social Media' : 'Coordonnées & Réseaux Sociaux'}
+              </h3>
+              <p className="text-xs text-white/60">
+                {isEn
+                  ? 'Manage your public contact phone numbers, WhatsApp, email, and social networks displayed across the site and footer.'
+                  : 'Gérez vos numéros de téléphone publics, WhatsApp, email officiel et réseaux sociaux affichés dans le footer et sur tout le site.'}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              {/* Formulaire de saisie */}
+              <form onSubmit={handleSaveContact} className="lg:col-span-7 bg-[#141414] border border-white/10 rounded-2xl p-6 space-y-5">
+                {/* Téléphone & WhatsApp */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-mono text-white/70 mb-2 flex items-center gap-1.5">
+                      <Call02Icon size={14} className="text-[#EBFF72]" />
+                      <span>{isEn ? 'PHONE NUMBER' : 'TÉLÉPHONE PRINCIPAL'}</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={contactForm.phone}
+                      onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
+                      placeholder="+237 6 99 00 00 00"
+                      className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono text-white/70 mb-2 flex items-center gap-1.5">
+                      <WhatsappIcon size={14} className="text-[#EBFF72]" />
+                      <span>{isEn ? 'WHATSAPP STUDIO' : 'WHATSAPP STUDIO'}</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={contactForm.whatsapp}
+                      onChange={(e) => setContactForm({ ...contactForm, whatsapp: e.target.value })}
+                      placeholder="+237 6 99 00 00 00"
+                      className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
+                    />
+                  </div>
+                </div>
+
+                {/* Email Officiel */}
+                <div>
+                  <label className="block text-xs font-mono text-white/70 mb-2 flex items-center gap-1.5">
+                    <Mail01Icon size={14} className="text-[#EBFF72]" />
+                    <span>{isEn ? 'OFFICIAL EMAIL' : 'EMAIL OFFICIEL DE CONTACT'}</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={contactForm.email}
+                    onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                    placeholder="hello@programactor.pro"
+                    className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
+                  />
+                </div>
+
+                {/* Réseaux sociaux : Facebook, X, Instagram */}
+                <div className="pt-2 border-t border-white/5 space-y-4">
+                  <div className="text-xs font-mono text-white/40 uppercase tracking-wider">
+                    {isEn ? 'Social Media Links' : 'Liens des Réseaux Sociaux'}
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono text-white/70 mb-2 flex items-center gap-1.5">
+                      <Facebook01Icon size={14} className="text-[#EBFF72]" />
+                      <span>FACEBOOK</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={contactForm.facebook}
+                      onChange={(e) => setContactForm({ ...contactForm, facebook: e.target.value })}
+                      placeholder="https://facebook.com/programactor"
+                      className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono text-white/70 mb-2 flex items-center gap-1.5">
+                      <NewTwitterIcon size={14} className="text-[#EBFF72]" />
+                      <span>X (TWITTER)</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={contactForm.twitter}
+                      onChange={(e) => setContactForm({ ...contactForm, twitter: e.target.value })}
+                      placeholder="https://x.com/programactor"
+                      className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono text-white/70 mb-2 flex items-center gap-1.5">
+                      <InstagramIcon size={14} className="text-[#EBFF72]" />
+                      <span>INSTAGRAM</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={contactForm.instagram}
+                      onChange={(e) => setContactForm({ ...contactForm, instagram: e.target.value })}
+                      placeholder="https://instagram.com/programactor"
+                      className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
+                    />
+                  </div>
+                </div>
+
+                {/* Villes / Présence */}
+                <div className="pt-2 border-t border-white/5">
+                  <label className="block text-xs font-mono text-white/70 mb-2 flex items-center gap-1.5">
+                    <Globe02Icon size={14} className="text-[#EBFF72]" />
+                    <span>{isEn ? 'CITIES / PRESENCE' : 'VILLES / IMPLANTATION'}</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={contactForm.cities}
+                    onChange={(e) => setContactForm({ ...contactForm, cities: e.target.value })}
+                    placeholder="Douala · Libreville"
+                    className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
+                  />
+                </div>
+
+                {/* Bouton de sauvegarde */}
+                <div className="pt-3">
+                  <button
+                    type="submit"
+                    disabled={isSavingContact}
+                    className="w-full py-3 px-4 bg-[#EBFF72] hover:bg-[#d9ec61] text-[#0E0E0E] font-sans font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#EBFF72]/10 disabled:opacity-50"
+                  >
+                    {isSavingContact ? (
+                      <>
+                        <span className="w-3.5 h-3.5 border-2 border-black/40 border-t-black rounded-full animate-spin" />
+                        <span>{isEn ? 'Saving Changes...' : 'Enregistrement...'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Tick01Icon size={16} />
+                        <span>{isEn ? 'Save Contact & Socials' : 'Enregistrer les coordonnées'}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+
+              {/* Aperçu en direct (Footer Preview) */}
+              <div className="lg:col-span-5 space-y-4">
+                <div className="bg-[#141414] border border-white/10 rounded-2xl p-5 sticky top-24">
+                  <div className="text-xs font-mono text-white/40 uppercase tracking-wider mb-4 flex items-center justify-between">
+                    <span>Aperçu direct (Footer)</span>
+                    <span className="text-[#EBFF72] text-[10px]">● Live</span>
+                  </div>
+
+                  <div className="bg-black/50 border border-white/5 rounded-xl p-4 space-y-4">
+                    {/* Liens réseaux sociaux */}
+                    <div className="flex items-center gap-2.5">
+                      {contactForm.whatsapp && (
+                        <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-[#EBFF72] bg-[#EBFF72]/10">
+                          <WhatsappIcon size={15} />
+                        </div>
+                      )}
+                      {contactForm.facebook && (
+                        <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/70">
+                          <Facebook01Icon size={15} />
+                        </div>
+                      )}
+                      {contactForm.twitter && (
+                        <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/70">
+                          <NewTwitterIcon size={14} />
+                        </div>
+                      )}
+                      {contactForm.instagram && (
+                        <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/70">
+                          <InstagramIcon size={15} />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Détails texte */}
+                    <div className="space-y-2 text-xs font-mono pt-2 border-t border-white/5">
+                      <div className="flex items-center gap-2 text-white/80">
+                        <Mail01Icon size={13} className="text-[#EBFF72]" />
+                        <span className="truncate">{contactForm.email || 'hello@programactor.pro'}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-white/80">
+                        <WhatsappIcon size={13} className="text-[#EBFF72]" />
+                        <span>{contactForm.whatsapp || '+237 6 99 00 00 00'}</span>
+                      </div>
+                      {contactForm.phone && (
+                        <div className="flex items-center gap-2 text-white/80">
+                          <Call02Icon size={13} className="text-[#EBFF72]" />
+                          <span>{contactForm.phone}</span>
+                        </div>
+                      )}
+                      <div className="text-[11px] text-white/40 pt-1">
+                        {contactForm.cities || 'Douala · Libreville'}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 text-[11px] text-white/40 font-mono leading-relaxed">
+                    Toutes les modifications sauvegardées sont synchronisées instantanément avec le footer et le configurateur XpreSite.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
