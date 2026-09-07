@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Récupérer le numéro du studio depuis site-contact.json ou défaut
-    let studioPhone = '237699000000';
+    let studioPhone = '237692025552';
     try {
       const contactFile = path.join(dataDir, 'site-contact.json');
       const contactData = JSON.parse(await fs.readFile(contactFile, 'utf-8'));

@@ -38,9 +38,10 @@ export async function generateMetadata({
       type: "website",
     },
     alternates: {
+      canonical: `https://programactor.pro/${lang}/xpresite`,
       languages: {
-        fr: "/fr/xpresite",
-        en: "/en/xpresite",
+        fr: "https://programactor.pro/fr/xpresite",
+        en: "https://programactor.pro/en/xpresite",
       },
     },
   };
@@ -58,8 +59,82 @@ export default async function XpreSitePage({
   const c = getContent(l);
   const isEn = l === "en";
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `https://programactor.pro/${lang}/xpresite/#service`,
+    name: isEn ? "XpreSite — Express Turnkey Website in 72h" : "XpreSite — Site Web Métier Clé en Main en 72h",
+    serviceType: "Website design and development package",
+    description: isEn
+      ? "Turnkey website package tailored for restaurants, couriers, laundries, car rentals, and agencies. Delivered in 72 hours, with 1-year domain & hosting included."
+      : "Formule de site web sur-mesure pour restaurants, livreurs, pressings, agences et loueurs de véhicules. Livraison garantie en 72h, 1 an de domaine + hébergement inclus.",
+    provider: { "@id": "https://programactor.pro/#organization" },
+    areaServed: [
+      { "@type": "City", name: "Douala" },
+      { "@type": "City", name: "Libreville" },
+    ],
+    offers: {
+      "@type": "Offer",
+      url: `https://programactor.pro/${lang}/xpresite`,
+      priceCurrency: "XAF",
+      price: "75000",
+      availability: "https://schema.org/InStock",
+    },
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: isEn
+          ? "How does the 72-hour delivery guarantee work?"
+          : "Comment fonctionne la garantie de livraison en 72 heures ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEn
+            ? "The 72-hour timer starts as soon as you provide your core content: logo, images, price list, and contact details."
+            : "Le chrono de 72 heures démarre dès que vous nous transmettez vos éléments essentiels : logo, photos, grille de prix et coordonnées.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: isEn
+          ? "How does the 2 or 3 installment payment plan work?"
+          : "Comment se déroule le paiement échelonné en 2 ou 3 tranches ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEn
+            ? "You pay an initial deposit via Mobile Money (Orange Money, MTN MoMo) or bank transfer, followed by milestone payments upon live delivery and approval."
+            : "Vous réglez un premier acompte au lancement par Mobile Money (Orange Money, MTN MoMo) ou virement. Le solde est versé à la livraison et validation de votre site.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: isEn
+          ? "Can I edit and update my site after launch?"
+          : "Est-ce que je pourrai modifier mon site après sa mise en ligne ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isEn
+            ? "Yes, you receive a full training handover and can request updates or add new pages anytime with studio support."
+            : "Oui, vous bénéficiez d'une prise en main complète pour mettre à jour vos tarifs, photos et textes en toute autonomie.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Nav c={c} lang={l} />
 
       <main className="pt-28 md:pt-36">

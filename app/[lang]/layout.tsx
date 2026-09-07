@@ -13,18 +13,46 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const c = getContent(lang as Lang);
+  const isEn = lang === "en";
+
   return {
-    title: c.meta.title,
+    metadataBase: new URL("https://programactor.pro"),
+    title: {
+      default: c.meta.title,
+      template: "%s | Programactor",
+    },
     description: c.meta.description,
-    icons: { icon: "/mark.svg" },
+    icons: { icon: "/mark.svg", apple: "/mark.svg" },
+    alternates: {
+      canonical: `https://programactor.pro/${lang}`,
+      languages: {
+        fr: "https://programactor.pro/fr",
+        en: "https://programactor.pro/en",
+        "x-default": "https://programactor.pro/fr",
+      },
+    },
     openGraph: {
       title: c.meta.title,
       description: c.meta.description,
-      locale: lang === "fr" ? "fr_CM" : "en_GB",
+      url: `https://programactor.pro/${lang}`,
+      siteName: "Programactor",
+      locale: isEn ? "en_US" : "fr_FR",
       type: "website",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: "Programactor Studio — Douala & Libreville",
+        },
+      ],
     },
-    alternates: {
-      languages: { fr: "/fr", en: "/en" },
+    twitter: {
+      card: "summary_large_image",
+      title: c.meta.title,
+      description: c.meta.description,
+      creator: "@programactor",
+      images: ["/og-image.png"],
     },
   };
 }
@@ -37,6 +65,52 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  const isEn = lang === "en";
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "ProfessionalService"],
+    "@id": "https://programactor.pro/#organization",
+    name: "Programactor",
+    url: "https://programactor.pro",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://programactor.pro/mark.svg",
+    },
+    image: "https://programactor.pro/og-image.png",
+    description: isEn
+      ? "Human-centred digital product studio in Douala and Libreville. Field research, UX/UI interface design, and rapid build sprints for Africa."
+      : "Agence de design produit et studio digital à Douala et Libreville. Recherche terrain, design UX/UI et développement en sprints courts, pour des produits pensés pour l'Afrique.",
+    slogan: isEn
+      ? "The studio that turns an idea into a product"
+      : "L'agence qui transforme l'idée en produit",
+    email: "hello@programactor.pro",
+    telephone: "+237692025552",
+    address: [
+      {
+        "@type": "PostalAddress",
+        addressLocality: "Douala",
+        addressCountry: "CM",
+      },
+      {
+        "@type": "PostalAddress",
+        addressLocality: "Libreville",
+        addressCountry: "GA",
+      },
+    ],
+    areaServed: [
+      { "@type": "City", name: "Douala" },
+      { "@type": "City", name: "Libreville" },
+      { "@type": "Country", name: "Cameroun" },
+      { "@type": "Country", name: "Gabon" },
+    ],
+    priceRange: "$$",
+    sameAs: [
+      "https://facebook.com/programactor",
+      "https://instagram.com/programactor",
+      "https://x.com/programactor",
+    ],
+  };
 
   return (
     <html lang={lang}>
@@ -57,7 +131,13 @@ export default async function RootLayout({
         />
         <meta name="theme-color" content="#0E0E0E" />
       </head>
-      <body>{children}</body>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

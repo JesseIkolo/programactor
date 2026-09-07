@@ -32,9 +32,10 @@ export async function generateMetadata({
       type: "website",
     },
     alternates: {
+      canonical: `https://programactor.pro/${lang}/realisations`,
       languages: {
-        fr: "/fr/realisations",
-        en: "/en/realisations",
+        fr: "https://programactor.pro/fr/realisations",
+        en: "https://programactor.pro/en/realisations",
       },
     },
   };

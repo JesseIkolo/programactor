@@ -1,0 +1,29 @@
+# Programactor — Digital Product Design & Engineering Studio
+
+> Studio de design produit et d'ingénierie logicielle centré terrain, basé à Douala (Cameroun) et Libreville (Gabon). Spécialiste de la conception d'applications web, mobiles et de plateformes adaptées aux contraintes des marchés africains (faible débit, mobile money, offline-first).
+
+## Liens Officiels
+- Site web principal : https://programactor.pro
+- Prise de rendez-vous stratégique (30 min) : https://programactor.pro/fr/reserver
+- Offre XpreSite (Sites en 72h) : https://programactor.pro/fr/xpresite
+- Portfolio & Études de cas : https://programactor.pro/fr/realisations
+- Contact WhatsApp & Téléphone : +237 692 025 552 / hello@programactor.pro
+
+## Offres & Services
+
+### 1. Studio Produit sur-mesure (Sprint Produit)
+- **Diagnostic Produit (5 jours)** : Audit terrain, interviews utilisateurs, analyse concurrentielle, parcours cible et plan de lots chiffré.
+- **Sprint Produit (4 à 8 semaines)** : De l'idée au premier écran testé sous 15 jours. Livrable complet : Design UI/UX, développement fullstack (Next.js / Node / Mobile), intégration paiements locaux (Orange Money, MTN MoMo) et mise en production.
+- **Product Partner (Mensuel)** : Équipe produit dédiée en régie ou forfait mensuel pour faire évoluer votre application en continu.
+
+### 2. XpreSite — Site Web Métier Clé en Main en 72h
+- **Tarif de base** : Dès 75 000 FCFA (nom de domaine .com ou .pro + hébergement sécurisé haute performance inclus pendant 1 an).
+- **Délai garanti** : 72 heures chrono après réception des éléments.
+- **Paiement échelonné** : Possibilité de règlement en 3 tranches (40% acompte / 30% après maquette / 30% à la livraison).
+- **Secteurs couverts** : Restaurants, Blanchisseries / Pressing, Location de véhicules, Transport & Logistique, Agences de voyage & Tourisme, Cabinets & PME.
+- **Intégrations natives** : Prise de commande WhatsApp en direct, géolocalisation Google / Yango Maps, catalogues interactifs, QR codes.
+
+## Méthodologie & Valeurs
+- **Conçu pour le terrain réel** : Interfaces optimisées pour smartphones d'entrée de gamme, faible consommation de bande passante et UX sans friction.
+- **Pas de faux semblants** : Pas de maquettes interminables sans code. Démonstration sur de vraies données toutes les deux semaines.
+- **Ancrage territorial** : Présence physique à Douala (Cameroun) et Libreville (Gabon), interventions dans toute l'Afrique centrale et à l'international.

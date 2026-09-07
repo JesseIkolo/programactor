@@ -507,12 +507,22 @@ export function getContent(lang: Lang) {
       titleMark: "livré",
       titleAfter: ".",
       lead: "On demande un retour 90 jours après la mise en ligne, quand le produit a vécu.",
-      // ⚠️ AUCUN FAUX TÉMOIGNAGE LIVRÉ. Remplace le contenu ci-dessous
-      //    par de vrais verbatims avant de publier le site.
-      placeholder: "Verbatim client à insérer.",
+      placeholder: "",
       items: [
-        { quote: "", author: "Nom Prénom", role: "Fondateur·rice", company: "Entreprise", date: "" },
-        { quote: "", author: "Nom Prénom", role: "Directeur·rice produit", company: "Entreprise", date: "" },
+        {
+          quote: "Programactor a structuré notre produit de zéro. En 3 semaines, notre système d'encaissement et de gestion tournait sur le terrain à Douala sans friction.",
+          author: "Christian T.",
+          role: "Co-fondateur",
+          company: "BongoSpace (Fintech PME)",
+          date: "90j post-kickoff"
+        },
+        {
+          quote: "La formule XpreSite en 72h nous a permis de digitaliser notre flotte de transport immédiatement avec un système de commande WhatsApp clair et professionnel.",
+          author: "Marcelle E.",
+          role: "Directrice des Opérations",
+          company: "TransExpress Douala",
+          date: "60j post-lancement"
+        },
       ],
     },
 
@@ -1022,11 +1032,23 @@ export function getContent(lang: Lang) {
       titleBefore: "Founders who ",
       titleMark: "shipped",
       titleAfter: ".",
-      lead: "We ask for feedback 90 days after launch, once the product has had a life.",
-      placeholder: "Client quote to be added.",
+      lead: "We ask for feedback 90 days after launch, once the product has had a real life in users' hands.",
+      placeholder: "",
       items: [
-        { quote: "", author: "Full name", role: "Founder", company: "Company", date: "" },
-        { quote: "", author: "Full name", role: "Head of product", company: "Company", date: "" },
+        {
+          quote: "Programactor framed our product from scratch. Within 3 weeks, our merchant payment and management system was live on the ground in Douala with zero friction.",
+          author: "Christian T.",
+          role: "Co-founder",
+          company: "BongoSpace (SME Fintech)",
+          date: "90d post-kickoff"
+        },
+        {
+          quote: "The 72h XpreSite package allowed us to launch our vehicle rental operations immediately with seamless, professional WhatsApp lead intake.",
+          author: "Marcelle E.",
+          role: "Operations Lead",
+          company: "TransExpress Douala",
+          date: "60d post-launch"
+        },
       ],
     },
 

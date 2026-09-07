@@ -34,9 +34,10 @@ export async function generateMetadata({
       type: "website",
     },
     alternates: {
+      canonical: `https://programactor.pro/${lang}/reserver`,
       languages: {
-        fr: "/fr/reserver",
-        en: "/en/reserver",
+        fr: "https://programactor.pro/fr/reserver",
+        en: "https://programactor.pro/en/reserver",
       },
     },
   };

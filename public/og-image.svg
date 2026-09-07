@@ -1,0 +1,67 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0E0E0E"/>
+  
+  <!-- Subtle technical grid -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.04"/>
+    </pattern>
+    <radialGradient id="glow" cx="80%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#EBFF72" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0E0E0E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Border -->
+  <rect x="40" y="40" width="1120" height="550" rx="24" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2"/>
+
+  <!-- Logo Mark -->
+  <g transform="translate(100, 110)">
+    <circle cx="28" cy="28" r="28" fill="#EBFF72"/>
+    <polygon points="20,16 42,28 20,40" fill="#0E0E0E"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="180" y="148" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="800" letter-spacing="-1">PROGRAMACTOR</text>
+
+  <!-- Badge -->
+  <g transform="translate(860, 112)">
+    <rect width="240" height="38" rx="19" fill="#141414" stroke="#EBFF72" stroke-opacity="0.3"/>
+    <circle cx="22" cy="19" r="5" fill="#EBFF72"/>
+    <text x="36" y="24" fill="#EBFF72" font-family="monospace" font-size="13" font-weight="600">DOUALA · LIBREVILLE</text>
+  </g>
+
+  <!-- Main Headline -->
+  <text x="100" y="270" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" letter-spacing="-1.5">
+    L'agence qui transforme l'idée
+  </text>
+  <text x="100" y="340" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" letter-spacing="-1.5">
+    en <tspan fill="#EBFF72">produit réel</tspan>.
+  </text>
+
+  <!-- Subheadline -->
+  <text x="100" y="415" fill="#999999" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400">
+    Design produit, recherche terrain et développement rapide pour l'Afrique.
+  </text>
+
+  <!-- Footer Pills -->
+  <g transform="translate(100, 485)">
+    <!-- Pill 1 -->
+    <rect x="0" y="0" width="220" height="42" rx="12" fill="#181818" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="20" y="26" fill="#cccccc" font-family="monospace" font-size="14">Sprint Produit (4-8 sem)</text>
+    
+    <!-- Pill 2 -->
+    <rect x="240" y="0" width="230" height="42" rx="12" fill="#181818" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="260" y="26" fill="#cccccc" font-family="monospace" font-size="14">XpreSite Clé en main (72h)</text>
+    
+    <!-- Pill 3 -->
+    <rect x="490" y="0" width="220" height="42" rx="12" fill="#181818" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="510" y="26" fill="#cccccc" font-family="monospace" font-size="14">Next.js · Mobile Money</text>
+  </g>
+
+  <!-- Domain URL -->
+  <text x="960" y="522" fill="#666666" font-family="monospace" font-size="16" font-weight="500">programactor.pro</text>
+</svg>

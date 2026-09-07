@@ -142,7 +142,7 @@ export async function createBooking(req: Request, res: Response): Promise<void> 
     });
 
     // Formatage du message de redirection WhatsApp
-    const studioPhone = '237699000000';
+    const studioPhone = '237692025552';
     const channelLabel =
       meetingType === 'PRESENTIEL'
         ? (lang === 'en' ? 'In-Person Meeting' : 'Présentiel (Bureaux Studio / Client)')

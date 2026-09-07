@@ -199,9 +199,23 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
         </div>
 
         <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-[color:var(--color-hairline)] pt-7">
-          <p className="t-mono text-[color:var(--color-muted-2)]">
-            © {year} {c.brand}. {c.footer.rights}
-          </p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <p className="t-mono text-[color:var(--color-muted-2)]">
+              © {year} {c.brand}. {c.footer.rights}
+            </p>
+            <Link
+              href={`/${lang}/mentions-legales`}
+              className="t-mono text-xs text-[color:var(--color-muted-2)] transition-colors hover:text-paper hover:underline"
+            >
+              {lang === "en" ? "Legal Notices" : "Mentions Légales"}
+            </Link>
+            <Link
+              href={`/${lang}/confidentialite`}
+              className="t-mono text-xs text-[color:var(--color-muted-2)] transition-colors hover:text-paper hover:underline"
+            >
+              {lang === "en" ? "Privacy Policy" : "Confidentialité"}
+            </Link>
+          </div>
           <div className="t-mono flex items-center gap-4 text-[color:var(--color-muted-2)]">
             <span className="text-paper">{lang.toUpperCase()}</span>
             <Link href={otherLangHref} className="transition-colors hover:text-paper">

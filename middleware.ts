@@ -17,7 +17,8 @@ export function middleware(request: NextRequest) {
   const lang = accept.toLowerCase().startsWith("en") ? "en" : DEFAULT_LANG;
 
   return NextResponse.redirect(
-    new URL(`/${lang}${pathname === "/" ? "" : pathname}`, request.url)
+    new URL(`/${lang}${pathname === "/" ? "" : pathname}`, request.url),
+    308
   );
 }
 

@@ -115,21 +115,25 @@ export function Counter({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement | null>(null);
-  const [value, setValue] = useState(raw ? to : 0);
+  // SSR & Crawlers fallback : rendu direct de la vraie valeur dans le HTML brut
+  const [value, setValue] = useState(to);
+  const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
-    if (raw) return;
+    if (raw || animated) return;
     const el = ref.current;
     if (!el) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      setValue(to);
-      return;
-    }
+    if (reduced) return;
+
+    // Réinitialise à 0 côté client uniquement pour déclencher l'animation visuelle
+    setValue(0);
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         io.disconnect();
+        setAnimated(true);
         const duration = 1300;
         const start = performance.now();
         const tick = (now: number) => {
@@ -140,11 +144,11 @@ export function Counter({
         };
         requestAnimationFrame(tick);
       },
-      { threshold: 0.4 }
+      { threshold: 0.2 }
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [to, raw]);
+  }, [to, raw, animated]);
 
   return (
     <span ref={ref} className={`t-num ${className}`}>
