@@ -10,6 +10,7 @@ import Labs from "@/components/Labs";
 import Pricing from "@/components/Pricing";
 import Faq from "@/components/Faq";
 import Footer from "@/components/Footer";
+import XpreSiteSection from "@/components/XpreSiteSection";
 import {
   About,
   FinalCta,
@@ -41,6 +42,7 @@ export default async function Page({
         <About c={c} />
         <Work c={c} />
         <Services c={c} />
+        <XpreSiteSection lang={l} />
         <Method c={c} />
         <Labs c={c} />
         <Testimonials c={c} />

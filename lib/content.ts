@@ -89,6 +89,7 @@ export function getContent(lang: Lang) {
       tagline: "Agence produit",
       links: [
         { label: "Réalisations", href: "#realisations" },
+        { label: "XpreSite", href: "#xpresite" },
         { label: "Services", href: "#services" },
         { label: "Méthode", href: "#methode" },
         { label: "One Touch Labs", href: "#labs" },
@@ -639,6 +640,7 @@ export function getContent(lang: Lang) {
       tagline: "Product studio",
       links: [
         { label: "Work", href: "#realisations" },
+        { label: "XpreSite", href: "#xpresite" },
         { label: "Services", href: "#services" },
         { label: "Method", href: "#methode" },
         { label: "One Touch Labs", href: "#labs" },

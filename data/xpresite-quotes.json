@@ -1,0 +1,24 @@
+[
+  {
+    "reference": "XPS-20260907-1ZNU",
+    "clientName": "Marc Nkono",
+    "clientEmail": "",
+    "clientPhone": "+237699112233",
+    "companyName": "Le Grill Douala",
+    "city": "Douala",
+    "industryId": "ind-restaurant",
+    "industryName": "Restaurant & Traiteur",
+    "selectedAddonTitles": [
+      "Menu QR Code interactif (+15.000 FCFA)",
+      "Géolocalisation Google Maps (+25.000 FCFA)"
+    ],
+    "basePriceXAF": 75000,
+    "addonsTotalXAF": 40000,
+    "totalPriceXAF": 115000,
+    "paymentSplits": 2,
+    "splitAmount": 57500,
+    "lang": "fr",
+    "status": "NEW",
+    "createdAt": "2026-09-07T04:55:24.257Z"
+  }
+]

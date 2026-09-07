@@ -11,6 +11,8 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isRealisations = pathname?.includes("/realisations");
+  const isXpreSite = pathname?.includes("/xpresite");
+  const isSubpage = isRealisations || isXpreSite;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -44,14 +46,21 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
   }, []);
 
   const other: Lang = lang === "fr" ? "en" : "fr";
-  const otherLangHref = isRealisations ? `/${other}/realisations` : `/${other}`;
+  const otherLangHref = isRealisations
+    ? `/${other}/realisations`
+    : isXpreSite
+    ? `/${other}/xpresite`
+    : `/${other}`;
 
   const getLinkHref = (rawHref: string) => {
     if (rawHref === "#realisations") {
       return `/${lang}/realisations`;
     }
+    if (rawHref === "#xpresite") {
+      return `/${lang}/xpresite`;
+    }
     if (rawHref.startsWith("#")) {
-      return isRealisations ? `/${lang}${rawHref}` : rawHref;
+      return isSubpage ? `/${lang}${rawHref}` : rawHref;
     }
     return rawHref;
   };
@@ -61,7 +70,7 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
       setOpen(false);
 
       // Si ancre sur la même page (ex: #services sur l'accueil)
-      if (!isRealisations && rawHref.startsWith("#")) {
+      if (!isSubpage && rawHref.startsWith("#")) {
         e.preventDefault();
         const targetId = rawHref.replace("#", "");
         const targetEl = document.getElementById(targetId);
@@ -72,7 +81,7 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
         }
       }
     },
-    [isRealisations]
+    [isSubpage]
   );
 
   return (
@@ -103,7 +112,9 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
         <nav className="hidden items-center gap-8 lg:flex">
           {c.nav.links.map((l) => {
             const href = getLinkHref(l.href);
-            const isCurrent = l.href === "#realisations" && isRealisations;
+            const isCurrent =
+              (l.href === "#realisations" && isRealisations) ||
+              (l.href === "#xpresite" && isXpreSite);
             return (
               <a
                 key={l.href}
@@ -169,7 +180,9 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
             <nav className="flex flex-col">
               {c.nav.links.map((l) => {
                 const href = getLinkHref(l.href);
-                const isCurrent = l.href === "#realisations" && isRealisations;
+                const isCurrent =
+                  (l.href === "#realisations" && isRealisations) ||
+                  (l.href === "#xpresite" && isXpreSite);
                 return (
                   <a
                     key={l.href}
