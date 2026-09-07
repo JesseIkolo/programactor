@@ -38,6 +38,6 @@ COPY --from=builder /app/dist ./dist
 # Passer à l'utilisateur non-root
 USER appuser
 
-EXPOSE 5000
+EXPOSE 5001
 
 CMD ["node", "dist/server.js"]

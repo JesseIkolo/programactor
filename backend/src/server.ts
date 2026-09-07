@@ -19,10 +19,10 @@ async function startServer() {
   // 3. Démarrage du serveur HTTP
   const app = createApp();
 
-  const server = app.listen(ENV.PORT, () => {
-    console.log(`🚀 API Programactor opérationnelle sur http://127.0.0.1:${ENV.PORT}`);
+  const server = app.listen(ENV.PORT, '0.0.0.0', () => {
+    console.log(`🚀 API Programactor opérationnelle sur http://0.0.0.0:${ENV.PORT}`);
     console.log(`🛡️ Environnement : ${ENV.NODE_ENV}`);
-    console.log(`📡 Healthcheck : http://127.0.0.1:${ENV.PORT}/api/v1/health`);
+    console.log(`📡 Healthcheck : http://0.0.0.0:${ENV.PORT}/api/v1/health`);
   });
 
   // Arrêt propre (Graceful Shutdown)
