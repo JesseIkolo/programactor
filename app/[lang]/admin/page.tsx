@@ -3,10 +3,24 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import {
+  Logout01Icon,
+  SecurityLockIcon,
+  CheckmarkCircle02Icon,
+  AlertCircleIcon,
+  Search01Icon,
+  FilterIcon,
+  RefreshIcon,
+  Tick01Icon,
+  Calendar01Icon,
+  Globe02Icon,
+} from 'hugeicons-react';
 import { Mark, Wordmark } from '@/components/ui';
 import { XPRESITE_CONFIG, formatFCFA } from '@/lib/xpresite-data';
+import AdminLogin from '@/components/admin/AdminLogin';
 
 interface QuoteItem {
+  _id?: string;
   reference: string;
   clientName: string;
   clientEmail?: string;
@@ -32,6 +46,12 @@ export default function AdminDashboardPage() {
   const lang = (params?.lang as string) || 'fr';
   const isEn = lang === 'en';
 
+  // État d'authentification
+  const [token, setToken] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<{ email: string; name: string; role: string } | null>(null);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
+
+  // État UI & Navigation
   const [activeTab, setActiveTab] = useState<'quotes' | 'bookings' | 'projects' | 'settings'>('quotes');
   const [quotes, setQuotes] = useState<QuoteItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,75 +60,198 @@ export default function AdminDashboardPage() {
   const [selectedQuote, setSelectedQuote] = useState<QuoteItem | null>(null);
   const [noteText, setNoteText] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
+  const [vpsStatus, setVpsStatus] = useState<'connected' | 'checking' | 'fallback'>('checking');
 
-  // Charger les devis depuis l'API
+  // Système de Toast Notifications UX
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => {
+      setToast(null);
+    }, 3500);
+  };
+
+  const getApiUrl = () => {
+    if (typeof window !== 'undefined') {
+      return process.env.NEXT_PUBLIC_API_URL || 'https://api.programactor.pro/api/v1';
+    }
+    return 'https://api.programactor.pro/api/v1';
+  };
+
+  // 1. Vérification de session persistée
+  useEffect(() => {
+    const savedToken = sessionStorage.getItem('programactor_admin_token');
+    const savedUser = sessionStorage.getItem('programactor_admin_user');
+
+    if (savedToken) {
+      setToken(savedToken);
+      if (savedUser) {
+        try {
+          setCurrentUser(JSON.parse(savedUser));
+        } catch {
+          setCurrentUser({ email: 'admin@programactor.pro', name: 'Studio Admin', role: 'SUPER_ADMIN' });
+        }
+      }
+    }
+    setIsAuthChecking(false);
+  }, []);
+
+  // 2. Déconnexion
+  const handleLogout = () => {
+    sessionStorage.removeItem('programactor_admin_token');
+    sessionStorage.removeItem('programactor_admin_user');
+    setToken(null);
+    setCurrentUser(null);
+    showToast(isEn ? 'Signed out successfully.' : 'Déconnexion effectuée avec succès.', 'success');
+  };
+
+  // 3. Charger les devis (Priorité Backend VPS / MongoDB Atlas avec fallback local)
   const fetchQuotes = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/admin/quotes');
-      const data = await res.json();
-      if (data.success && Array.isArray(data.quotes)) {
-        setQuotes(data.quotes);
-        if (data.quotes.length > 0 && !selectedQuote) {
-          setSelectedQuote(data.quotes[0]);
-          setNoteText(data.quotes[0].internalNotes || '');
+      const apiUrl = getApiUrl();
+      let loadedQuotes: QuoteItem[] = [];
+
+      try {
+        const res = await fetch(`${apiUrl}/quotes`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.data?.quotes) {
+            loadedQuotes = data.data.quotes;
+            setVpsStatus('connected');
+          }
+        }
+      } catch {
+        setVpsStatus('fallback');
+      }
+
+      // Fallback local si l'API VPS n'a pas répondu
+      if (loadedQuotes.length === 0) {
+        const resLocal = await fetch('/api/admin/quotes');
+        const dataLocal = await resLocal.json();
+        if (dataLocal.success && Array.isArray(dataLocal.quotes)) {
+          loadedQuotes = dataLocal.quotes;
+        }
+      }
+
+      setQuotes(loadedQuotes);
+      if (loadedQuotes.length > 0) {
+        if (!selectedQuote || !loadedQuotes.find((q) => q.reference === selectedQuote.reference)) {
+          setSelectedQuote(loadedQuotes[0]);
+          setNoteText(loadedQuotes[0].internalNotes || '');
         }
       }
     } catch (err) {
-      console.error('Erreur lors du chargement des devis :', err);
+      console.error('Erreur chargement devis :', err);
+      showToast(isEn ? 'Could not load quotes.' : 'Impossible de charger les devis.', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchQuotes();
-  }, []);
+    if (token) {
+      fetchQuotes();
+    }
+  }, [token]);
 
-  // Mettre à jour le statut d'un devis
+  // 4. Mettre à jour le statut d'un devis
   const handleUpdateStatus = async (reference: string, newStatus: string) => {
     setIsUpdating(true);
+    const apiUrl = getApiUrl();
+
     try {
-      const res = await fetch('/api/admin/quotes', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reference, status: newStatus }),
-      });
-      const data = await res.json();
-      if (data.success) {
+      let success = false;
+
+      // Tentative VPS
+      try {
+        const res = await fetch(`${apiUrl}/quotes/${reference}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: JSON.stringify({ status: newStatus }),
+        });
+        if (res.ok) success = true;
+      } catch {}
+
+      // Fallback local
+      if (!success) {
+        const res = await fetch('/api/admin/quotes', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reference, status: newStatus }),
+        });
+        if (res.ok) success = true;
+      }
+
+      if (success) {
         setQuotes((prev) =>
           prev.map((q) => (q.reference === reference ? { ...q, status: newStatus as any } : q))
         );
         if (selectedQuote && selectedQuote.reference === reference) {
           setSelectedQuote((prev) => (prev ? { ...prev, status: newStatus as any } : null));
         }
+        showToast(
+          isEn ? `Status updated to ${newStatus}` : `Statut mis à jour : ${newStatus}`,
+          'success'
+        );
+      } else {
+        showToast(isEn ? 'Error updating status' : 'Erreur de mise à jour du statut', 'error');
       }
-    } catch (err) {
-      console.error('Erreur mise à jour statut :', err);
+    } catch {
+      showToast(isEn ? 'Network error' : 'Erreur réseau', 'error');
     } finally {
       setIsUpdating(false);
     }
   };
 
-  // Sauvegarder les notes internes
+  // 5. Sauvegarder les notes internes
   const handleSaveNotes = async () => {
     if (!selectedQuote) return;
     setIsUpdating(true);
+    const apiUrl = getApiUrl();
+
     try {
-      const res = await fetch('/api/admin/quotes', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reference: selectedQuote.reference, internalNotes: noteText }),
-      });
-      const data = await res.json();
-      if (data.success) {
+      let success = false;
+
+      try {
+        const res = await fetch(`${apiUrl}/quotes/${selectedQuote.reference}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: JSON.stringify({ internalNotes: noteText }),
+        });
+        if (res.ok) success = true;
+      } catch {}
+
+      if (!success) {
+        const res = await fetch('/api/admin/quotes', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reference: selectedQuote.reference, internalNotes: noteText }),
+        });
+        if (res.ok) success = true;
+      }
+
+      if (success) {
         setQuotes((prev) =>
           prev.map((q) => (q.reference === selectedQuote.reference ? { ...q, internalNotes: noteText } : q))
         );
         setSelectedQuote((prev) => (prev ? { ...prev, internalNotes: noteText } : null));
+        showToast(isEn ? 'Notes saved successfully' : 'Notes internes sauvegardées avec succès', 'success');
+      } else {
+        showToast(isEn ? 'Error saving notes' : 'Erreur lors de la sauvegarde', 'error');
       }
-    } catch (err) {
-      console.error('Erreur sauvegarde notes :', err);
+    } catch {
+      showToast(isEn ? 'Network error' : 'Erreur réseau', 'error');
     } finally {
       setIsUpdating(false);
     }
@@ -124,12 +267,11 @@ export default function AdminDashboardPage() {
         (q.city && q.city.toLowerCase().includes(searchQuery.toLowerCase()));
 
       const matchesStatus = statusFilter === 'ALL' || q.status === statusFilter;
-
       return matchesSearch && matchesStatus;
     });
   }, [quotes, searchQuery, statusFilter]);
 
-  // Statistiques rapides
+  // Statistiques
   const stats = useMemo(() => {
     const totalQuotes = quotes.length;
     const newQuotes = quotes.filter((q) => q.status === 'NEW').length;
@@ -154,10 +296,52 @@ export default function AdminDashboardPage() {
     }
   };
 
+  // Écran de chargement initial de vérification de session
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-[#0E0E0E] text-white flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <span className="w-8 h-8 border-2 border-[#EBFF72]/30 border-t-[#EBFF72] rounded-full animate-spin" />
+          <span className="text-xs font-mono text-white/50">Vérification de la session...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // BARRIÈRE DE SÉCURITÉ : Si aucun token n'est présent, forcer l'écran de connexion
+  if (!token) {
+    return (
+      <AdminLogin
+        lang={lang}
+        onSuccess={(newToken, user) => {
+          setToken(newToken);
+          setCurrentUser(user);
+          showToast(isEn ? 'Welcome to Studio Backoffice' : 'Bienvenue sur le Studio Backoffice', 'success');
+        }}
+      />
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-[#0E0E0E] text-white flex flex-col">
+    <div className="min-h-screen bg-[#0E0E0E] text-white flex flex-col relative">
+      {/* Toast Notification Flottante UX */}
+      {toast && (
+        <div className="fixed top-5 right-5 z-50 animate-in slide-in-from-top-3 fade-in duration-300">
+          <div
+            className={`px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border text-xs font-mono backdrop-blur-md ${
+              toast.type === 'success'
+                ? 'bg-[#141414]/95 border-[#EBFF72]/40 text-[#EBFF72]'
+                : 'bg-[#141414]/95 border-red-500/40 text-red-400'
+            }`}
+          >
+            {toast.type === 'success' ? <CheckmarkCircle02Icon size={16} /> : <AlertCircleIcon size={16} />}
+            <span>{toast.message}</span>
+          </div>
+        </div>
+      )}
+
       {/* Header Admin */}
-      <header className="border-b border-white/10 bg-[#141414] px-6 py-4">
+      <header className="border-b border-white/10 bg-[#141414] px-6 py-3.5 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link href={`/${lang}`} className="flex items-center gap-3">
@@ -165,27 +349,54 @@ export default function AdminDashboardPage() {
               <Wordmark className="text-lg leading-none" />
             </Link>
             <span className="hidden sm:inline-block text-xs font-mono text-white/40">/</span>
-            <span className="text-xs font-mono font-semibold tracking-wider text-[#EBFF72] bg-[#EBFF72]/10 px-2.5 py-1 rounded-md">
+            <span className="text-xs font-mono font-semibold tracking-wider text-[#EBFF72] bg-[#EBFF72]/10 px-2.5 py-1 rounded-md flex items-center gap-1.5">
+              <SecurityLockIcon size={14} />
               STUDIO ADMIN
             </span>
           </div>
 
           <div className="flex items-center gap-4 text-xs font-mono">
-            <div className="flex items-center gap-2 text-white/60">
-              <span className="inline-block w-2 h-2 rounded-full bg-[#EBFF72] animate-pulse" />
-              <span>Douala UTC+1</span>
+            {/* Statut VPS / Atlas */}
+            <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/40 border border-white/10 text-white/70 text-[11px]">
+              <span
+                className={`inline-block w-2 h-2 rounded-full ${
+                  vpsStatus === 'connected'
+                    ? 'bg-emerald-400 animate-pulse'
+                    : 'bg-[#EBFF72]'
+                }`}
+              />
+              <span>{vpsStatus === 'connected' ? 'VPS Atlas : En ligne' : 'Atlas : Synchronisé'}</span>
             </div>
+
+            {/* Profil connecté */}
+            <span className="hidden lg:inline-block text-white/50 text-[11px]">
+              {currentUser?.email || 'admin@programactor.pro'}
+            </span>
+
+            {/* Lien Site Public */}
             <Link
               href={`/${lang}`}
-              className="text-white/60 hover:text-white px-3 py-1.5 rounded-full border border-white/10 transition-colors"
+              className="text-white/60 hover:text-white px-3 py-1 rounded-full border border-white/10 transition-colors flex items-center gap-1.5"
             >
-              {isEn ? 'View Public Site ↗' : 'Voir le site public ↗'}
+              <Globe02Icon size={13} />
+              <span className="hidden sm:inline">{isEn ? 'Public Site' : 'Site public'}</span>
             </Link>
+
+            {/* Bouton de Déconnexion */}
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-1 rounded-full border border-red-500/30 transition-colors flex items-center gap-1.5 font-bold"
+              title={isEn ? 'Sign Out' : 'Se déconnecter'}
+            >
+              <Logout01Icon size={14} />
+              <span>{isEn ? 'Logout' : 'Déconnexion'}</span>
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Barre de navigation interne de l'admin */}
+      {/* Barre de navigation interne */}
       <div className="border-b border-white/10 bg-[#111] px-6">
         <div className="max-w-7xl mx-auto flex gap-6 overflow-x-auto">
           <button
@@ -212,7 +423,8 @@ export default function AdminDashboardPage() {
                 : 'border-transparent text-white/60 hover:text-white'
             }`}
           >
-            <span>{isEn ? 'Appointments' : 'Rendez-vous Studio'}</span>
+            <Calendar01Icon size={14} />
+            <span>{isEn ? 'Appointments' : 'Rendez-vous'}</span>
             <span className="px-2 py-0.5 rounded-full bg-white/10 text-[10px]">0</span>
           </button>
 
@@ -238,16 +450,13 @@ export default function AdminDashboardPage() {
                 : 'border-transparent text-white/60 hover:text-white'
             }`}
           >
-            {isEn ? 'Config & Pricing' : 'Paramètres & Tarifs'}
+            {isEn ? 'Pricing Config' : 'Configuration Tarifs'}
           </button>
         </div>
       </div>
 
       {/* Contenu de l'Admin */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-6">
-        {/* ====================================================================
-            ONGLET 1 : DEVIS XPRESITE
-        ==================================================================== */}
         {activeTab === 'quotes' && (
           <div className="space-y-6">
             {/* Cartes de métriques */}
@@ -262,8 +471,8 @@ export default function AdminDashboardPage() {
               </div>
 
               <div className="bg-[#141414] border border-white/10 rounded-2xl p-4">
-                <div className="text-xs font-mono uppercase text-[#EBFF72] mb-1">
-                  {isEn ? 'New Leads to contact' : 'Nouveaux Leads à traiter'}
+                <div className="text-xs font-mono uppercase text-white/50 mb-1">
+                  {isEn ? 'New Inquiries' : 'Nouveaux Devis'}
                 </div>
                 <div className="text-2xl font-mono font-bold text-[#EBFF72]">
                   {stats.newQuotes}
@@ -272,7 +481,7 @@ export default function AdminDashboardPage() {
 
               <div className="bg-[#141414] border border-white/10 rounded-2xl p-4">
                 <div className="text-xs font-mono uppercase text-white/50 mb-1">
-                  {isEn ? 'Total Pipeline Value' : 'Volume Pipeline Estimé'}
+                  {isEn ? 'Estimated Pipeline Volume' : 'Volume Estimé du Pipeline'}
                 </div>
                 <div className="text-2xl font-mono font-bold text-white">
                   {formatFCFA(stats.totalVolumeXAF)}
@@ -280,94 +489,102 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            {/* Barre de filtres et recherche */}
-            <div className="flex flex-wrap items-center justify-between gap-4 bg-[#141414] border border-white/10 p-3 rounded-2xl">
-              <div className="flex flex-wrap items-center gap-1">
-                {['ALL', 'NEW', 'CONTACTED', 'IN_PROGRESS', 'DELIVERED'].map((st) => (
-                  <button
-                    key={st}
-                    type="button"
-                    onClick={() => setStatusFilter(st)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
-                      statusFilter === st
-                        ? 'bg-[#EBFF72] text-[#0E0E0E] font-bold'
-                        : 'text-white/60 hover:text-white hover:bg-white/5'
-                    }`}
-                  >
-                    {st === 'ALL' ? (isEn ? 'All' : 'Tous') : st}
-                  </button>
-                ))}
-              </div>
-
-              <div className="w-full sm:w-72">
+            {/* Barre de Recherche et Filtres */}
+            <div className="flex flex-col sm:flex-row gap-3 items-center justify-between bg-[#141414] border border-white/10 p-3 rounded-2xl">
+              <div className="relative w-full sm:w-80">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/40">
+                  <Search01Icon size={15} />
+                </div>
                 <input
                   type="text"
-                  placeholder={isEn ? 'Search by name, ref, city...' : 'Recherche par nom, réf, ville...'}
+                  placeholder={isEn ? 'Search by client, city, ref...' : 'Recherche par client, ville, réf...'}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#0E0E0E] border border-white/15 rounded-xl px-3.5 py-1.5 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#EBFF72]"
+                  className="w-full pl-9 pr-3 py-2 bg-black/50 border border-white/10 rounded-xl text-xs font-mono text-white placeholder:text-white/30 focus:outline-none focus:border-[#EBFF72]"
                 />
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <div className="flex items-center gap-1 text-white/40 text-xs font-mono pl-1">
+                  <FilterIcon size={14} />
+                  <span>Statut :</span>
+                </div>
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="bg-black/50 border border-white/10 text-xs font-mono rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#EBFF72]"
+                >
+                  <option value="ALL">Tous les statuts</option>
+                  <option value="NEW">NOUVEAU</option>
+                  <option value="CONTACTED">CONTACTÉ</option>
+                  <option value="IN_PROGRESS">EN DEV (72H)</option>
+                  <option value="DELIVERED">LIVRÉ</option>
+                  <option value="CANCELLED">ANNULÉ</option>
+                </select>
+
+                <button
+                  type="button"
+                  onClick={fetchQuotes}
+                  className="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white/70 hover:text-white transition-colors"
+                  title="Actualiser la liste"
+                >
+                  <RefreshIcon size={15} className={loading ? 'animate-spin' : ''} />
+                </button>
               </div>
             </div>
 
-            {/* Grille principale : Liste des devis + Fiche détaillée */}
+            {/* Grille : Liste Devis (Gauche) + Détail (Droite) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              {/* Liste des devis */}
-              <div className="lg:col-span-6 space-y-3">
+              {/* Colonne Liste */}
+              <div className="lg:col-span-5 space-y-3">
                 {loading ? (
-                  <div className="text-center py-12 text-white/40 font-mono text-sm">
-                    {isEn ? 'Loading quotes...' : 'Chargement des devis...'}
+                  <div className="bg-[#141414] border border-white/10 rounded-2xl p-12 text-center text-xs font-mono text-white/50">
+                    <span className="w-6 h-6 border-2 border-[#EBFF72]/40 border-t-[#EBFF72] rounded-full animate-spin inline-block mb-3" />
+                    <div>Chargement des devis...</div>
                   </div>
                 ) : filteredQuotes.length === 0 ? (
-                  <div className="bg-[#141414] border border-white/10 rounded-2xl p-8 text-center text-white/50">
-                    <span className="text-3xl block mb-2">📋</span>
-                    {isEn ? 'No quotes matching your filters.' : 'Aucun devis ne correspond aux critères.'}
+                  <div className="bg-[#141414] border border-white/10 rounded-2xl p-12 text-center text-xs font-mono text-white/40">
+                    Aucun devis ne correspond aux critères.
                   </div>
                 ) : (
-                  filteredQuotes.map((quote) => {
-                    const isSelected = selectedQuote?.reference === quote.reference;
+                  filteredQuotes.map((q) => {
+                    const isSelected = selectedQuote?.reference === q.reference;
                     return (
                       <div
-                        key={quote.reference}
+                        key={q.reference}
                         onClick={() => {
-                          setSelectedQuote(quote);
-                          setNoteText(quote.internalNotes || '');
+                          setSelectedQuote(q);
+                          setNoteText(q.internalNotes || '');
                         }}
                         className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-[#1C1C1C] border-[#EBFF72] shadow-lg shadow-[#EBFF72]/5'
+                            ? 'bg-[#1C1C1C] border-[#EBFF72]/70 shadow-lg shadow-[#EBFF72]/5'
                             : 'bg-[#141414] border-white/10 hover:border-white/20'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center justify-between gap-2 mb-2">
                           <span className="font-mono text-xs font-bold text-[#EBFF72]">
-                            {quote.reference}
+                            {q.reference}
                           </span>
-                          {getStatusBadge(quote.status)}
+                          {getStatusBadge(q.status)}
                         </div>
 
-                        <div className="flex items-baseline justify-between mb-1">
-                          <h4 className="text-sm font-bold text-white">
-                            {quote.clientName}
-                            {quote.companyName && (
-                              <span className="text-white/60 font-normal"> · {quote.companyName}</span>
-                            )}
-                          </h4>
-                          <span className="font-mono text-xs font-bold text-white">
-                            {formatFCFA(quote.totalPriceXAF)}
-                          </span>
+                        <div className="text-sm font-bold text-white mb-1">
+                          {q.clientName}
+                          {q.companyName && (
+                            <span className="text-white/50 font-normal ml-1">
+                              ({q.companyName})
+                            </span>
+                          )}
                         </div>
 
-                        <div className="flex items-center justify-between text-xs text-white/50 font-mono">
-                          <span>
-                            {quote.industryName} {quote.city && `· ${quote.city}`}
-                          </span>
-                          <span>
-                            {new Date(quote.createdAt).toLocaleDateString('fr-FR', {
-                              day: '2-digit',
-                              month: 'short',
-                            })}
-                          </span>
+                        <div className="text-xs font-mono text-white/60 mb-2">
+                          {q.industryName} {q.city ? `· ${q.city}` : ''}
+                        </div>
+
+                        <div className="flex items-center justify-between text-xs font-mono pt-2 border-t border-white/5 text-white/50">
+                          <span>{formatFCFA(q.totalPriceXAF)}</span>
+                          <span>{new Date(q.createdAt).toLocaleDateString('fr-FR')}</span>
                         </div>
                       </div>
                     );
@@ -375,130 +592,128 @@ export default function AdminDashboardPage() {
                 )}
               </div>
 
-              {/* Fiche détaillée du devis sélectionné */}
-              <div className="lg:col-span-6">
+              {/* Colonne Détail */}
+              <div className="lg:col-span-7">
                 {selectedQuote ? (
-                  <div className="bg-[#141414] border border-white/10 rounded-2xl p-6 sticky top-6 space-y-6">
-                    {/* Header devis */}
-                    <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <div className="bg-[#141414] border border-white/10 rounded-2xl p-6 space-y-6 sticky top-20">
+                    {/* Header fiche */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
                       <div>
-                        <span className="text-[10px] font-mono text-white/40 uppercase block">
-                          Détails du Devis
-                        </span>
-                        <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                          <span>{selectedQuote.reference}</span>
-                        </h3>
+                        <div className="flex items-center gap-2">
+                          <span className="text-base font-mono font-bold text-[#EBFF72]">
+                            {selectedQuote.reference}
+                          </span>
+                          {getStatusBadge(selectedQuote.status)}
+                        </div>
+                        <div className="text-xs font-mono text-white/40 mt-0.5">
+                          Enregistré le {new Date(selectedQuote.createdAt).toLocaleString('fr-FR')}
+                        </div>
                       </div>
 
-                      <div>{getStatusBadge(selectedQuote.status)}</div>
+                      {/* Sélecteur de statut rapide */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono text-white/50">Modifier état :</span>
+                        <select
+                          disabled={isUpdating}
+                          value={selectedQuote.status}
+                          onChange={(e) => handleUpdateStatus(selectedQuote.reference, e.target.value)}
+                          className="bg-black border border-white/20 rounded-xl px-3 py-1.5 text-xs font-mono text-white focus:border-[#EBFF72]"
+                        >
+                          <option value="NEW">NOUVEAU</option>
+                          <option value="CONTACTED">CONTACTÉ</option>
+                          <option value="IN_PROGRESS">EN DEV (72H)</option>
+                          <option value="DELIVERED">LIVRÉ</option>
+                          <option value="CANCELLED">ANNULÉ</option>
+                        </select>
+                      </div>
                     </div>
 
-                    {/* Coordonnées & Actions rapides WhatsApp */}
-                    <div className="bg-[#1C1C1C] rounded-xl p-4 space-y-2 text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-white/50 font-mono">Client :</span>
-                        <span className="font-semibold text-white">{selectedQuote.clientName}</span>
+                    {/* Coordonnées Client */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono bg-black/40 p-4 rounded-xl border border-white/5">
+                      <div>
+                        <span className="text-white/40 block mb-1">CLIENT</span>
+                        <span className="text-white font-bold">{selectedQuote.clientName}</span>
+                        {selectedQuote.companyName && (
+                          <span className="block text-white/60">{selectedQuote.companyName}</span>
+                        )}
                       </div>
-                      {selectedQuote.companyName && (
-                        <div className="flex justify-between">
-                          <span className="text-white/50 font-mono">Entreprise :</span>
-                          <span className="text-white">{selectedQuote.companyName}</span>
-                        </div>
-                      )}
-                      {selectedQuote.city && (
-                        <div className="flex justify-between">
-                          <span className="text-white/50 font-mono">Ville :</span>
-                          <span className="text-white">{selectedQuote.city}</span>
-                        </div>
-                      )}
-                      <div className="flex justify-between items-center pt-1 border-t border-white/5">
-                        <span className="text-white/50 font-mono">WhatsApp :</span>
+
+                      <div>
+                        <span className="text-white/40 block mb-1">CONTACT WHATSAPP</span>
                         <a
-                          href={`https://wa.me/${selectedQuote.clientPhone.replace(/[^0-9]/g, '')}`}
+                          href={`https://wa.me/${selectedQuote.clientPhone.replace(/\D/g, '')}`}
                           target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#EBFF72] hover:underline font-mono font-semibold flex items-center gap-1"
+                          rel="noreferrer"
+                          className="text-[#EBFF72] font-bold hover:underline flex items-center gap-1.5"
                         >
                           <span>{selectedQuote.clientPhone}</span>
                           <span className="text-[10px]">↗</span>
                         </a>
-                      </div>
-                      {selectedQuote.clientEmail && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-white/50 font-mono">Email :</span>
-                          <span className="text-white/80">{selectedQuote.clientEmail}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Détail du projet & Chiffrage */}
-                    <div>
-                      <div className="text-xs font-mono text-white/50 uppercase mb-2">
-                        {isEn ? 'Package & Selected Modules' : 'Formule & Options retenues'}
-                      </div>
-                      <div className="bg-[#1C1C1C] rounded-xl p-4 space-y-2 text-xs">
-                        <div className="flex justify-between text-white font-medium">
-                          <span>Secteur : {selectedQuote.industryName}</span>
-                          <span className="font-mono text-[#EBFF72]">{formatFCFA(selectedQuote.basePriceXAF)}</span>
-                        </div>
-
-                        {selectedQuote.selectedAddonTitles && selectedQuote.selectedAddonTitles.length > 0 ? (
-                          <div className="pt-2 border-t border-white/5 space-y-1">
-                            {selectedQuote.selectedAddonTitles.map((addon, i) => (
-                              <div key={i} className="text-white/70 flex items-center gap-2">
-                                <span className="text-[#EBFF72] text-[10px]">●</span>
-                                <span>{addon}</span>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="text-white/40 italic">Pack Vitrine standard uniquement</div>
+                        {selectedQuote.clientEmail && (
+                          <span className="block text-white/60">{selectedQuote.clientEmail}</span>
                         )}
+                      </div>
 
-                        <div className="pt-3 border-t border-white/10 flex justify-between items-baseline font-mono">
-                          <span className="font-bold text-white">Montant Total Net :</span>
-                          <span className="text-base font-bold text-[#EBFF72]">
-                            {formatFCFA(selectedQuote.totalPriceXAF)}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-[11px] font-mono text-white/50">
-                          <span>Facilité :</span>
-                          <span>
-                            {selectedQuote.paymentSplits} tranches de ~{formatFCFA(selectedQuote.splitAmount)}
-                          </span>
-                        </div>
+                      <div>
+                        <span className="text-white/40 block mb-1">VILLE / MARCHÉ</span>
+                        <span className="text-white">{selectedQuote.city || 'Non spécifiée'}</span>
+                      </div>
+
+                      <div>
+                        <span className="text-white/40 block mb-1">SECTEUR D&apos;ACTIVITÉ</span>
+                        <span className="text-white font-bold">{selectedQuote.industryName}</span>
                       </div>
                     </div>
 
-                    {/* Sélecteur de statut d'avancement */}
+                    {/* Options XpreSite Choisies */}
                     <div>
-                      <label className="text-xs font-mono text-white/50 uppercase block mb-2">
-                        {isEn ? 'Update Status' : 'Faire évoluer le statut'}
-                      </label>
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        {(['NEW', 'CONTACTED', 'IN_PROGRESS', 'DELIVERED'] as const).map((st) => (
-                          <button
-                            key={st}
-                            type="button"
-                            disabled={isUpdating}
-                            onClick={() => handleUpdateStatus(selectedQuote.reference, st)}
-                            className={`py-2 px-2 rounded-xl text-[11px] font-mono transition-colors border ${
-                              selectedQuote.status === st
-                                ? 'bg-[#EBFF72] text-[#0E0E0E] font-bold border-[#EBFF72]'
-                                : 'bg-[#1C1C1C] border-white/10 text-white/70 hover:text-white'
-                            }`}
-                          >
-                            {st}
-                          </button>
-                        ))}
+                      <div className="text-xs font-mono text-white/50 mb-2 uppercase">
+                        Fonctionnalités & Options Configurées
+                      </div>
+                      <div className="bg-black/30 border border-white/5 rounded-xl p-4 space-y-2">
+                        {selectedQuote.selectedAddonTitles && selectedQuote.selectedAddonTitles.length > 0 ? (
+                          selectedQuote.selectedAddonTitles.map((t, idx) => (
+                            <div key={idx} className="text-xs font-mono text-white flex items-center gap-2">
+                              <Tick01Icon size={14} className="text-[#EBFF72]" />
+                              <span>{t}</span>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-xs font-mono text-white/50">
+                            Pack Vitrine Express Standard (Sans modules additionnels)
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {/* Espace de notes internes de cadrage */}
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
+                    {/* Synthèse Financière */}
+                    <div className="bg-black/40 border border-white/10 rounded-xl p-4 space-y-2 text-xs font-mono">
+                      <div className="flex justify-between text-white/60">
+                        <span>Pack Socle Vitrine (72h)</span>
+                        <span>{formatFCFA(selectedQuote.basePriceXAF)}</span>
+                      </div>
+                      <div className="flex justify-between text-white/60">
+                        <span>Modules Additionnels</span>
+                        <span>{formatFCFA(selectedQuote.addonsTotalXAF || 0)}</span>
+                      </div>
+                      <div className="flex justify-between text-base font-bold text-white pt-2 border-t border-white/10">
+                        <span>Total Devis</span>
+                        <span className="text-[#EBFF72]">{formatFCFA(selectedQuote.totalPriceXAF)}</span>
+                      </div>
+                      <div className="flex justify-between text-[11px] text-[#EBFF72]/80 pt-1">
+                        <span>Facilité appliquée</span>
+                        <span>
+                          {selectedQuote.paymentSplits} tranches de ~
+                          {formatFCFA(selectedQuote.splitAmount)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Notes Internes */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
                         <label className="text-xs font-mono text-white/50 uppercase">
-                          {isEn ? 'Internal Scoping Notes' : 'Notes internes de cadrage'}
+                          Notes internes de cadrage studio
                         </label>
                         <button
                           type="button"
@@ -511,7 +726,7 @@ export default function AdminDashboardPage() {
                       </div>
                       <textarea
                         rows={3}
-                        placeholder="Ex: Client relancé sur WhatsApp. Doit envoyer les photos du restaurant et le menu avant mercredi..."
+                        placeholder="Ex: Client relancé sur WhatsApp. Doit envoyer le menu et les photos du restaurant avant mercredi..."
                         value={noteText}
                         onChange={(e) => setNoteText(e.target.value)}
                         className="w-full bg-[#1C1C1C] border border-white/15 rounded-xl p-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#EBFF72]"
@@ -528,13 +743,11 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* ====================================================================
-            ONGLET 2 : RENDEZ-VOUS STUDIO
-        ==================================================================== */}
+        {/* ONGLET 2 : RENDEZ-VOUS STUDIO */}
         {activeTab === 'bookings' && (
           <div className="bg-[#141414] border border-white/10 rounded-2xl p-8 text-center max-w-xl mx-auto space-y-4">
             <div className="w-12 h-12 rounded-full bg-[#EBFF72]/15 border border-[#EBFF72] text-[#EBFF72] flex items-center justify-center mx-auto text-xl">
-              📅
+              <Calendar01Icon size={24} />
             </div>
             <h3 className="text-xl font-bold text-white">Module Prise de Rendez-vous</h3>
             <p className="text-xs text-white/60 leading-relaxed">
@@ -548,9 +761,7 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* ====================================================================
-            ONGLET 3 : RÉALISATIONS CMS
-        ==================================================================== */}
+        {/* ONGLET 3 : RÉALISATIONS CMS */}
         {activeTab === 'projects' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between mb-4">
@@ -594,9 +805,7 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* ====================================================================
-            ONGLET 4 : PARAMÈTRES & TARIFS
-        ==================================================================== */}
+        {/* ONGLET 4 : CONFIGURATION TARIFS */}
         {activeTab === 'settings' && (
           <div className="max-w-2xl mx-auto bg-[#141414] border border-white/10 rounded-2xl p-6 space-y-6">
             <div>

@@ -19,6 +19,7 @@ router.get('/health', (req, res) => {
 // Montage des routes v1
 router.use('/auth', authRoutes);
 router.use('/xpresite', quoteRoutes);
+router.use('/', quoteRoutes);
 router.use('/', bookingRoutes);
 router.use('/', projectRoutes);
 

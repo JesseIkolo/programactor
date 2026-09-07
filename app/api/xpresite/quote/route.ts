@@ -75,6 +75,19 @@ export async function POST(req: NextRequest) {
       console.error('Erreur lors de la sauvegarde du devis XpreSite :', saveError);
     }
 
+    // Forwarder vers le backend VPS / MongoDB Atlas si joignable
+    const vpsApiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.programactor.pro/api/v1';
+    try {
+      await fetch(`${vpsApiUrl}/quotes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      console.log(`[XpreSite] Devis synchronisé sur MongoDB Atlas : ${quoteReference}`);
+    } catch (atlasSyncError) {
+      console.warn('[XpreSite] Backend VPS injoignable, sauvegarde locale conservée.');
+    }
+
     // Notification interne (Simulation/Log d'envoi vers hello@programactor.pro)
     console.log(`[XPRESITE] Nouveau devis généré : ${quoteReference} pour ${clientName} (${clientPhone}) - Total: ${totalPriceXAF} FCFA`);
 

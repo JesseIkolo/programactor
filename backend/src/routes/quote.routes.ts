@@ -32,6 +32,7 @@ router.post('/quotes', publicFormLimiter, validateBody(createQuoteSchema), creat
 
 // Gestion administrative (protégée par JWT)
 router.get('/quotes', requireAuth, getQuotes);
+router.patch('/quotes/:id', requireAuth, updateQuoteStatus);
 router.patch('/quotes/:id/status', requireAuth, updateQuoteStatus);
 
 export default router;

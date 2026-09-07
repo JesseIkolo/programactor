@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { Quote } from '../models/Quote.model.js';
 import { ENV } from '../config/env.js';
 
@@ -111,11 +112,14 @@ export async function getQuotes(req: Request, res: Response): Promise<void> {
 }
 
 export async function updateQuoteStatus(req: Request, res: Response): Promise<void> {
-  const { id } = req.params;
+  const id = String(req.params.id);
   const { status, internalNotes } = req.body;
 
-  const quote = await Quote.findByIdAndUpdate(
-    id,
+  const isMongoId = mongoose.Types.ObjectId.isValid(id);
+  const filter = isMongoId ? { _id: id } : { reference: id };
+
+  const quote = await Quote.findOneAndUpdate(
+    filter,
     {
       ...(status && { status }),
       ...(internalNotes !== undefined && { internalNotes }),
