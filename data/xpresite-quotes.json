@@ -1,5 +1,27 @@
 [
   {
+    "reference": "XPS-20260907-0K7L",
+    "clientName": "6736629892",
+    "clientEmail": "",
+    "clientPhone": "6736629892",
+    "companyName": "Yuska Food",
+    "city": "Douala",
+    "industryId": "ind-immigration",
+    "industryName": "Agence d'Immigration & Facilitation Visas",
+    "selectedAddonTitles": [
+      "Présentation des destinations & types de visas (Inclus)",
+      "Prise de rendez-vous pour étude de dossier & upload de CV (40 000 FCFA)"
+    ],
+    "basePriceXAF": 75000,
+    "addonsTotalXAF": 40000,
+    "totalPriceXAF": 115000,
+    "paymentSplits": 2,
+    "splitAmount": 57500,
+    "lang": "fr",
+    "status": "NEW",
+    "createdAt": "2026-09-07T09:44:12.694Z"
+  },
+  {
     "reference": "XPS-20260907-9NNR",
     "clientName": "Jesse ",
     "clientEmail": "jesseikolo@gmail.com",

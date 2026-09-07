@@ -1,29 +1,48 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export type BookingStatus = 'CONFIRMED' | 'COMPLETED' | 'RESCHEDULED' | 'CANCELLED';
+export type BookingStatus =
+  | 'CONFIRMÉ'
+  | 'EN ATTENTE'
+  | 'HONORÉ'
+  | 'ANNULÉ'
+  | 'REPORTÉ'
+  | 'EN ATTENTE DE PAIEMENT'
+  | 'A RELANCER';
+
+export type MeetingChannel = 'EN_LIGNE' | 'PRESENTIEL';
 
 export interface IBooking extends Document {
+  reference: string;
   clientName: string;
   clientEmail: string;
   clientPhone: string;
   clientCity?: string;
   companyName?: string;
-  sector: string;
-  problemSummary: string;
-  desiredOffer?: string;
-  preferredChannel: 'meet' | 'whatsapp';
+  sector?: string;
+  topic?: string;
+  meetingType: MeetingChannel;
+  locationDetails?: string;
+  date: string; // YYYY-MM-DD
+  timeSlot: string; // Ex: "10:30"
   scheduledAt: Date;
   durationMinutes: number;
   clientTimezone: string;
   status: BookingStatus;
   meetingLink?: string;
   internalNotes?: string;
+  lang: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
 const BookingSchema = new Schema<IBooking>(
   {
+    reference: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
     clientName: {
       type: String,
       required: true,
@@ -50,20 +69,29 @@ const BookingSchema = new Schema<IBooking>(
     },
     sector: {
       type: String,
-      required: true,
+      default: '',
     },
-    problemSummary: {
-      type: String,
-      required: true,
-    },
-    desiredOffer: {
+    topic: {
       type: String,
       default: '',
     },
-    preferredChannel: {
+    meetingType: {
       type: String,
-      enum: ['meet', 'whatsapp'],
-      default: 'meet',
+      enum: ['EN_LIGNE', 'PRESENTIEL'],
+      default: 'EN_LIGNE',
+    },
+    locationDetails: {
+      type: String,
+      default: '',
+    },
+    date: {
+      type: String,
+      required: true,
+      index: true,
+    },
+    timeSlot: {
+      type: String,
+      required: true,
     },
     scheduledAt: {
       type: Date,
@@ -80,8 +108,16 @@ const BookingSchema = new Schema<IBooking>(
     },
     status: {
       type: String,
-      enum: ['CONFIRMED', 'COMPLETED', 'RESCHEDULED', 'CANCELLED'],
-      default: 'CONFIRMED',
+      enum: [
+        'CONFIRMÉ',
+        'EN ATTENTE',
+        'HONORÉ',
+        'ANNULÉ',
+        'REPORTÉ',
+        'EN ATTENTE DE PAIEMENT',
+        'A RELANCER',
+      ],
+      default: 'CONFIRMÉ',
       index: true,
     },
     meetingLink: {
@@ -91,6 +127,10 @@ const BookingSchema = new Schema<IBooking>(
     internalNotes: {
       type: String,
       default: '',
+    },
+    lang: {
+      type: String,
+      default: 'fr',
     },
   },
   {

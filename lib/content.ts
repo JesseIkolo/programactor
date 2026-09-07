@@ -77,6 +77,10 @@ const projectsBase = [
 export function getContent(lang: Lang) {
   const fr = {
     ...shared,
+    contact: {
+      ...shared.contact,
+      booking: "/fr/reserver",
+    },
     lang: "fr" as const,
     htmlLang: "fr",
     meta: {
@@ -628,6 +632,10 @@ export function getContent(lang: Lang) {
 
   const en = {
     ...shared,
+    contact: {
+      ...shared.contact,
+      booking: "/en/reserver",
+    },
     lang: "en" as const,
     htmlLang: "en",
     meta: {

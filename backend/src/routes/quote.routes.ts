@@ -4,12 +4,18 @@ import {
   createQuote,
   getQuotes,
   updateQuoteStatus,
+  getXpreSiteConfig,
+  updateXpreSiteConfig,
 } from '../controllers/quote.controller.js';
 import { requireAuth } from '../middlewares/auth.middleware.js';
 import { validateBody } from '../middlewares/validate.middleware.js';
 import { publicFormLimiter } from '../config/security.js';
 
 const router = Router();
+
+// Configuration dynamique XpreSite
+router.get('/config', getXpreSiteConfig);
+router.put('/config', requireAuth, updateXpreSiteConfig);
 
 const createQuoteSchema = z.object({
   clientName: z.string().min(2, 'Le nom est requis.'),

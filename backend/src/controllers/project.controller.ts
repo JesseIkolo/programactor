@@ -2,11 +2,14 @@ import { Request, Response } from 'express';
 import { Project } from '../models/Project.model.js';
 
 export async function getProjects(req: Request, res: Response): Promise<void> {
-  const { status = 'PUBLISHED' } = req.query;
+  const { status = 'PUBLISHED', featured } = req.query;
 
   const query: any = {};
   if (status && status !== 'ALL') {
     query.status = status;
+  }
+  if (featured !== undefined) {
+    query.featured = featured === 'true';
   }
 
   const projects = await Project.find(query).sort({ displayOrder: 1, createdAt: -1 });

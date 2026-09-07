@@ -24,6 +24,9 @@ import {
 import { Mark, Wordmark } from '@/components/ui';
 import { XPRESITE_CONFIG, formatFCFA } from '@/lib/xpresite-data';
 import AdminLogin from '@/components/admin/AdminLogin';
+import AdminBookingsTab from '@/components/admin/AdminBookingsTab';
+import AdminProjectsTab from '@/components/admin/AdminProjectsTab';
+import AdminSettingsTab from '@/components/admin/AdminSettingsTab';
 
 interface QuoteItem {
   _id?: string;
@@ -67,6 +70,8 @@ export default function AdminDashboardPage() {
   const [noteText, setNoteText] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
   const [vpsStatus, setVpsStatus] = useState<'connected' | 'checking' | 'fallback'>('checking');
+  const [bookingsCount, setBookingsCount] = useState(0);
+  const [projectsCount, setProjectsCount] = useState(0);
 
   // État Gestion Coordonnées & Réseaux Sociaux
   const [contactForm, setContactForm] = useState({
@@ -498,7 +503,9 @@ export default function AdminDashboardPage() {
           >
             <Calendar01Icon size={14} />
             <span>{isEn ? 'Appointments' : 'Rendez-vous'}</span>
-            <span className="px-2 py-0.5 rounded-full bg-white/10 text-[10px]">0</span>
+            <span className="px-2 py-0.5 rounded-full bg-white/10 text-[10px]">
+              {bookingsCount}
+            </span>
           </button>
 
           <button
@@ -511,7 +518,9 @@ export default function AdminDashboardPage() {
             }`}
           >
             <span>{isEn ? 'Case Studies CMS' : 'Réalisations CMS'}</span>
-            <span className="px-2 py-0.5 rounded-full bg-white/10 text-[10px]">6</span>
+            <span className="px-2 py-0.5 rounded-full bg-white/10 text-[10px]">
+              {projectsCount}
+            </span>
           </button>
 
           <button
@@ -831,112 +840,17 @@ export default function AdminDashboardPage() {
 
         {/* ONGLET 2 : RENDEZ-VOUS STUDIO */}
         {activeTab === 'bookings' && (
-          <div className="bg-[#141414] border border-white/10 rounded-2xl p-8 text-center max-w-xl mx-auto space-y-4">
-            <div className="w-12 h-12 rounded-full bg-[#EBFF72]/15 border border-[#EBFF72] text-[#EBFF72] flex items-center justify-center mx-auto text-xl">
-              <Calendar01Icon size={24} />
-            </div>
-            <h3 className="text-xl font-bold text-white">Module Prise de Rendez-vous</h3>
-            <p className="text-xs text-white/60 leading-relaxed">
-              Le tunnel de prise de rendez-vous de cadrage 30 minutes est configuré sur l&apos;API. Dès qu&apos;un visiteur planifie un appel via le formulaire dédié, la fiche apparaîtra ici avec la détection anti-collision et le lien visio Google Meet / WhatsApp.
-            </p>
-            <div className="pt-2">
-              <span className="font-mono text-xs text-[#EBFF72] bg-[#EBFF72]/10 px-3 py-1 rounded-full">
-                Prêt pour la synchronisation VPS
-              </span>
-            </div>
-          </div>
+          <AdminBookingsTab token={token} showToast={showToast} isEn={isEn} />
         )}
 
         {/* ONGLET 3 : RÉALISATIONS CMS */}
         {activeTab === 'projects' && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-bold text-white">Études de Cas en Ligne</h3>
-                <p className="text-xs text-white/60">
-                  Projets affichés sur la page d&apos;accueil et la page Réalisations (`/[lang]/realisations`).
-                </p>
-              </div>
-              <Link
-                href={`/${lang}/realisations`}
-                className="text-xs font-mono px-3 py-1.5 rounded-full border border-[#EBFF72] text-[#EBFF72] hover:bg-[#EBFF72]/10"
-              >
-                Voir en direct ↗
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                { name: 'MoMo Pay Terminal', sector: 'Fintech', city: 'Douala', year: '2025', status: 'En ligne' },
-                { name: 'Yamo Delivery', sector: 'Logistique', city: 'Yaoundé', year: '2025', status: 'En ligne' },
-                { name: 'Kribi Logistics Portal', sector: 'Fret Maritime', city: 'Kribi', year: '2024', status: 'En ligne' },
-                { name: 'Maître Pro', sector: 'Services B2B', city: 'Libreville', year: '2025', status: 'En ligne' },
-                { name: 'AgriLink Cameroon', sector: 'Agritech', city: 'Bafoussam', year: '2024', status: 'En ligne' },
-                { name: 'Bantu Learn', sector: 'Éducation', city: 'Douala', year: '2024', status: 'En ligne' },
-              ].map((p, i) => (
-                <div key={i} className="bg-[#141414] border border-white/10 rounded-2xl p-5 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-[#EBFF72] bg-[#EBFF72]/10 px-2 py-0.5 rounded-full">
-                      ● {p.status}
-                    </span>
-                    <span className="text-xs font-mono text-white/40">{p.year}</span>
-                  </div>
-                  <h4 className="text-base font-bold text-white">{p.name}</h4>
-                  <div className="text-xs text-white/60 font-mono">
-                    {p.sector} · {p.city}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <AdminProjectsTab token={token} showToast={showToast} isEn={isEn} />
         )}
 
         {/* ONGLET 4 : CONFIGURATION TARIFS */}
         {activeTab === 'settings' && (
-          <div className="max-w-2xl mx-auto bg-[#141414] border border-white/10 rounded-2xl p-6 space-y-6">
-            <div>
-              <h3 className="text-lg font-bold text-white mb-1">Paramètres de l&apos;Offre XpreSite</h3>
-              <p className="text-xs text-white/60">
-                Configuration par défaut utilisée dans le simulateur public.
-              </p>
-            </div>
-
-            <div className="space-y-4 text-xs font-mono">
-              <div className="p-4 bg-[#1C1C1C] rounded-xl flex justify-between items-center">
-                <div>
-                  <div className="text-white font-semibold">Tarif socle Vitrine de base</div>
-                  <div className="text-white/50 text-[11px]">Prix d&apos;appel standard en FCFA</div>
-                </div>
-                <div className="text-base font-bold text-[#EBFF72]">
-                  {formatFCFA(XPRESITE_CONFIG.defaultBasePriceXAF)}
-                </div>
-              </div>
-
-              <div className="p-4 bg-[#1C1C1C] rounded-xl flex justify-between items-center">
-                <div>
-                  <div className="text-white font-semibold">Promesse d&apos;exécution</div>
-                  <div className="text-white/50 text-[11px]">Délai garanti dès réception des contenus</div>
-                </div>
-                <div className="text-base font-bold text-white">72 Heures</div>
-              </div>
-
-              <div className="p-4 bg-[#1C1C1C] rounded-xl flex justify-between items-center">
-                <div>
-                  <div className="text-white font-semibold">Facilité de paiement</div>
-                  <div className="text-white/50 text-[11px]">Calcul instantané dans le formulaire</div>
-                </div>
-                <div className="text-base font-bold text-white">2 ou 3 tranches</div>
-              </div>
-
-              <div className="p-4 bg-[#1C1C1C] rounded-xl flex justify-between items-center">
-                <div>
-                  <div className="text-white font-semibold">Hébergement & Domaine</div>
-                  <div className="text-white/50 text-[11px]">Offert avec chaque pack</div>
-                </div>
-                <div className="text-base font-bold text-white">1 An Inclus</div>
-              </div>
-            </div>
-          </div>
+          <AdminSettingsTab token={token} showToast={showToast} isEn={isEn} />
         )}
 
         {/* ONGLET 5 : COORDONNÉES & RÉSEAUX SOCIAUX */}

@@ -10,21 +10,24 @@ export interface IProject extends Document {
   duration: string;
   status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
   displayOrder: number;
-  accentTone: 'indigo' | 'signal' | 'surface';
+  featured?: boolean;
+  accentTone?: 'indigo' | 'signal' | 'surface';
   coverImageUrl?: string;
   contentFr: {
     tagline: string;
     challenge: string;
     solution: string;
-    deliverables: string[];
+    impact?: string;
+    deliverables?: string[];
   };
   contentEn: {
     tagline: string;
     challenge: string;
     solution: string;
-    deliverables: string[];
+    impact?: string;
+    deliverables?: string[];
   };
-  metrics: Array<{
+  metrics?: Array<{
     value: string;
     labelFr: string;
     labelEn: string;
@@ -79,6 +82,11 @@ const ProjectSchema = new Schema<IProject>(
       default: 0,
       index: true,
     },
+    featured: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
     accentTone: {
       type: String,
       enum: ['indigo', 'signal', 'surface'],
@@ -92,12 +100,14 @@ const ProjectSchema = new Schema<IProject>(
       tagline: { type: String, default: '' },
       challenge: { type: String, default: '' },
       solution: { type: String, default: '' },
+      impact: { type: String, default: '' },
       deliverables: { type: [String], default: [] },
     },
     contentEn: {
       tagline: { type: String, default: '' },
       challenge: { type: String, default: '' },
       solution: { type: String, default: '' },
+      impact: { type: String, default: '' },
       deliverables: { type: [String], default: [] },
     },
     metrics: [

@@ -11,7 +11,44 @@ interface ProjectShowcaseProps {
 
 export default function ProjectShowcase({ c }: ProjectShowcaseProps) {
   const t = c.realisationsPage;
-  const projects = c.detailedProjects as DetailedProject[];
+  const [liveProjects, setLiveProjects] = useState<DetailedProject[] | null>(null);
+
+  useEffect(() => {
+    fetch('/api/projects?status=PUBLISHED')
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success && Array.isArray(d.data) && d.data.length > 0) {
+          const isEn = c.lang === 'en';
+          const mapped: DetailedProject[] = d.data.map((p: any) => ({
+            key: p.slug || p._id,
+            id: p.slug || p._id,
+            name: p.name,
+            client: p.client || '',
+            sector: p.sector,
+            city: p.city,
+            year: p.year || '2026',
+            duration: p.duration || '3 semaines',
+            status: p.status === 'PUBLISHED' ? (isEn ? 'Live' : 'En ligne') : p.status,
+            tags: p.tags || [],
+            tagline: isEn ? (p.contentEn?.tagline || p.contentFr?.tagline) : (p.contentFr?.tagline || p.contentEn?.tagline),
+            challenge: isEn ? (p.contentEn?.challenge || p.contentFr?.challenge) : (p.contentFr?.challenge || p.contentEn?.challenge),
+            solution: isEn ? (p.contentEn?.solution || p.contentFr?.solution) : (p.contentFr?.solution || p.contentEn?.solution),
+            deliverables: (isEn ? p.contentEn?.deliverables : p.contentFr?.deliverables) || [],
+            metrics: (p.metrics || []).map((m: any) => ({
+              value: m.value,
+              label: isEn ? (m.labelEn || m.labelFr) : (m.labelFr || m.labelEn),
+            })),
+            accentTone: 'signal' as const,
+          }));
+          setLiveProjects(mapped);
+        }
+      })
+      .catch(() => {});
+  }, [c.lang]);
+
+  const projects = (liveProjects && liveProjects.length > 0)
+    ? liveProjects
+    : (c.detailedProjects as DetailedProject[]);
 
   const [selectedSector, setSelectedSector] = useState<string>("all");
   const [selectedCity, setSelectedCity] = useState<string>("all");

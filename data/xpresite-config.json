@@ -1,0 +1,263 @@
+{
+  "defaultBasePriceXAF": 75000,
+  "deliveryDelay": "72h",
+  "allowThreeSplits": true,
+  "minAmountForThreeSplits": 100000,
+  "hostingIncludedYears": 1,
+  "whatsappContactNumber": "237699000000",
+  "industries": [
+    {
+      "id": "ind-restaurant",
+      "slug": "restaurant",
+      "name": {
+        "fr": "Restaurant & Traiteur",
+        "en": "Restaurant & Catering"
+      },
+      "tagline": {
+        "fr": "Sublimez vos plats, facilitez les commandes directes et remplissez vos tables.",
+        "en": "Showcase your dishes, streamline direct orders, and fill your tables."
+      },
+      "iconName": "utensils",
+      "basePriceXAF": 75000,
+      "isActive": true,
+      "addons": [
+        {
+          "id": "addon-resto-wa",
+          "slug": "wa-ordering",
+          "title": {
+            "fr": "Commande directe WhatsApp avec panier",
+            "en": "Direct WhatsApp ordering with cart"
+          },
+          "desc": {
+            "fr": "Le client compose son menu et vous envoie la commande prête à traiter sur WhatsApp.",
+            "en": "Customers select their meal and send the prepared order directly to WhatsApp."
+          },
+          "priceXAF": 0,
+          "isDefaultSelected": true
+        },
+        {
+          "id": "addon-resto-qr",
+          "slug": "qr-menu",
+          "title": {
+            "fr": "Menu QR Code interactif sur table",
+            "en": "Interactive table QR code menu"
+          },
+          "desc": {
+            "fr": "Un QR code personnalisé à imprimer sur vos tables pour consulter le menu en un scan.",
+            "en": "Custom printable QR codes for tables to browse the menu instantly on smartphones."
+          },
+          "priceXAF": 15000,
+          "isDefaultSelected": false
+        },
+        {
+          "id": "addon-resto-maps",
+          "slug": "maps-integration",
+          "title": {
+            "fr": "Géolocalisation Google Maps & Yango Maps",
+            "en": "Google Maps & Yango Maps integration"
+          },
+          "desc": {
+            "fr": "Itinéraire instantané en un clic pour que les clients et livreurs vous trouvent sans effort.",
+            "en": "One-tap directions so guests and riders arrive directly at your doors."
+          },
+          "priceXAF": 25000,
+          "isDefaultSelected": true
+        },
+        {
+          "id": "addon-resto-booking",
+          "slug": "table-reservation",
+          "title": {
+            "fr": "Module de réservation de table en direct",
+            "en": "Direct table booking module"
+          },
+          "desc": {
+            "fr": "Formulaire de réservation avec confirmation automatique par SMS ou WhatsApp.",
+            "en": "Table booking form with instant automated confirmation via SMS or WhatsApp."
+          },
+          "priceXAF": 35000,
+          "isDefaultSelected": false
+        }
+      ]
+    },
+    {
+      "id": "ind-pressing",
+      "slug": "pressing",
+      "name": {
+        "fr": "Pressing & Blanchisserie",
+        "en": "Dry Cleaning & Laundry"
+      },
+      "tagline": {
+        "fr": "Grille tarifaire claire au vêtement, collecte à domicile et suivi WhatsApp.",
+        "en": "Transparent garment pricing, doorstep pickup scheduling, and WhatsApp alerts."
+      },
+      "iconName": "shirt",
+      "basePriceXAF": 75000,
+      "isActive": true,
+      "addons": [
+        {
+          "id": "addon-pressing-price",
+          "slug": "garment-pricelist",
+          "title": {
+            "fr": "Calculateur d'estimation au vêtement",
+            "en": "Per-garment instant price estimator"
+          },
+          "desc": {
+            "fr": "Le client choisit ses pièces (chemise, costume, couette) et voit le montant exact.",
+            "en": "Customers pick their clothes (shirts, suits, blankets) and view the total immediately."
+          },
+          "priceXAF": 0,
+          "isDefaultSelected": true
+        },
+        {
+          "id": "addon-pressing-pickup",
+          "slug": "pickup-scheduler",
+          "title": {
+            "fr": "Module de collecte & livraison à domicile",
+            "en": "Home pickup & delivery scheduling module"
+          },
+          "desc": {
+            "fr": "Choix du jour et créneau horaire de ramassage du linge avec géolocalisation.",
+            "en": "Customers choose their laundry pickup day, time window, and precise pickup area."
+          },
+          "priceXAF": 35000,
+          "isDefaultSelected": true
+        }
+      ]
+    },
+    {
+      "id": "ind-rental",
+      "slug": "rental",
+      "name": {
+        "fr": "Location de Voitures & Véhicules",
+        "en": "Car & Vehicle Rental"
+      },
+      "tagline": {
+        "fr": "Parc automobile en vitrine, réservation de dates et vérification de permis.",
+        "en": "Showcase your car fleet, book rental dates, and streamline license uploads."
+      },
+      "iconName": "car",
+      "basePriceXAF": 120000,
+      "isActive": true,
+      "addons": [
+        {
+          "id": "addon-rental-fleet",
+          "slug": "fleet-filter",
+          "title": {
+            "fr": "Filtres avancés par catégorie (SUV, Berline, 4x4)",
+            "en": "Vehicle filters by class (SUV, Sedan, 4x4)"
+          },
+          "desc": {
+            "fr": "Navigation ultra-rapide par type de véhicule, carburant et transmission.",
+            "en": "Filter vehicles instantly by body type, fuel economy, and gearbox."
+          },
+          "priceXAF": 0,
+          "isDefaultSelected": true
+        },
+        {
+          "id": "addon-rental-calendar",
+          "slug": "date-range-picker",
+          "title": {
+            "fr": "Calculateur automatique selon le nombre de jours",
+            "en": "Automatic day-count price calculator"
+          },
+          "desc": {
+            "fr": "Calcul du tarif dégressif selon la durée de location choisie par le client.",
+            "en": "Automatic discounted rates based on the chosen rental duration."
+          },
+          "priceXAF": 25000,
+          "isDefaultSelected": true
+        }
+      ]
+    },
+    {
+      "id": "ind-delivery",
+      "slug": "delivery",
+      "name": {
+        "fr": "Transport, Fret & Livraison",
+        "en": "Logistics, Freight & Delivery"
+      },
+      "tagline": {
+        "fr": "Simulateur de course par zone, demande d'enlèvement et suivi de colis.",
+        "en": "Zone-based fare calculator, pickup requests, and package tracking."
+      },
+      "iconName": "truck",
+      "basePriceXAF": 90000,
+      "isActive": true,
+      "addons": [
+        {
+          "id": "addon-delivery-zones",
+          "slug": "zone-pricing",
+          "title": {
+            "fr": "Simulateur de tarif par quartier / ville",
+            "en": "Zone and city pricing calculator"
+          },
+          "desc": {
+            "fr": "Le client sélectionne départ et arrivée pour afficher le prix de la course.",
+            "en": "Customers select departure and destination zones to preview the ride fee."
+          },
+          "priceXAF": 0,
+          "isDefaultSelected": true
+        },
+        {
+          "id": "addon-delivery-tracking",
+          "slug": "tracking-number",
+          "title": {
+            "fr": "Module de suivi par numéro de bordereau",
+            "en": "Waybill tracking number module"
+          },
+          "desc": {
+            "fr": "L'expéditeur ou le destinataire saisit son code pour voir le statut de livraison.",
+            "en": "Clients type their tracking code to follow shipment milestones in real time."
+          },
+          "priceXAF": 45000,
+          "isDefaultSelected": false
+        }
+      ]
+    },
+    {
+      "id": "ind-travel",
+      "slug": "travel",
+      "name": {
+        "fr": "Voyage, Hôtels & Tourisme",
+        "en": "Travel, Hospitality & Tourism"
+      },
+      "tagline": {
+        "fr": "Packages séjours, galerie photo immersive et demande de devis express.",
+        "en": "Tour packages, immersive galleries, and express travel inquiries."
+      },
+      "iconName": "plane",
+      "basePriceXAF": 95000,
+      "isActive": true,
+      "addons": [
+        {
+          "id": "addon-travel-packages",
+          "slug": "tours-catalog",
+          "title": {
+            "fr": "Catalogue d'excursions avec programme jour par jour",
+            "en": "Tours catalog with day-by-day itinerary"
+          },
+          "desc": {
+            "fr": "Présentation des circuits touristiques avec tarifs par personne et inclusions.",
+            "en": "Highlight travel itineraries with per-guest pricing and included amenities."
+          },
+          "priceXAF": 0,
+          "isDefaultSelected": true
+        },
+        {
+          "id": "addon-travel-visa",
+          "slug": "visa-form",
+          "title": {
+            "fr": "Formulaire d'assistance visa & formalités",
+            "en": "Visa and documentation assistance intake"
+          },
+          "desc": {
+            "fr": "Collecte sécurisée des pièces justificatives et orientation personnalisée.",
+            "en": "Collect document requirements with private submission directly to the agency."
+          },
+          "priceXAF": 30000,
+          "isDefaultSelected": false
+        }
+      ]
+    }
+  ]
+}

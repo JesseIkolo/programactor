@@ -134,3 +134,47 @@ export async function updateQuoteStatus(req: Request, res: Response): Promise<vo
 
   res.json({ success: true, data: quote });
 }
+
+export async function getXpreSiteConfig(req: Request, res: Response): Promise<void> {
+  try {
+    const { XpreSiteConfig } = await import('../models/XpreSiteConfig.model.js');
+    let config = await XpreSiteConfig.findOne().sort({ updatedAt: -1 });
+
+    if (!config) {
+      config = await XpreSiteConfig.create({
+        defaultBasePriceXAF: 75000,
+        deliveryDelay: '72h',
+        allowThreeSplits: true,
+        minAmountForThreeSplits: 100000,
+        hostingIncludedYears: 1,
+        whatsappContactNumber: '237699000000',
+        industries: [],
+      });
+    }
+
+    res.json({ success: true, data: config });
+  } catch (error) {
+    console.error('Erreur getXpreSiteConfig :', error);
+    res.status(500).json({ success: false, message: 'Erreur lors de la lecture de la configuration.' });
+  }
+}
+
+export async function updateXpreSiteConfig(req: Request, res: Response): Promise<void> {
+  try {
+    const { XpreSiteConfig } = await import('../models/XpreSiteConfig.model.js');
+    let config = await XpreSiteConfig.findOne().sort({ updatedAt: -1 });
+
+    if (!config) {
+      config = await XpreSiteConfig.create(req.body);
+    } else {
+      Object.assign(config, req.body);
+      await config.save();
+    }
+
+    res.json({ success: true, message: 'Configuration XpreSite mise à jour.', data: config });
+  } catch (error) {
+    console.error('Erreur updateXpreSiteConfig :', error);
+    res.status(500).json({ success: false, message: 'Erreur lors de la sauvegarde.' });
+  }
+}
+
