@@ -1,10 +1,26 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mark, Wordmark } from "./ui";
 import type { Content, Lang } from "@/lib/content";
 
 export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
   const other: Lang = lang === "fr" ? "en" : "fr";
   const year = new Date().getFullYear();
+  const pathname = usePathname();
+  const isRealisations = pathname?.includes("/realisations");
+  const otherLangHref = isRealisations ? `/${other}/realisations` : `/${other}`;
+
+  const getLinkHref = (rawHref: string) => {
+    if (rawHref === "#realisations") {
+      return `/${lang}/realisations`;
+    }
+    if (rawHref.startsWith("#")) {
+      return isRealisations ? `/${lang}${rawHref}` : rawHref;
+    }
+    return rawHref;
+  };
 
   return (
     <footer className="border-t border-[color:var(--color-hairline)] pb-10 pt-16 md:pt-20">
@@ -32,7 +48,7 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
               {c.nav.links.map((l) => (
                 <li key={l.href}>
                   <a
-                    href={l.href}
+                    href={getLinkHref(l.href)}
                     className="text-[15px] text-[color:var(--color-muted)] transition-colors hover:text-paper"
                   >
                     {l.label}
@@ -84,7 +100,7 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
           </p>
           <div className="t-mono flex items-center gap-4 text-[color:var(--color-muted-2)]">
             <span className="text-paper">{lang.toUpperCase()}</span>
-            <Link href={`/${other}`} className="transition-colors hover:text-paper">
+            <Link href={otherLangHref} className="transition-colors hover:text-paper">
               {other.toUpperCase()}
             </Link>
           </div>

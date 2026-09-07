@@ -27,6 +27,25 @@ export type Project = {
   status: string;
 };
 
+export type DetailedProject = {
+  key: string;
+  id: string;
+  name: string;
+  client: string;
+  sector: string;
+  city: string;
+  year: string;
+  duration: string;
+  status: string;
+  tags: string[];
+  tagline: string;
+  challenge: string;
+  solution: string;
+  deliverables: string[];
+  metrics: { value: string; label: string }[];
+  accentTone?: "indigo" | "signal" | "surface";
+};
+
 export type Content = ReturnType<typeof getContent>;
 
 const shared = {
@@ -180,6 +199,230 @@ export function getContent(lang: Lang) {
         },
       ],
     },
+
+    realisationsPage: {
+      meta: {
+        title: "Réalisations · Études de cas — Programactor",
+        description:
+          "Découvrez les produits conçus et mis en production par Programactor à Douala, Libreville et en Afrique centrale. Recherche terrain, design d'interface et build.",
+      },
+      badge: "Portfolio & Études de cas",
+      titleBefore: "Des produits conçus pour le ",
+      titleMark: "terrain",
+      titleAfter: ", pas pour la galerie.",
+      lead:
+        "Ni concepts théoriques, ni maquettes oubliées dans un dossier. Des applications et plateformes qui tournent sur de vrais réseaux, avec de vrais utilisateurs et de vrais paiements.",
+      filterAllSectors: "Tous les secteurs",
+      filterAllCities: "Toutes les villes",
+      viewCards: "Vue détaillée",
+      viewGrid: "Vue compacte",
+      filterSectorLabel: "Secteur",
+      filterCityLabel: "Localisation",
+      resultsCount: "projets livrés",
+      challengeLabel: "Le défi terrain",
+      solutionLabel: "La réponse produit",
+      deliverablesLabel: "Livrables finaux",
+      metricsLabel: "Impact mesuré",
+      viewDetails: "Explorer l'étude de cas",
+      closeDetails: "Fermer la vue détaillée",
+      backHome: "Retour à l'accueil",
+      statusLive: "En ligne",
+      durationUnit: "semaines",
+      timelineLabel: "Délai",
+      cityLabel: "Ville",
+      sectorLabel: "Secteur",
+      methodBanner: {
+        label: "La promesse Programactor",
+        title: "Toutes les deux semaines, un incrément testé sur le terrain.",
+        body: "On ne facture pas des mois de recherche théorique. Dès le 15ème jour, tu as entre les mains un écran validé avec tes utilisateurs cibles.",
+        cta: "Découvrir notre méthode",
+      },
+      cta: {
+        label: "Ton projet",
+        titleBefore: "Tu as un produit à ",
+        titleMark: "lancer",
+        titleAfter: " en Afrique centrale ?",
+        body: "Explique-nous le problème en une phrase. On te dit sans détour si c'est réalisable en un sprint de 4 à 8 semaines et à quel coût.",
+        button: "Réserver un appel de cadrage",
+      },
+    },
+
+    detailedProjects: [
+      {
+        key: "p1",
+        id: "fintech-momo",
+        name: "Fintech",
+        client: "Fintech B2B",
+        sector: "Paiement mobile",
+        city: "Douala",
+        year: "2026",
+        duration: "3 semaines",
+        status: "En ligne",
+        tags: ["Recherche", "Identité", "Produit", "Mobile Money"],
+        tagline: "Encaissement instantané QR code et USSD pour commerçants de proximité.",
+        challenge:
+          "Réseaux 3G/EDGE instables dans les marchés de Douala, commerçants réticents aux interfaces chargées et retards fréquents de validation des notifications SMS d'opérateurs.",
+        solution:
+          "Architecture offline-first avec synchronisation en tâche de fond, génération instantanée de QR statiques et dynamiques, et confirmation audio bilingue (français/pidgin) à chaque encaissement réussi.",
+        deliverables: [
+          "Entretiens immersifs au Marché Central",
+          "Design system mobile haute densité",
+          "PWA offline-first ultra-légère (< 2 Mo)",
+          "Passerelle d'encaissement MTN MoMo & Orange Money",
+        ],
+        metrics: [
+          { value: "-40%", label: "Temps d'encaissement" },
+          { value: "100%", label: "Fonctionnement offline" },
+          { value: "15 jours", label: "Du brief au test marchand" },
+        ],
+        accentTone: "signal" as const,
+      },
+      {
+        key: "p2",
+        id: "logistique-coursier",
+        name: "Logistique",
+        client: "Express Dispatch",
+        sector: "Livraison dernier kilomètre",
+        city: "Libreville",
+        year: "2026",
+        duration: "6 semaines",
+        status: "En ligne",
+        tags: ["Stratégie", "Design", "Build", "Dispatch"],
+        tagline: "Système de dispatch coursier et guidage sans adressage postal formel.",
+        challenge:
+          "À Libreville, l'absence de noms de rues et de numéros rend le GPS classique inopérant : le repérage se fait par carrefours, écoles, pharmacies et descriptions informelles.",
+        solution:
+          "Application coursier basée sur des repères visuels géolocalisés avec photos de référence, suivi en temps réel par lien SMS sans installation pour le destinataire final, et console de dispatch temps réel.",
+        deliverables: [
+          "Cartographie des parcours coursiers à Libreville",
+          "Application mobile Android basse consommation",
+          "Console web de supervision et dispatch",
+          "Système de notification WhatsApp et SMS",
+        ],
+        metrics: [
+          { value: "-35%", label: "Temps moyen de livraison" },
+          { value: "< 8 Mo", label: "Taille de l'application" },
+          { value: "99.2%", label: "Taux de livraison réussie" },
+        ],
+        accentTone: "indigo" as const,
+      },
+      {
+        key: "p3",
+        id: "sante-consultation",
+        name: "Santé",
+        client: "Clinique Santé Plus",
+        sector: "Prise de rendez-vous",
+        city: "Douala",
+        year: "2025",
+        duration: "4 semaines",
+        status: "En ligne",
+        tags: ["Recherche", "Produit", "SMS/WhatsApp"],
+        tagline: "Gestion de consultations médicales et rappels automatiques multi-canaux.",
+        challenge:
+          "Plus de 40% de rendez-vous manqués dans les cliniques privées, files d'attente désordonnées dès 7h du matin et secrétariats submergés d'appels téléphoniques répétés.",
+        solution:
+          "Parcours de prise de rendez-vous en 3 étapes avec acompte Mobile Money pour verrouiller le créneau, et système automatisé de rappels préventifs sur WhatsApp et SMS la veille.",
+        deliverables: [
+          "Étude terrain en salle d'attente et entretiens patients",
+          "Interface patient web fluide sans création de compte obligatoire",
+          "Espace praticien avec gestion de file d'attente",
+          "Système de rappels automatiques WhatsApp & SMS",
+        ],
+        metrics: [
+          { value: "-62%", label: "Taux de rendez-vous manqués" },
+          { value: "3 clics", label: "Pour finaliser un créneau" },
+          { value: "+180%", label: "Paiements d'acompte digitalisés" },
+        ],
+        accentTone: "surface" as const,
+      },
+      {
+        key: "p4",
+        id: "commerce-catalogue",
+        name: "Commerce",
+        client: "Retail Mode & Maison",
+        sector: "Catalogue WhatsApp",
+        city: "Yaoundé",
+        year: "2025",
+        duration: "2 semaines",
+        status: "En ligne",
+        tags: ["Identité", "Web", "Social Commerce"],
+        tagline: "Boutique en ligne ultra-légère synchronisée avec WhatsApp Business.",
+        challenge:
+          "Vendeurs passant leurs journées à renvoyer des photos de produits et des prix un par un dans des conversations WhatsApp, entraînant des pertes de commandes et des erreurs d'inventaire.",
+        solution:
+          "Mini-catalogue web ultra-rapide (chargement < 1 seconde sur réseau 3G) permettant aux acheteurs de composer leur panier et de générer un message de commande WhatsApp préformaté en un clic.",
+        deliverables: [
+          "Design du catalogue mobile centré sur les visuels produits",
+          "Générateur intelligent de panier WhatsApp",
+          "Outil mobile simplifié de mise à jour des stocks",
+          "Guide de bonnes pratiques pour les vendeurs",
+        ],
+        metrics: [
+          { value: "< 1s", label: "Temps de chargement sur 3G" },
+          { value: "2 sem", label: "Du brief à la première vente" },
+          { value: "+210%", label: "Commandes finalisées sans friction" },
+        ],
+        accentTone: "signal" as const,
+      },
+      {
+        key: "p5",
+        id: "agritech-cacao",
+        name: "Agritech",
+        client: "Coopérative Cacao Sud",
+        sector: "Traçabilité",
+        city: "Kribi",
+        year: "2025",
+        duration: "8 semaines",
+        status: "En ligne",
+        tags: ["Terrain", "Design", "Build", "PWA"],
+        tagline: "Traçabilité de la fève au conteneur d'export pour les coopératives de cacao.",
+        challenge:
+          "Centres de pesée situés en zone blanche sans réseau mobile, pèseurs peu familiers des smartphones et impératif de respecter les normes européennes de traçabilité anti-déforestation.",
+        solution:
+          "Application tablette durcie à très fort contraste et typographie DM Mono agrandie, synchronisation différée par paquet dès reconnexion, et étiquetage de sacs par QR codes indélébiles.",
+        deliverables: [
+          "Immersion de 7 jours en campement et centre de pesée",
+          "Application tablette hors-ligne avec stockage local chiffré",
+          "Portail de supervision pour les auditeurs et exportateurs",
+          "Manuel d'utilisation imagé sous forme de poster plastifié",
+        ],
+        metrics: [
+          { value: "100%", label: "Conformité d'audit export" },
+          { value: "0 perte", label: "De données lors des coupures" },
+          { value: "+18%", label: "Prime de qualité redistribuée" },
+        ],
+        accentTone: "indigo" as const,
+      },
+      {
+        key: "p6",
+        id: "education-microlearning",
+        name: "Éducation",
+        client: "Académie Pro Afrique",
+        sector: "Plateforme de cours",
+        city: "Libreville",
+        year: "2024",
+        duration: "3 semaines",
+        status: "En ligne",
+        tags: ["Produit", "Design system", "Audio/Video"],
+        tagline: "Plateforme de formation allégée avec capsules audio et fiches de synthèse.",
+        challenge:
+          "Coût exorbitant de la bande passante data pour le streaming vidéo chez les étudiants, entraînant un taux d'abandon supérieur à 80% sur les MOOC traditionnels.",
+        solution:
+          "Expérience d'apprentissage restructurée autour de formats micro-audio de 3 à 5 minutes consommables en mobilité, téléchargement en WiFi nocturne et fiches PDF synthétiques.",
+        deliverables: [
+          "Design system complet pensé pour la faible consommation d'énergie",
+          "Lecteur audio progressif avec reprise de lecture automatique",
+          "Espace apprenant PWA avec mode sombre par défaut",
+          "Outil d'administration et publication de cours",
+        ],
+        metrics: [
+          { value: "-85%", label: "Consommation data vs vidéo" },
+          { value: "78%", label: "Taux de complétion des parcours" },
+          { value: "3 sem", label: "Pour lancer la première promotion" },
+        ],
+        accentTone: "surface" as const,
+      },
+    ],
 
     services: {
       label: "Services",
@@ -467,6 +710,230 @@ export function getContent(lang: Lang) {
         { name: "Education", sector: "Course platform", city: "Libreville", tags: ["Product", "Design system"] },
       ],
     },
+
+    realisationsPage: {
+      meta: {
+        title: "Work · Case studies — Programactor",
+        description:
+          "Explore products designed and shipped by Programactor in Douala, Libreville, and across Central Africa. Field research, interface design, and build.",
+      },
+      badge: "Portfolio & Case Studies",
+      titleBefore: "Products built for the ",
+      titleMark: "ground",
+      titleAfter: ", not for a moodboard.",
+      lead:
+        "No theoretical concepts, no forgotten prototypes. Real applications running on real cellular networks, with real users and real transactions.",
+      filterAllSectors: "All sectors",
+      filterAllCities: "All cities",
+      viewCards: "Detailed story view",
+      viewGrid: "Compact grid",
+      filterSectorLabel: "Sector",
+      filterCityLabel: "Location",
+      resultsCount: "delivered products",
+      challengeLabel: "Field challenge",
+      solutionLabel: "Product answer",
+      deliverablesLabel: "Final deliverables",
+      metricsLabel: "Measured impact",
+      viewDetails: "Explore case study",
+      closeDetails: "Close detailed view",
+      backHome: "Back to home",
+      statusLive: "Live",
+      durationUnit: "weeks",
+      timelineLabel: "Timeline",
+      cityLabel: "City",
+      sectorLabel: "Sector",
+      methodBanner: {
+        label: "The Programactor promise",
+        title: "Every two weeks, a functional increment tested in the field.",
+        body: "We do not bill for months of detached research. By day 15, you hold an interface validated with your target users.",
+        cta: "Discover our method",
+      },
+      cta: {
+        label: "Your project",
+        titleBefore: "Have a product to ",
+        titleMark: "ship",
+        titleAfter: " in Central Africa?",
+        body: "Tell us the core problem in one sentence. We will give you a direct feasibility verdict for a 4 to 8-week sprint and transparent pricing.",
+        button: "Book a scoping call",
+      },
+    },
+
+    detailedProjects: [
+      {
+        key: "p1",
+        id: "fintech-momo",
+        name: "Fintech",
+        client: "B2B Fintech",
+        sector: "Mobile payments",
+        city: "Douala",
+        year: "2026",
+        duration: "3 weeks",
+        status: "Live",
+        tags: ["Research", "Identity", "Product", "Mobile Money"],
+        tagline: "Instant QR code and USSD merchant checkout for neighborhood retail.",
+        challenge:
+          "Unstable 3G/EDGE coverage across Douala open-air markets, shopkeeper reluctance toward bloated UI, and delayed SMS operator confirmations.",
+        solution:
+          "Offline-first architecture with background queueing, instantaneous static and dynamic QR generation, and bilingual audio verification (French/Pidgin) on every payment.",
+        deliverables: [
+          "Field research across Marché Central",
+          "High-density mobile design system",
+          "Ultra-lightweight offline PWA (< 2MB)",
+          "MTN MoMo & Orange Money payment gateway",
+        ],
+        metrics: [
+          { value: "-40%", label: "Checkout completion time" },
+          { value: "100%", label: "Offline-ready operations" },
+          { value: "15 days", label: "Kickoff to merchant test" },
+        ],
+        accentTone: "signal" as const,
+      },
+      {
+        key: "p2",
+        id: "logistique-coursier",
+        name: "Logistics",
+        client: "Express Dispatch",
+        sector: "Last-mile delivery",
+        city: "Libreville",
+        year: "2026",
+        duration: "6 weeks",
+        status: "Live",
+        tags: ["Strategy", "Design", "Build", "Dispatch"],
+        tagline: "Courier dispatch system and location tracking without formal street addresses.",
+        challenge:
+          "In Libreville, the lack of formal street naming and building numbers breaks traditional navigation; dispatches rely on visual landmarks and phone guidance.",
+        solution:
+          "Courier app guided by geo-anchored visual landmarks with reference photos, zero-install customer SMS tracking links, and real-time operations console.",
+        deliverables: [
+          "Libreville courier route & landmark mapping",
+          "Low-battery Android courier application",
+          "Web supervisor & dispatch console",
+          "Automated WhatsApp & SMS notifications",
+        ],
+        metrics: [
+          { value: "-35%", label: "Average delivery turnaround" },
+          { value: "< 8 MB", label: "Application install size" },
+          { value: "99.2%", label: "Successful drop-off rate" },
+        ],
+        accentTone: "indigo" as const,
+      },
+      {
+        key: "p3",
+        id: "sante-consultation",
+        name: "Health",
+        client: "Santé Plus Clinic",
+        sector: "Appointment booking",
+        city: "Douala",
+        year: "2025",
+        duration: "4 weeks",
+        status: "Live",
+        tags: ["Research", "Product", "SMS/WhatsApp"],
+        tagline: "Clinical appointment management and multi-channel automated reminders.",
+        challenge:
+          "Over 40% patient no-show rate in private polyclinics, disorganized morning queues, and medical receptionists flooded with repetitive calls.",
+        solution:
+          "Streamlined 3-step appointment portal paired with Mobile Money micro-deposits to secure slots, plus scheduled WhatsApp and SMS alerts.",
+        deliverables: [
+          "Waiting room field research & patient interviews",
+          "Zero-friction web booking (no account needed)",
+          "Doctor queue management dashboard",
+          "Automated SMS & WhatsApp reminder pipeline",
+        ],
+        metrics: [
+          { value: "-62%", label: "Missed appointment rate" },
+          { value: "3 clicks", label: "To confirm booking" },
+          { value: "+180%", label: "Digital deposit adoption" },
+        ],
+        accentTone: "surface" as const,
+      },
+      {
+        key: "p4",
+        id: "commerce-catalogue",
+        name: "Retail",
+        client: "Retail Fashion & Home",
+        sector: "WhatsApp catalogue",
+        city: "Yaoundé",
+        year: "2025",
+        duration: "2 weeks",
+        status: "Live",
+        tags: ["Identity", "Web", "Social Commerce"],
+        tagline: "Lightweight digital storefront synchronized with WhatsApp Business.",
+        challenge:
+          "Sellers losing hours manually sharing product pictures and prices one by one in chat threads, resulting in inventory mismatches and abandoned checkouts.",
+        solution:
+          "Blazing-fast mini-store (< 1s load on 3G) enabling shoppers to build a basket and generate a pre-formatted WhatsApp order message in a single tap.",
+        deliverables: [
+          "Visual-first responsive catalogue design",
+          "Smart WhatsApp cart text generator",
+          "Simplified mobile stock manager",
+          "Merchant best-practices guide",
+        ],
+        metrics: [
+          { value: "< 1s", label: "Page load on 3G mobile" },
+          { value: "2 wks", label: "Brief to initial sales" },
+          { value: "+210%", label: "Completed order conversions" },
+        ],
+        accentTone: "signal" as const,
+      },
+      {
+        key: "p5",
+        id: "agritech-cacao",
+        name: "Agritech",
+        client: "Cacao Sud Cooperative",
+        sector: "Traceability",
+        city: "Kribi",
+        year: "2025",
+        duration: "8 weeks",
+        status: "Live",
+        tags: ["Field", "Design", "Build", "PWA"],
+        tagline: "Farm-to-export traceability for cocoa farmer cooperatives.",
+        challenge:
+          "Weighing stations located in complete cellular dead zones, scale operators unfamiliar with touchscreens, and mandatory compliance with EU anti-deforestation laws.",
+        solution:
+          "Ruggedized tablet interface with high-contrast DM Mono typography, reliable offline-first queued sync, and permanent QR tags on individual burlap bags.",
+        deliverables: [
+          "7-day field immersion in plantation hubs",
+          "Offline tablet app with encrypted local DB",
+          "Exporter & compliance audit portal",
+          "Illustrated pictorial field operator guide",
+        ],
+        metrics: [
+          { value: "100%", label: "Export compliance pass" },
+          { value: "0 loss", label: "Data drops during blackouts" },
+          { value: "+18%", label: "Fair premium payout" },
+        ],
+        accentTone: "indigo" as const,
+      },
+      {
+        key: "p6",
+        id: "education-microlearning",
+        name: "Education",
+        client: "Africa Pro Academy",
+        sector: "Course platform",
+        city: "Libreville",
+        year: "2024",
+        duration: "3 weeks",
+        status: "Live",
+        tags: ["Product", "Design system", "Audio/Video"],
+        tagline: "Low-bandwidth learning platform with audio micro-lessons and summary cards.",
+        challenge:
+          "Prohibitive mobile data costs making video streaming unaffordable for learners, causing over 80% dropout rates on standard video platforms.",
+        solution:
+          "Curriculum restructured around 3-5 minute micro-audio modules, scheduled off-peak Wi-Fi downloads, and downloadable summary cards.",
+        deliverables: [
+          "Low-energy high-efficiency design system",
+          "Progressive audio player with resume memory",
+          "Learner PWA with default dark mode",
+          "Course publishing & instructor console",
+        ],
+        metrics: [
+          { value: "-85%", label: "Data usage versus video" },
+          { value: "78%", label: "Course completion rate" },
+          { value: "3 wks", label: "Kickoff to first cohort" },
+        ],
+        accentTone: "surface" as const,
+      },
+    ],
 
     services: {
       label: "Services",

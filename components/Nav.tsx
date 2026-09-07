@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mark, Wordmark } from "./ui";
 import type { Content, Lang } from "@/lib/content";
 
 export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isRealisations = pathname?.includes("/realisations");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -24,6 +27,17 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
   }, [open]);
 
   const other: Lang = lang === "fr" ? "en" : "fr";
+  const otherLangHref = isRealisations ? `/${other}/realisations` : `/${other}`;
+
+  const getLinkHref = (rawHref: string) => {
+    if (rawHref === "#realisations") {
+      return `/${lang}/realisations`;
+    }
+    if (rawHref.startsWith("#")) {
+      return isRealisations ? `/${lang}${rawHref}` : rawHref;
+    }
+    return rawHref;
+  };
 
   return (
     <header
@@ -45,15 +59,23 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
 
         {/* Liens desktop */}
         <nav className="hidden items-center gap-8 lg:flex">
-          {c.nav.links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="t-mono text-[color:var(--color-muted)] transition-colors hover:text-paper"
-            >
-              {l.label}
-            </a>
-          ))}
+          {c.nav.links.map((l) => {
+            const href = getLinkHref(l.href);
+            const isCurrent = l.href === "#realisations" && isRealisations;
+            return (
+              <a
+                key={l.href}
+                href={href}
+                className={`t-mono transition-colors ${
+                  isCurrent
+                    ? "text-signal font-semibold"
+                    : "text-[color:var(--color-muted)] hover:text-paper"
+                }`}
+              >
+                {l.label}
+              </a>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -62,7 +84,7 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
             <span className="text-paper">{lang.toUpperCase()}</span>
             <span aria-hidden>/</span>
             <Link
-              href={`/${other}`}
+              href={otherLangHref}
               className="transition-colors hover:text-paper"
               aria-label={other === "fr" ? "Version française" : "English version"}
             >
@@ -96,16 +118,19 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
       {open && (
         <div className="fixed inset-0 top-[68px] z-40 bg-ink lg:hidden">
           <div className="shell flex flex-col gap-1 py-10">
-            {c.nav.links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="t-sub border-b border-[color:var(--color-hairline)] py-5"
-              >
-                {l.label}
-              </a>
-            ))}
+            {c.nav.links.map((l) => {
+              const href = getLinkHref(l.href);
+              return (
+                <a
+                  key={l.href}
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  className="t-sub border-b border-[color:var(--color-hairline)] py-5"
+                >
+                  {l.label}
+                </a>
+              );
+            })}
             <div className="mt-8 flex items-center gap-4">
               <a
                 href={c.contact.booking}
@@ -114,7 +139,7 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
               >
                 {c.nav.cta}
               </a>
-              <Link href={`/${other}`} className="t-mono text-[color:var(--color-muted)]">
+              <Link href={otherLangHref} className="t-mono text-[color:var(--color-muted)]">
                 {other.toUpperCase()}
               </Link>
             </div>

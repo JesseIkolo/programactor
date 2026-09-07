@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { Mark, Pill, Reveal, SectionHead } from "./ui";
+import ProjectVisual from "./ProjectVisual";
 import type { Content } from "@/lib/content";
 
 export default function Work({ c }: { c: Content }) {
@@ -7,34 +9,46 @@ export default function Work({ c }: { c: Content }) {
     ...c.projectsMeta[i],
   }));
 
+  const exploreLabel =
+    c.lang === "fr"
+      ? "Explorer toutes les réalisations"
+      : "Explore all case studies";
+
   return (
     <section id="realisations" className="scroll-mt-24 py-20 md:py-32">
       <div className="shell">
-        <SectionHead label={c.work.label} title={c.work.title} lead={c.work.lead} />
+        <SectionHead
+          label={c.work.label}
+          title={c.work.title}
+          lead={c.work.lead}
+          action={
+            <Link
+              href={`/${c.lang}/realisations`}
+              className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-white/[0.03] px-5 py-3 text-xs font-semibold text-paper transition-colors hover:border-signal hover:text-signal"
+            >
+              <span>{exploreLabel}</span>
+              <span aria-hidden>→</span>
+            </Link>
+          }
+        />
 
         <div className="mt-16 grid gap-5 md:mt-24 md:grid-cols-2">
           {projects.map((p, i) => (
             <Reveal key={p.key} delay={(i % 2) * 90}>
-              <article className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[color:var(--color-hairline)] bg-surface transition-colors duration-300 hover:border-[color:var(--color-hairline-strong)]">
-                {/* Visuel — TODO: remplacer par la photo/capture du projet */}
+              <Link
+                href={`/${c.lang}/realisations`}
+                className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[color:var(--color-hairline)] bg-surface transition-colors duration-300 hover:border-[color:var(--color-hairline-strong)] block"
+              >
+                {/* Visuel immersif interactif */}
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-indigo-deep">
-                  {p.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                    />
-                  ) : (
-                    <div className="grain absolute inset-0 flex items-center justify-center bg-indigo">
-                      <Mark
-                        className="h-9 w-auto text-white/25"
-                        accent="var(--color-signal)"
-                        accentOpacity={0.35}
-                      />
-                    </div>
-                  )}
-                  <span className="t-mono absolute left-5 top-5 inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-ink/70 px-3 py-[6px] text-paper backdrop-blur">
+                  <ProjectVisual
+                    id={p.key}
+                    name={p.name}
+                    sector={p.sector}
+                    city={p.city}
+                    image={p.image}
+                  />
+                  <span className="t-mono absolute left-5 top-5 inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-ink/80 px-3 py-[6px] text-paper backdrop-blur border border-white/10">
                     <span className="inline-block h-[5px] w-[5px] rounded-full bg-signal" />
                     {c.work.statusLive}
                   </span>
@@ -42,7 +56,14 @@ export default function Work({ c }: { c: Content }) {
 
                 <div className="flex flex-1 flex-col justify-between gap-6 p-6 md:p-8">
                   <div>
-                    <h3 className="t-sub">{p.name}.</h3>
+                    <div className="flex items-center justify-between">
+                      <h3 className="t-sub text-paper group-hover:text-white">
+                        {p.name}.
+                      </h3>
+                      <span className="t-mono text-xs text-signal opacity-0 transition-opacity group-hover:opacity-100">
+                        Étude complète →
+                      </span>
+                    </div>
                     <p className="t-mono mt-3 text-[color:var(--color-muted-2)]">
                       {p.sector} · {p.city}
                     </p>
@@ -58,9 +79,20 @@ export default function Work({ c }: { c: Content }) {
                     </p>
                   </div>
                 </div>
-              </article>
+              </Link>
             </Reveal>
           ))}
+        </div>
+
+        {/* Bouton bas de section */}
+        <div className="mt-12 flex justify-center md:mt-16">
+          <Link
+            href={`/${c.lang}/realisations`}
+            className="t-mono inline-flex items-center gap-3 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-surface px-7 py-4 text-xs font-semibold text-paper transition-all hover:border-signal hover:bg-signal hover:text-ink"
+          >
+            <span>{exploreLabel}</span>
+            <span aria-hidden>→</span>
+          </Link>
         </div>
       </div>
     </section>
