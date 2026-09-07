@@ -106,12 +106,12 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify(body),
         signal: AbortSignal.timeout(5000),
       });
-      if (vpsRes.ok) {
-        const vpsData = await vpsRes.json();
-        return NextResponse.json(vpsData, { status: 201 });
+      const vpsData = await vpsRes.json();
+      if (vpsRes.status < 500) {
+        return NextResponse.json(vpsData, { status: vpsRes.status });
       }
     } catch {
-      // VPS injoignable, on continue en mode local
+      // VPS injoignable (erreur réseau, 500, timeout), on bascule en secours local
     }
 
     // Récupérer le numéro du studio depuis site-contact.json ou défaut
@@ -157,10 +157,14 @@ export async function POST(req: NextRequest) {
       updatedAt: new Date().toISOString(),
     };
 
-    // Cache local
-    const localBookings = await getLocalBookings();
-    localBookings.unshift(newBooking);
-    await saveLocalBookings(localBookings);
+    // Cache local en secours
+    try {
+      const localBookings = await getLocalBookings();
+      localBookings.unshift(newBooking);
+      await saveLocalBookings(localBookings);
+    } catch (fsErr) {
+      console.warn('Sauvegarde locale ignorée (environnement serverless read-only) :', fsErr);
+    }
 
     return NextResponse.json({
       success: true,
