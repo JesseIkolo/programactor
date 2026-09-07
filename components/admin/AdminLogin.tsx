@@ -42,27 +42,47 @@ export default function AdminLogin({ onSuccess, lang = 'fr' }: AdminLoginProps) 
     try {
       // 1. Tenter l'authentification sur l'API VPS principale
       let res: Response;
+      let data: any;
+
       try {
         res = await fetch(`${apiUrl}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password }),
         });
-      } catch (networkErr) {
-        // Fallback local en développement si le VPS est indisponible
+        data = await res.json();
+      } catch {
+        // Fallback local en cas d'erreur réseau VPS
         res = await fetch('/api/admin/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password }),
         });
+        data = await res.json();
       }
 
-      const data = await res.json();
+      // Si le backend VPS n'a pas validé, tenter la validation sur la route locale Next.js
+      if ((!res.ok || !data?.success) && res.status === 401) {
+        try {
+          const localRes = await fetch('/api/admin/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+          if (localRes.ok) {
+            const localData = await localRes.json();
+            if (localData.success) {
+              res = localRes;
+              data = localData;
+            }
+          }
+        } catch {}
+      }
 
-      if (res.ok && data.success && data.data?.tokens?.accessToken) {
-        const token = data.data.tokens.accessToken;
-        const user = data.data.user;
+      const token = data?.data?.token || data?.data?.tokens?.accessToken;
+      const user = data?.data?.user || { email, name: 'Studio Admin', role: 'SUPER_ADMIN' };
 
+      if (res.ok && data?.success && token) {
         // Stocker la session dans sessionStorage
         sessionStorage.setItem('programactor_admin_token', token);
         sessionStorage.setItem('programactor_admin_user', JSON.stringify(user));
@@ -70,7 +90,7 @@ export default function AdminLogin({ onSuccess, lang = 'fr' }: AdminLoginProps) 
         onSuccess(token, user);
       } else {
         setErrorMessage(
-          data.message || (isEn ? 'Invalid credentials. Please try again.' : 'Identifiants invalides. Vérifiez votre mot de passe.')
+          data?.message || (isEn ? 'Invalid credentials. Please try again.' : 'Identifiants invalides. Vérifiez votre mot de passe.')
         );
       }
     } catch (err: any) {

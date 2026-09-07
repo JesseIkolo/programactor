@@ -1,0 +1,228 @@
+[
+  {
+    "_id": "proj-fintech-momo",
+    "slug": "fintech-momo",
+    "name": "BongoSpace",
+    "client": "Proprietaire",
+    "sector": "Commerce, COmptabilité",
+    "city": "Douala, Kinshasa",
+    "year": "2026",
+    "duration": "3 semaines",
+    "status": "PUBLISHED",
+    "featured": true,
+    "displayOrder": 1,
+    "coverImageUrl": "/projects/fintech.jpg",
+    "tags": [
+      "Mobile Money",
+      "Offline-First",
+      "Web",
+      "SAAS",
+      "ERP",
+      "PME"
+    ],
+    "contentFr": {
+      "tagline": "Encaissement instantané QR code et USSD pour commerçants de proximité.",
+      "challenge": "Réseaux 3G/EDGE instables dans les marchés de Douala, commerçants réticents aux interfaces chargées et retards de notification SMS.",
+      "solution": "Architecture offline-first avec synchronisation automatique, génération instantanée de QR codes et confirmation audio bilingue.",
+      "impact": "-40% temps d’encaissement, 100% opérationnel offline, validé en 15 jours."
+    },
+    "contentEn": {
+      "tagline": "Instant QR code and USSD merchant terminal designed for low-connectivity markets.",
+      "challenge": "Unstable 3G networks in central markets, complex merchant interfaces, and SMS notification lag.",
+      "solution": "Offline-first architecture with automatic background sync, instant dynamic QR generation, and bilingual audio confirmations.",
+      "impact": "-40% transaction time, 100% offline uptime, tested with live merchants in 15 days."
+    },
+    "metrics": [
+      {
+        "value": "-40%",
+        "labelFr": "Temps d'encaissement",
+        "labelEn": "Transaction time"
+      },
+      {
+        "value": "100%",
+        "labelFr": "Fonctionnement offline",
+        "labelEn": "Offline uptime"
+      },
+      {
+        "value": "15j",
+        "labelFr": "Du brief au test marchand",
+        "labelEn": "Brief to live field test"
+      }
+    ],
+    "createdAt": "2026-09-07T12:10:38.041Z",
+    "updatedAt": "2026-09-07T12:15:15.316Z"
+  },
+  {
+    "_id": "proj-logistique-coursier",
+    "slug": "logistique-coursier",
+    "name": "Yamo Delivery",
+    "client": "Express Dispatch",
+    "sector": "Livraison dernier kilomètre",
+    "city": "Libreville",
+    "year": "2026",
+    "duration": "6 semaines",
+    "status": "PUBLISHED",
+    "featured": true,
+    "displayOrder": 2,
+    "coverImageUrl": "/projects/logistics.jpg",
+    "tags": [
+      "Logistique",
+      "Mobile",
+      "Dispatch",
+      "Géolocalisation"
+    ],
+    "contentFr": {
+      "tagline": "Système de dispatch coursier et guidage sans adressage postal formel.",
+      "challenge": "Absence d’adresses formelles à Libreville, repérage empirique par carrefours, écoles et pharmacies.",
+      "solution": "Application coursier basée sur des repères visuels géolocalisés, suivi en temps réel par SMS sans téléchargement obligatoire.",
+      "impact": "+52% de courses livrées à temps, temps d’orientation divisé par deux.",
+      "deliverables": [
+        "App mobile coursier",
+        "Console dispatch dispatchers",
+        "Tracking SMS direct"
+      ]
+    },
+    "contentEn": {
+      "tagline": "Courier dispatch and navigation system designed for unmapped urban cities.",
+      "challenge": "Lack of formal street addresses in Libreville, where navigation relies on landmark cues and local descriptions.",
+      "solution": "Driver mobile app using visual landmark coordinates and no-app customer tracking via direct SMS links.",
+      "impact": "+52% on-time deliveries, dispatch resolution time reduced by 50%.",
+      "deliverables": [
+        "Courier Mobile App",
+        "Dispatcher Central Console",
+        "Direct SMS Tracking Link"
+      ]
+    },
+    "metrics": [
+      {
+        "value": "+52%",
+        "labelFr": "Livraisons à l’heure",
+        "labelEn": "On-time deliveries"
+      },
+      {
+        "value": "0 app",
+        "labelFr": "Requis pour le destinataire",
+        "labelEn": "Required for receiver"
+      },
+      {
+        "value": "6 sem.",
+        "labelFr": "Délai total de livraison",
+        "labelEn": "Total turnaround time"
+      }
+    ],
+    "createdAt": "2026-09-07T12:10:38.041Z",
+    "updatedAt": "2026-09-07T12:10:38.041Z"
+  },
+  {
+    "_id": "proj-sante-rdv",
+    "slug": "sante-rdv",
+    "name": "Cabinet Médical Santé Plus",
+    "client": "Clinique de la Paix",
+    "sector": "Santé & Médical",
+    "city": "Douala",
+    "year": "2025",
+    "duration": "4 semaines",
+    "status": "PUBLISHED",
+    "featured": true,
+    "displayOrder": 3,
+    "coverImageUrl": "/projects/health.jpg",
+    "tags": [
+      "Santé",
+      "Prise de RDV",
+      "WhatsApp",
+      "Web"
+    ],
+    "contentFr": {
+      "tagline": "Prise de rendez-vous médical sans friction via WhatsApp et rappels automatisés.",
+      "challenge": "Taux élevé de rendez-vous manqués (no-show de 35%) et secrétariat médical surchargé d’appels répétitifs.",
+      "solution": "Tunnel de réservation en 3 clics avec confirmation immédiate et rappels programmés par SMS et WhatsApp.",
+      "impact": "-65% de rendez-vous non honorés, gain de 2 heures par jour pour le secrétariat.",
+      "deliverables": [
+        "Portail de prise de rendez-vous",
+        "Synchronisation agenda médecins",
+        "Module de rappels automatiques"
+      ]
+    },
+    "contentEn": {
+      "tagline": "Zero-friction medical appointment booking with automated WhatsApp reminders.",
+      "challenge": "High 35% patient no-show rate and medical receptionists overloaded with routine booking calls.",
+      "solution": "3-click web appointment flow with automated SMS and WhatsApp confirmations and 24h reminders.",
+      "impact": "-65% patient no-show rate, saving 2 hours daily for reception staff.",
+      "deliverables": [
+        "Patient Booking Web Portal",
+        "Doctor Calendar Sync",
+        "Automated Reminder Engine"
+      ]
+    },
+    "metrics": [
+      {
+        "value": "-65%",
+        "labelFr": "Taux de non-présentation",
+        "labelEn": "No-show reduction"
+      },
+      {
+        "value": "3 clics",
+        "labelFr": "Pour réserver",
+        "labelEn": "To book appointment"
+      }
+    ],
+    "createdAt": "2026-09-07T12:10:38.041Z",
+    "updatedAt": "2026-09-07T12:10:38.041Z"
+  },
+  {
+    "_id": "proj-commerce-catalogue",
+    "slug": "commerce-catalogue",
+    "name": "Boutique Wax & Chic",
+    "client": "Maison Wax",
+    "sector": "Commerce & Mode",
+    "city": "Yaoundé",
+    "year": "2025",
+    "duration": "2 semaines",
+    "status": "PUBLISHED",
+    "featured": false,
+    "displayOrder": 4,
+    "coverImageUrl": "/projects/fashion.jpg",
+    "tags": [
+      "Commerce",
+      "E-commerce",
+      "WhatsApp",
+      "Identité"
+    ],
+    "contentFr": {
+      "tagline": "Catalogue interactif mobile avec synchronisation directe du panier WhatsApp.",
+      "challenge": "Clients qui demandent les prix un par un en DM Instagram et perte de ventes lors de ruptures de stock non signalées.",
+      "solution": "Site catalogue mobile ultra-rapide avec panier persistant et bouton d’envoi direct de la commande formatée sur WhatsApp.",
+      "impact": "Conversion multipliée par 2.5, panier moyen en hausse de 35%.",
+      "deliverables": [
+        "Catalogue web mobile",
+        "Gestion des stocks simplifiée",
+        "Panier WhatsApp direct"
+      ]
+    },
+    "contentEn": {
+      "tagline": "Interactive mobile product catalogue with direct WhatsApp cart handoff.",
+      "challenge": "Customer friction asking individual prices in Instagram DMs and lost sales from untracked inventory.",
+      "solution": "Fast mobile web showcase with persistent shopping bag and instant WhatsApp order formatting.",
+      "impact": "2.5x conversion boost, 35% increase in average order value.",
+      "deliverables": [
+        "Mobile Web Catalogue",
+        "Stock Management UI",
+        "WhatsApp Direct Checkout"
+      ]
+    },
+    "metrics": [
+      {
+        "value": "x2.5",
+        "labelFr": "Taux de conversion",
+        "labelEn": "Conversion rate"
+      },
+      {
+        "value": "+35%",
+        "labelFr": "Panier moyen",
+        "labelEn": "Average order value"
+      }
+    ],
+    "createdAt": "2026-09-07T12:10:38.041Z",
+    "updatedAt": "2026-09-07T12:10:38.041Z"
+  }
+]
