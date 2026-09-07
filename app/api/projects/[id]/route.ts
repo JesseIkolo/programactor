@@ -15,8 +15,12 @@ async function getLocalProjects(): Promise<any[]> {
 }
 
 async function saveLocalProjects(projects: any[]): Promise<void> {
-  await fs.mkdir(dataDir, { recursive: true });
-  await fs.writeFile(projectsFile, JSON.stringify(projects, null, 2), 'utf-8');
+  try {
+    await fs.mkdir(dataDir, { recursive: true });
+    await fs.writeFile(projectsFile, JSON.stringify(projects, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Impossible d\'écrire les projets localement (environnement serverless) :', err);
+  }
 }
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

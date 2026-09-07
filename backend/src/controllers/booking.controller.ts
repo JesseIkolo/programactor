@@ -115,7 +115,11 @@ export async function createBooking(req: Request, res: Response): Promise<void> 
     }
 
     const reference = generateBookingRef();
-    const scheduledAt = new Date(`${date}T${timeSlot}:00Z`);
+    const cleanTime = (timeSlot || '10:00').split('-')[0].trim();
+    let scheduledAt = new Date(`${date}T${cleanTime}:00Z`);
+    if (isNaN(scheduledAt.getTime())) {
+      scheduledAt = new Date();
+    }
 
     const booking = await Booking.create({
       reference,

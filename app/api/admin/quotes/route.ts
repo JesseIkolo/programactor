@@ -44,8 +44,12 @@ export async function PATCH(req: NextRequest) {
     if (internalNotes !== undefined) quotes[index].internalNotes = internalNotes;
     quotes[index].updatedAt = new Date().toISOString();
 
-    await fs.mkdir(dataDir, { recursive: true });
-    await fs.writeFile(quotesFile, JSON.stringify(quotes, null, 2), 'utf-8');
+    try {
+      await fs.mkdir(dataDir, { recursive: true });
+      await fs.writeFile(quotesFile, JSON.stringify(quotes, null, 2), 'utf-8');
+    } catch (fsErr) {
+      console.warn('Impossible d\'écrire les devis localement :', fsErr);
+    }
 
     return NextResponse.json({ success: true, quote: quotes[index] });
   } catch (error) {

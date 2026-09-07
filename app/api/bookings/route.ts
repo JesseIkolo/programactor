@@ -15,8 +15,13 @@ async function getLocalBookings(): Promise<any[]> {
 }
 
 async function saveLocalBookings(bookings: any[]): Promise<void> {
-  await fs.mkdir(dataDir, { recursive: true });
-  await fs.writeFile(bookingsFile, JSON.stringify(bookings, null, 2), 'utf-8');
+  try {
+    await fs.mkdir(dataDir, { recursive: true });
+    await fs.writeFile(bookingsFile, JSON.stringify(bookings, null, 2), 'utf-8');
+  } catch (err) {
+    // Dans les environnements serverless read-only (Netlify / AWS Lambda)
+    console.warn('Impossible d\'écrire les réservations localement (système de fichiers en lecture seule) :', err);
+  }
 }
 
 export async function GET(req: NextRequest) {
@@ -94,19 +99,19 @@ export async function POST(req: NextRequest) {
 
     // Tenter de pousser directement vers l'API VPS MongoDB Atlas
     const vpsApiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.programactor.pro/api/v1';
-    let vpsResult = null;
     try {
       const vpsRes = await fetch(`${vpsApiUrl}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-        signal: AbortSignal.timeout(4000),
+        signal: AbortSignal.timeout(5000),
       });
       if (vpsRes.ok) {
-        vpsResult = await vpsRes.json();
+        const vpsData = await vpsRes.json();
+        return NextResponse.json(vpsData, { status: 201 });
       }
     } catch {
-      // VPS injoignable, on sauvegarde localement
+      // VPS injoignable, on continue en mode local
     }
 
     // Récupérer le numéro du studio depuis site-contact.json ou défaut
@@ -119,7 +124,7 @@ export async function POST(req: NextRequest) {
       }
     } catch {}
 
-    const reference = vpsResult?.data?.booking?.reference || `BK-${date.replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const reference = `BK-${date.replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`;
 
     const channelLabel =
       meetingType === 'PRESENTIEL'
@@ -185,15 +190,19 @@ export async function PATCH(req: NextRequest) {
     const vpsApiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.programactor.pro/api/v1';
     try {
       const authHeader = req.headers.get('authorization');
-      await fetch(`${vpsApiUrl}/bookings/${lookupId}`, {
+      const vpsRes = await fetch(`${vpsApiUrl}/bookings/${lookupId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           ...(authHeader ? { Authorization: authHeader } : {}),
         },
         body: JSON.stringify(body),
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(5000),
       });
+      if (vpsRes.ok) {
+        const vpsData = await vpsRes.json();
+        return NextResponse.json(vpsData);
+      }
     } catch {}
 
     // Mise à jour locale

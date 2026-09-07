@@ -16,8 +16,12 @@ async function getLocalConfig() {
 }
 
 async function saveLocalConfig(config: any) {
-  await fs.mkdir(dataDir, { recursive: true });
-  await fs.writeFile(configFile, JSON.stringify(config, null, 2), 'utf-8');
+  try {
+    await fs.mkdir(dataDir, { recursive: true });
+    await fs.writeFile(configFile, JSON.stringify(config, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Impossible d\'écrire la config xpresite localement (environnement serverless) :', err);
+  }
 }
 
 export async function GET(req: NextRequest) {
