@@ -36,3 +36,9 @@ next-env.d.ts
 
 # netlify
 .netlify
+
+# backend
+backend/node_modules/
+backend/dist/
+backend/.env
+backend/logs/

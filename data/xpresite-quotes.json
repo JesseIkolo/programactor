@@ -1,5 +1,28 @@
 [
   {
+    "reference": "XPS-20260907-9NNR",
+    "clientName": "Jesse ",
+    "clientEmail": "jesseikolo@gmail.com",
+    "clientPhone": "678766543",
+    "companyName": "Yuska Food",
+    "city": "Douala",
+    "industryId": "ind-restaurant",
+    "industryName": "Restaurant & Traiteur",
+    "selectedAddonTitles": [
+      "Commande directe WhatsApp avec panier (Inclus)",
+      "Menu QR Code interactif sur table (15 000 FCFA)",
+      "Géolocalisation Google Maps & Yango Maps (25 000 FCFA)"
+    ],
+    "basePriceXAF": 75000,
+    "addonsTotalXAF": 40000,
+    "totalPriceXAF": 115000,
+    "paymentSplits": 2,
+    "splitAmount": 57500,
+    "lang": "fr",
+    "status": "NEW",
+    "createdAt": "2026-09-07T05:04:57.066Z"
+  },
+  {
     "reference": "XPS-20260907-1ZNU",
     "clientName": "Marc Nkono",
     "clientEmail": "",

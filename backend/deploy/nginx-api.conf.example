@@ -1,0 +1,38 @@
+# =============================================================================
+# EXEMPLE DE CONFIGURATION NGINX — api.programactor.pro
+# Emplacement sur le VPS : /etc/nginx/sites-available/api.programactor.pro
+# =============================================================================
+
+server {
+    server_name api.programactor.pro;
+
+    # Sécurité En-têtes Nginx
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+
+    # Redirection vers le serveur Node.js / Docker
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_http_version 1.1;
+
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 90;
+    }
+
+    # Logs Nginx
+    access_log /var/log/nginx/api.programactor.pro.access.log;
+    error_log /var/log/nginx/api.programactor.pro.error.log;
+
+    listen 80;
+}
+
+# NOTE : Pour activer le certificat SSL HTTPS automatique Let's Encrypt :
+# sudo certbot --nginx -d api.programactor.pro
