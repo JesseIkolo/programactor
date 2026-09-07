@@ -7,10 +7,14 @@ async function startServer() {
   console.log('--- Initialisation du Backend Programactor ---');
 
   // 1. Connexion à MongoDB
-  await connectDB();
+  const isConnected = await connectDB();
 
   // 2. Initialisation du compte super-administrateur si premier lancement
-  await seedInitialAdmin();
+  if (isConnected) {
+    await seedInitialAdmin();
+  } else {
+    console.log('[Seed] En attente de connexion MongoDB pour initialiser le compte admin.');
+  }
 
   // 3. Démarrage du serveur HTTP
   const app = createApp();

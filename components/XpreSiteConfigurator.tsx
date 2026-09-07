@@ -8,6 +8,19 @@ import {
   XpreSiteIndustry,
 } from '@/lib/xpresite-data';
 
+import {
+  Restaurant01Icon,
+  DeliveryTruck01Icon,
+  Shirt01Icon,
+  Car01Icon,
+  Airplane01Icon,
+  Tick01Icon,
+  WhatsappIcon,
+  FlashIcon,
+  Globe02Icon,
+  ArrowRight01Icon,
+} from 'hugeicons-react';
+
 interface XpreSiteConfiguratorProps {
   lang?: 'fr' | 'en';
 }
@@ -150,41 +163,18 @@ export function XpreSiteConfigurator({ lang = 'fr' }: XpreSiteConfiguratorProps)
 
   // Icône dynamique par secteur
   const renderIcon = (name: string, active: boolean) => {
-    const strokeClass = active ? 'stroke-[#EBFF72]' : 'stroke-white/70';
+    const iconClass = active ? 'text-[#EBFF72]' : 'text-white/70';
     switch (name) {
       case 'utensils':
-        return (
-          <svg className={`w-5 h-5 ${strokeClass}`} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm-14 7V2M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-          </svg>
-        );
+        return <Restaurant01Icon size={20} className={iconClass} />;
       case 'truck':
-        return (
-          <svg className={`w-5 h-5 ${strokeClass}`} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2m11 0h3a2 2 0 0 0 2-2v-5l-3-4h-5v11m-8 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0m11 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0" />
-          </svg>
-        );
+        return <DeliveryTruck01Icon size={20} className={iconClass} />;
       case 'shirt':
-        return (
-          <svg className={`w-5 h-5 ${strokeClass}`} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
-          </svg>
-        );
+        return <Shirt01Icon size={20} className={iconClass} />;
       case 'car':
-        return (
-          <svg className={`w-5 h-5 ${strokeClass}`} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2" />
-            <circle cx="7" cy="17" r="2" />
-            <path d="M9 17h6" />
-            <circle cx="17" cy="17" r="2" />
-          </svg>
-        );
+        return <Car01Icon size={20} className={iconClass} />;
       case 'plane':
-        return (
-          <svg className={`w-5 h-5 ${strokeClass}`} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
-          </svg>
-        );
+        return <Airplane01Icon size={20} className={iconClass} />;
       default:
         return null;
     }
@@ -197,9 +187,7 @@ export function XpreSiteConfigurator({ lang = 'fr' }: XpreSiteConfiguratorProps)
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
           <div className="bg-[#141414] border border-[#EBFF72]/40 rounded-[28px] max-w-lg w-full p-6 sm:p-8 text-white relative shadow-2xl">
             <div className="w-12 h-12 rounded-full bg-[#EBFF72]/15 border border-[#EBFF72] flex items-center justify-center text-[#EBFF72] mb-4">
-              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <Tick01Icon size={24} className="text-[#EBFF72]" />
             </div>
 
             <span className="font-mono text-xs uppercase tracking-wider text-[#EBFF72] bg-[#EBFF72]/10 px-3 py-1 rounded-full">
@@ -240,9 +228,7 @@ export function XpreSiteConfigurator({ lang = 'fr' }: XpreSiteConfiguratorProps)
                 rel="noopener noreferrer"
                 className="flex-1 inline-flex items-center justify-center gap-2 bg-[#EBFF72] text-[#0E0E0E] font-semibold text-sm py-3.5 px-6 rounded-full hover:bg-[#d6ec55] transition-colors"
               >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
-                </svg>
+                <WhatsappIcon size={18} className="text-[#0E0E0E]" />
                 {isEn ? 'Finalize on WhatsApp' : 'Finaliser sur WhatsApp'}
               </a>
 
@@ -539,22 +525,22 @@ export function XpreSiteConfigurator({ lang = 'fr' }: XpreSiteConfiguratorProps)
             {/* Garanties clés */}
             <div className="bg-[#1C1C1C] border border-white/5 rounded-2xl p-4 space-y-2.5">
               <div className="flex items-center gap-2.5 text-xs text-white/80">
-                <span className="text-[#EBFF72]">⚡</span>
+                <FlashIcon size={16} className="text-[#EBFF72] shrink-0" />
                 <span>
                   <strong>{isEn ? '72-Hour Delivery' : 'Livré en 72 heures chrono'}</strong>{' '}
                   {isEn ? 'upon receiving your elements' : 'dès réception de vos éléments (logo, photos, textes)'}
                 </span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-white/80">
-                <span className="text-[#EBFF72]">🌐</span>
+                <Globe02Icon size={16} className="text-[#EBFF72] shrink-0" />
                 <span>
                   {isEn ? '1 Year Domain & High-speed Hosting Included' : '1 an de Nom de Domaine & Hébergement haute vitesse inclus'}
                 </span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-white/80">
-                <span className="text-[#EBFF72]">📱</span>
+                <WhatsappIcon size={16} className="text-[#EBFF72] shrink-0" />
                 <span>
-                  {isEn ? 'Optimized for low-connectivity & mobile data' : 'Optimisé pour smartphones & faible connexion (ultra-léger)'}
+                  {isEn ? 'Direct WhatsApp Ordering & Support' : 'Prise de contact & commande directe par WhatsApp'}
                 </span>
               </div>
             </div>
@@ -634,7 +620,7 @@ export function XpreSiteConfigurator({ lang = 'fr' }: XpreSiteConfiguratorProps)
                         ? 'Generate Quote & Finalize on WhatsApp'
                         : 'Générer mon devis & Finaliser sur WhatsApp'}
                     </span>
-                    <span>▶</span>
+                    <ArrowRight01Icon size={16} className="text-[#0E0E0E]" />
                   </>
                 )}
               </button>

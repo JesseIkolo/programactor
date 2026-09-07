@@ -159,6 +159,10 @@ export async function seedInitialAdmin(): Promise<void> {
   try {
     const count = await User.countDocuments();
     if (count === 0) {
+      if (ENV.NODE_ENV === 'production' && (!process.env.INITIAL_ADMIN_PASSWORD || process.env.INITIAL_ADMIN_PASSWORD.includes('ChangeMe'))) {
+        console.warn('[Sécurité] Initialisation ignorée : veuillez définir INITIAL_ADMIN_PASSWORD avec un mot de passe fort dans votre .env pour la production.');
+        return;
+      }
       console.log('[Seed] Création du premier compte administrateur...');
       const hashedPassword = await hashPassword(ENV.INITIAL_ADMIN_PASSWORD);
       await User.create({

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Mark, Wordmark } from "./ui";
 import type { Content, Lang } from "@/lib/content";
+import { Menu01Icon, Cancel01Icon, ArrowRight01Icon } from "hugeicons-react";
 
 export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
   const [scrolled, setScrolled] = useState(false);
@@ -160,15 +161,15 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
             aria-expanded={open}
             aria-label={open ? c.nav.close : c.nav.menu}
           >
-            <span className="text-signal text-[11px] font-bold" aria-hidden>
-              {open ? "✕" : "▶"}
+            <span className="text-signal font-bold" aria-hidden>
+              {open ? <Cancel01Icon size={14} /> : <Menu01Icon size={14} />}
             </span>
             <span>{open ? c.nav.close : c.nav.menu}</span>
           </button>
         </div>
       </div>
 
-      {/* Menu mobile plein écran déroulant */}
+      {/* Menu mobile plein écran */}
       {open && (
         <div
           className="fixed inset-x-0 bottom-0 top-[68px] z-40 flex flex-col justify-between overflow-y-auto overscroll-contain bg-ink lg:hidden"
@@ -193,7 +194,7 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
                     }`}
                   >
                     <span>{l.label}</span>
-                    <span className="text-xs text-[color:var(--color-muted-2)]">→</span>
+                    <ArrowRight01Icon size={16} className="text-[color:var(--color-muted-2)]" />
                   </a>
                 );
               })}

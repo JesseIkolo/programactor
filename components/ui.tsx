@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { PlayIcon } from "hugeicons-react";
 
 /* ==========================================================================
    MARK — logo officiel Programactor (public/mark.svg)
@@ -165,9 +166,7 @@ export function Label({
 }) {
   return (
     <div className={`t-mono flex items-center gap-2 text-[color:var(--color-muted)] ${className}`}>
-      <span aria-hidden className="text-signal">
-        ▶
-      </span>
+      <PlayIcon size={11} className="text-signal fill-signal" aria-hidden />
       <span>{children}</span>
     </div>
   );

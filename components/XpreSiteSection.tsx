@@ -1,14 +1,23 @@
 import Link from 'next/link';
 import { Pill, Reveal, SectionHead } from './ui';
 import { XPRESITE_INDUSTRIES, XPRESITE_CONFIG, formatFCFA } from '@/lib/xpresite-data';
+import { FlashIcon, CreditCardIcon, Globe02Icon } from 'hugeicons-react';
 
 export default function XpreSiteSection({ lang = 'fr' }: { lang?: 'fr' | 'en' }) {
   const isEn = lang === 'en';
 
   const label = isEn ? 'Express Offer · XpreSite' : 'Formule Express · XpreSite';
-  const title = isEn
-    ? 'A tailored website for your business, ready in <span class="mark-word">72h</span>.'
-    : 'Un site web taillé pour votre métier, livré en <span class="mark-word">72h</span>.';
+  const title = isEn ? (
+    <>
+      A tailored website for your business, ready in{' '}
+      <span className="mark-word">72h</span>.
+    </>
+  ) : (
+    <>
+      Un site web taillé pour votre métier, livré en{' '}
+      <span className="mark-word">72h</span>.
+    </>
+  );
   const lead = isEn
     ? 'Designed specifically for African SMBs, restaurants, logistics, and service providers. Starting at 75,000 FCFA with 1-year hosting included and payment in 2 or 3 installments.'
     : 'Conçu spécifiquement pour les commerces, restaurants, livreurs et prestataires en Afrique. À partir de 75.000 FCFA avec hébergement 1 an inclus et facilité de paiement en 2 ou 3 tranches.';
@@ -38,7 +47,9 @@ export default function XpreSiteSection({ lang = 'fr' }: { lang?: 'fr' | 'en' })
         {/* Bannière de réassurance XpreSite */}
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="rounded-[var(--radius-tile)] border border-[color:var(--color-hairline)] bg-surface p-5 flex items-center gap-4">
-            <span className="text-2xl">⚡</span>
+            <div className="w-10 h-10 rounded-full bg-[#EBFF72]/10 border border-[#EBFF72]/25 flex items-center justify-center text-signal shrink-0">
+              <FlashIcon size={20} className="text-signal stroke-[1.5]" />
+            </div>
             <div>
               <div className="t-mono text-xs text-signal font-semibold">
                 {isEn ? '72h Sprint' : '72h Chrono'}
@@ -50,7 +61,9 @@ export default function XpreSiteSection({ lang = 'fr' }: { lang?: 'fr' | 'en' })
           </div>
 
           <div className="rounded-[var(--radius-tile)] border border-[color:var(--color-hairline)] bg-surface p-5 flex items-center gap-4">
-            <span className="text-2xl">💳</span>
+            <div className="w-10 h-10 rounded-full bg-[#EBFF72]/10 border border-[#EBFF72]/25 flex items-center justify-center text-signal shrink-0">
+              <CreditCardIcon size={20} className="text-signal stroke-[1.5]" />
+            </div>
             <div>
               <div className="t-mono text-xs text-signal font-semibold">
                 {isEn ? 'Cashflow friendly' : 'Facilité de trésorerie'}
@@ -62,7 +75,9 @@ export default function XpreSiteSection({ lang = 'fr' }: { lang?: 'fr' | 'en' })
           </div>
 
           <div className="rounded-[var(--radius-tile)] border border-[color:var(--color-hairline)] bg-surface p-5 flex items-center gap-4">
-            <span className="text-2xl">🌐</span>
+            <div className="w-10 h-10 rounded-full bg-[#EBFF72]/10 border border-[#EBFF72]/25 flex items-center justify-center text-signal shrink-0">
+              <Globe02Icon size={20} className="text-signal stroke-[1.5]" />
+            </div>
             <div>
               <div className="t-mono text-xs text-signal font-semibold">
                 {isEn ? '100% Turnkey' : 'Pack Clé en main'}
