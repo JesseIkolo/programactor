@@ -53,7 +53,7 @@ const shared = {
   founded: "2023",
   contact: {
     // TODO: coordonnées réelles
-    email: "hello@programactor.com",
+    email: "hello@programactor.pro",
     whatsapp: "+237 6 00 00 00 00",
     instagram: "https://www.instagram.com/programactor/",
     booking: "#contact",
