@@ -3,12 +3,9 @@
 import React, { useEffect, useRef, useState } from "react";
 
 /* ==========================================================================
-   MARK — logo Programactor
-   ⚠️  RECONSTRUCTION GÉOMÉTRIQUE PROVISOIRE.
-   Le PDF de charte n'embarque le mark qu'en bitmap 51×51, non vectorisable.
-   Remplace cette géométrie par le fichier officiel
-   (Vessa · « Primary logo · SVG · 643×643 ») — et public/mark.svg avec.
-   Construction respectée : deux traits identiques en symétrie de rotation 180°.
+   MARK — logo officiel Programactor (public/mark.svg)
+   Construction vectorielle officielle avec support des props de
+   personnalisation (className, accent, accentOpacity).
    ========================================================================== */
 export function Mark({
   className = "",
@@ -21,26 +18,27 @@ export function Mark({
 }) {
   return (
     <svg
-      viewBox="0 0 46 44"
+      viewBox="0 0 349 298"
       className={className}
       role="img"
       aria-label="Programactor"
       fill="none"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M43 3 V27 H23 V11 H31"
-        stroke={accent}
-        strokeOpacity={accentOpacity}
-        strokeWidth={6}
-        strokeLinecap="butt"
-        strokeLinejoin="miter"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M272 0C297.037 4.53501e-05 317.334 20.2965 317.334 45.3334V155.833C317.334 168.352 327.482 178.5 340 178.5H348.5L317.334 218.167H300.334C293.777 218.167 287.873 215.381 283.735 210.931C276.468 215.616 267.953 218.167 259.173 218.167H184.358C159.358 218.167 139.076 197.927 139.024 172.928L138.872 98.1651C138.848 86.1099 143.626 74.5405 152.151 66.0162L165.222 52.9452C173.723 44.4439 185.254 39.667 197.277 39.6667H238L209.667 0H272ZM238 56.6667C238 69.1852 227.852 79.3334 215.333 79.3334H201.452C188.933 79.3334 178.785 89.4816 178.785 102V155.833C178.785 168.352 188.933 178.5 201.452 178.5H255C267.519 178.5 277.667 168.352 277.667 155.833V62.3334C277.667 49.8149 267.519 39.6667 255 39.6667H238V56.6667Z"
+        fill={accent}
+        fillOpacity={accentOpacity}
       />
       <path
-        d="M3 41 V17 H23 V33 H15"
-        stroke="currentColor"
-        strokeWidth={6}
-        strokeLinecap="butt"
-        strokeLinejoin="miter"
+        d="M133.167 79.3334C158.204 79.3334 178.5 99.6298 178.5 124.667V199.389C178.5 211.412 173.724 222.943 165.222 231.445L152.111 244.556C143.61 253.057 132.079 257.834 120.056 257.834H79.3334V240.833C79.3334 228.315 89.4816 218.167 102 218.167H116.167C128.685 218.167 138.833 208.019 138.833 195.5V141.667C138.833 129.148 128.685 119 116.167 119H0L39.6667 79.3334H133.167Z"
+        fill="currentColor"
+      />
+      <path
+        d="M39.6671 235.167C39.6671 247.685 49.8153 257.833 62.3338 257.833L79.3334 257.834L79.3338 297.5H45.3338C20.2969 297.5 0.000418925 277.204 0.000421024 252.167L0.000428865 158.667L39.6671 119L39.6671 235.167Z"
+        fill="currentColor"
       />
     </svg>
   );
