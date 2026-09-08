@@ -22,14 +22,14 @@
   --color-hairline: rgba(255, 255, 255, 0.09);
   --color-hairline-strong: rgba(255, 255, 255, 0.16);
   --color-muted: rgba(255, 255, 255, 0.58);
-  --color-muted-2: rgba(255, 255, 255, 0.38);
+  --color-muted-2: rgba(255, 255, 255, 0.52);
 
   /* --- Typographie --- */
-  --font-display: "Satoshi", "Inter", "Helvetica Neue", Helvetica, Arial,
+  --font-display: var(--font-satoshi), "Satoshi", "Inter", "Helvetica Neue", Helvetica, Arial,
     ui-sans-serif, system-ui, sans-serif;
-  --font-text: "Switzer", "Inter", "Helvetica Neue", Helvetica, Arial,
+  --font-text: var(--font-switzer), "Switzer", "Inter", "Helvetica Neue", Helvetica, Arial,
     ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas,
+  --font-mono: var(--font-dm-mono), "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas,
     monospace;
 
   /* --- Rayons (repris du langage de référence) --- */
