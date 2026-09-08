@@ -1,10 +1,19 @@
 import Link from 'next/link';
 import { Pill, Reveal, SectionHead } from './ui';
-import { XPRESITE_INDUSTRIES, XPRESITE_CONFIG, formatFCFA } from '@/lib/xpresite-data';
+import { XPRESITE_INDUSTRIES, XPRESITE_CONFIG, formatFCFA, type XpreSiteConfig } from '@/lib/xpresite-data';
 import { FlashIcon, CreditCardIcon, Globe02Icon } from 'hugeicons-react';
 
-export default function XpreSiteSection({ lang = 'fr' }: { lang?: 'fr' | 'en' }) {
+export default function XpreSiteSection({
+  lang = 'fr',
+  config: incomingConfig,
+}: {
+  lang?: 'fr' | 'en';
+  config?: XpreSiteConfig;
+}) {
   const isEn = lang === 'en';
+  const cfg = incomingConfig || XPRESITE_CONFIG;
+  const basePrice = cfg.defaultBasePriceXAF || XPRESITE_CONFIG.defaultBasePriceXAF;
+  const formattedPrice = formatFCFA(basePrice);
 
   const label = isEn ? 'Express Offer · XpreSite' : 'Formule Express · XpreSite';
   const title = isEn ? (
@@ -19,8 +28,8 @@ export default function XpreSiteSection({ lang = 'fr' }: { lang?: 'fr' | 'en' })
     </>
   );
   const lead = isEn
-    ? 'Designed specifically for African SMBs, restaurants, logistics, and service providers. Starting at 75,000 FCFA with 1-year hosting included and payment in 2 or 3 installments.'
-    : 'Conçu spécifiquement pour les commerces, restaurants, livreurs et prestataires en Afrique. À partir de 75.000 FCFA avec hébergement 1 an inclus et facilité de paiement en 2 ou 3 tranches.';
+    ? `Designed specifically for African SMBs, restaurants, logistics, and service providers. Starting at ${formattedPrice} with 1-year hosting included and payment in 2 or 3 installments.`
+    : `Conçu spécifiquement pour les commerces, restaurants, livreurs et prestataires en Afrique. À partir de ${formattedPrice} avec hébergement 1 an inclus et facilité de paiement en 2 ou 3 tranches.`;
 
   const ctaLabel = isEn ? 'Configure my XpreSite' : 'Configurer mon XpreSite';
   const startingAt = isEn ? 'Starting from' : 'À partir de';
@@ -140,7 +149,7 @@ export default function XpreSiteSection({ lang = 'fr' }: { lang?: 'fr' | 'en' })
                       {startingAt}
                     </span>
                     <span className="t-mono text-sm font-bold text-signal">
-                      {formatFCFA(XPRESITE_CONFIG.defaultBasePriceXAF)}
+                      {formattedPrice}
                     </span>
                   </div>
 
