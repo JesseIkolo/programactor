@@ -7,11 +7,14 @@ import type { Content, DetailedProject } from "@/lib/content";
 
 interface ProjectShowcaseProps {
   c: Content;
+  initialProjects?: DetailedProject[];
 }
 
-export default function ProjectShowcase({ c }: ProjectShowcaseProps) {
+export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseProps) {
   const t = c.realisationsPage;
-  const [liveProjects, setLiveProjects] = useState<DetailedProject[] | null>(null);
+  const [liveProjects, setLiveProjects] = useState<DetailedProject[] | null>(
+    initialProjects && initialProjects.length > 0 ? initialProjects : null
+  );
 
   useEffect(() => {
     fetch('/api/projects?status=PUBLISHED')

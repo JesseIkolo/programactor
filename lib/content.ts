@@ -44,6 +44,8 @@ export type DetailedProject = {
   deliverables: string[];
   metrics: { value: string; label: string }[];
   accentTone?: "indigo" | "signal" | "surface";
+  image?: string;
+  coverImageUrl?: string;
 };
 
 export type Content = ReturnType<typeof getContent>;
@@ -164,43 +166,30 @@ export function getContent(lang: Lang) {
       durationUnit: "semaines",
       statusLive: "En ligne",
       cta: "Voir le projet",
-      // TODO: remplacer par les vrais clients
       projects: [
         {
-          name: "Fintech",
-          sector: "Paiement mobile",
-          city: "Douala",
-          tags: ["Recherche", "Identité", "Produit"],
+          name: "BongoSpace",
+          sector: "Commerce & Comptabilité",
+          city: "Douala, Kinshasa",
+          tags: ["Mobile Money", "Offline-First", "PWA"],
         },
         {
-          name: "Logistique",
+          name: "Yamo Delivery",
           sector: "Livraison dernier kilomètre",
           city: "Libreville",
-          tags: ["Stratégie", "Design", "Build"],
+          tags: ["Logistique", "Dispatch", "Mobile"],
         },
         {
-          name: "Santé",
-          sector: "Prise de rendez-vous",
+          name: "Cabinet Médical Santé Plus",
+          sector: "Santé & Prise de RDV",
           city: "Douala",
-          tags: ["Recherche", "Produit"],
+          tags: ["Santé", "WhatsApp", "Web"],
         },
         {
-          name: "Commerce",
-          sector: "Catalogue WhatsApp",
+          name: "Boutique Wax & Chic",
+          sector: "Commerce & Mode",
           city: "Yaoundé",
-          tags: ["Identité", "Web"],
-        },
-        {
-          name: "Agritech",
-          sector: "Traçabilité",
-          city: "Kribi",
-          tags: ["Terrain", "Design", "Build"],
-        },
-        {
-          name: "Éducation",
-          sector: "Plateforme de cours",
-          city: "Libreville",
-          tags: ["Produit", "Design system"],
+          tags: ["Catalogue", "WhatsApp", "E-commerce"],
         },
       ],
     },
@@ -256,14 +245,14 @@ export function getContent(lang: Lang) {
       {
         key: "p1",
         id: "fintech-momo",
-        name: "Fintech",
-        client: "Fintech B2B",
-        sector: "Paiement mobile",
-        city: "Douala",
+        name: "BongoSpace",
+        client: "Propriétaire",
+        sector: "Commerce & Comptabilité",
+        city: "Douala, Kinshasa",
         year: "2026",
         duration: "3 semaines",
         status: "En ligne",
-        tags: ["Recherche", "Identité", "Produit", "Mobile Money"],
+        tags: ["Mobile Money", "Offline-First", "PWA", "SAAS", "ERP"],
         tagline: "Encaissement instantané QR code et USSD pour commerçants de proximité.",
         challenge:
           "Réseaux 3G/EDGE instables dans les marchés de Douala, commerçants réticents aux interfaces chargées et retards fréquents de validation des notifications SMS d'opérateurs.",
@@ -285,7 +274,7 @@ export function getContent(lang: Lang) {
       {
         key: "p2",
         id: "logistique-coursier",
-        name: "Logistique",
+        name: "Yamo Delivery",
         client: "Express Dispatch",
         sector: "Livraison dernier kilomètre",
         city: "Libreville",
@@ -314,8 +303,8 @@ export function getContent(lang: Lang) {
       {
         key: "p3",
         id: "sante-consultation",
-        name: "Santé",
-        client: "Clinique Santé Plus",
+        name: "Cabinet Médical Santé Plus",
+        client: "Clinique de la Paix",
         sector: "Prise de rendez-vous",
         city: "Douala",
         year: "2025",
@@ -343,8 +332,8 @@ export function getContent(lang: Lang) {
       {
         key: "p4",
         id: "commerce-catalogue",
-        name: "Commerce",
-        client: "Retail Mode & Maison",
+        name: "Boutique Wax & Chic",
+        client: "Maison Wax",
         sector: "Catalogue WhatsApp",
         city: "Yaoundé",
         year: "2025",
@@ -722,12 +711,10 @@ export function getContent(lang: Lang) {
       statusLive: "Live",
       cta: "View project",
       projects: [
-        { name: "Fintech", sector: "Mobile payments", city: "Douala", tags: ["Research", "Identity", "Product"] },
-        { name: "Logistics", sector: "Last-mile delivery", city: "Libreville", tags: ["Strategy", "Design", "Build"] },
-        { name: "Health", sector: "Appointment booking", city: "Douala", tags: ["Research", "Product"] },
-        { name: "Retail", sector: "WhatsApp catalogue", city: "Yaoundé", tags: ["Identity", "Web"] },
-        { name: "Agritech", sector: "Traceability", city: "Kribi", tags: ["Field", "Design", "Build"] },
-        { name: "Education", sector: "Course platform", city: "Libreville", tags: ["Product", "Design system"] },
+        { name: "BongoSpace", sector: "Commerce & Accounting", city: "Douala, Kinshasa", tags: ["Mobile Money", "Offline-First", "PWA"] },
+        { name: "Yamo Delivery", sector: "Last-mile delivery", city: "Libreville", tags: ["Logistics", "Dispatch", "Mobile"] },
+        { name: "Cabinet Médical Santé Plus", sector: "Health & Booking", city: "Douala", tags: ["Health", "WhatsApp", "Web"] },
+        { name: "Boutique Wax & Chic", sector: "Fashion & Retail", city: "Yaoundé", tags: ["Catalogue", "WhatsApp", "E-commerce"] },
       ],
     },
 
@@ -782,14 +769,14 @@ export function getContent(lang: Lang) {
       {
         key: "p1",
         id: "fintech-momo",
-        name: "Fintech",
-        client: "B2B Fintech",
-        sector: "Mobile payments",
-        city: "Douala",
+        name: "BongoSpace",
+        client: "Owner",
+        sector: "Commerce & Accounting",
+        city: "Douala, Kinshasa",
         year: "2026",
         duration: "3 weeks",
         status: "Live",
-        tags: ["Research", "Identity", "Product", "Mobile Money"],
+        tags: ["Mobile Money", "Offline-First", "PWA", "SAAS", "ERP"],
         tagline: "Instant QR code and USSD merchant checkout for neighborhood retail.",
         challenge:
           "Unstable 3G/EDGE coverage across Douala open-air markets, shopkeeper reluctance toward bloated UI, and delayed SMS operator confirmations.",
@@ -811,7 +798,7 @@ export function getContent(lang: Lang) {
       {
         key: "p2",
         id: "logistique-coursier",
-        name: "Logistics",
+        name: "Yamo Delivery",
         client: "Express Dispatch",
         sector: "Last-mile delivery",
         city: "Libreville",
@@ -840,8 +827,8 @@ export function getContent(lang: Lang) {
       {
         key: "p3",
         id: "sante-consultation",
-        name: "Health",
-        client: "Santé Plus Clinic",
+        name: "Cabinet Médical Santé Plus",
+        client: "Clinique de la Paix",
         sector: "Appointment booking",
         city: "Douala",
         year: "2025",
@@ -869,8 +856,8 @@ export function getContent(lang: Lang) {
       {
         key: "p4",
         id: "commerce-catalogue",
-        name: "Retail",
-        client: "Retail Fashion & Home",
+        name: "Boutique Wax & Chic",
+        client: "Maison Wax",
         sector: "WhatsApp catalogue",
         city: "Yaoundé",
         year: "2025",

@@ -1,13 +1,21 @@
 import Link from "next/link";
 import { Mark, Pill, Reveal, SectionHead } from "./ui";
 import ProjectVisual from "./ProjectVisual";
-import type { Content } from "@/lib/content";
+import type { Content, DetailedProject } from "@/lib/content";
 
-export default function Work({ c }: { c: Content }) {
-  const projects = c.work.projects.map((p, i) => ({
-    ...p,
-    ...c.projectsMeta[i],
-  }));
+interface WorkProps {
+  c: Content;
+  projects?: DetailedProject[];
+}
+
+export default function Work({ c, projects: incomingProjects }: WorkProps) {
+  const projects =
+    incomingProjects && incomingProjects.length > 0
+      ? incomingProjects
+      : c.work.projects.map((p, i) => ({
+          ...p,
+          ...c.projectsMeta[i],
+        }));
 
   const exploreLabel =
     c.lang === "fr"
@@ -75,7 +83,10 @@ export default function Work({ c }: { c: Content }) {
                       ))}
                     </div>
                     <p className="t-mono text-[color:var(--color-muted-2)]">
-                      {p.year} · {p.duration} {c.work.durationUnit}
+                      {p.year} ·{" "}
+                      {p.duration?.includes(c.work.durationUnit)
+                        ? p.duration
+                        : `${p.duration} ${c.work.durationUnit}`}
                     </p>
                   </div>
                 </div>

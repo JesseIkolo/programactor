@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getContent, LANGS, type Lang } from "@/lib/content";
+import { getPublishedProjects } from "@/lib/projects-data";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { Label, Reveal } from "@/components/ui";
@@ -52,6 +53,7 @@ export default async function RealisationsPage({
   const l = lang as Lang;
   const c = getContent(l);
   const t = c.realisationsPage;
+  const projects = await getPublishedProjects(l);
 
   return (
     <>
@@ -152,7 +154,7 @@ export default async function RealisationsPage({
             EXPLORATEUR ET ÉTUDES DE CAS
             ==================================================================== */}
         <section className="pb-24">
-          <ProjectShowcase c={c} />
+          <ProjectShowcase c={c} initialProjects={projects} />
         </section>
 
         {/* ====================================================================

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getContent, LANGS, type Lang } from "@/lib/content";
+import { getFeaturedProjects } from "@/lib/projects-data";
 
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
@@ -30,6 +31,7 @@ export default async function Page({
 
   const l = lang as Lang;
   const c = getContent(l);
+  const featuredProjects = await getFeaturedProjects(l);
 
   return (
     <>
@@ -40,7 +42,7 @@ export default async function Page({
         <Stats c={c} />
         <Rhythm c={c} />
         <About c={c} />
-        <Work c={c} />
+        <Work c={c} projects={featuredProjects} />
         <Services c={c} />
         <XpreSiteSection lang={l} />
         <Method c={c} />
