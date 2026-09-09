@@ -42,6 +42,8 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
               label: isEn ? (m.labelEn || m.labelFr) : (m.labelFr || m.labelEn),
             })),
             accentTone: 'signal' as const,
+            image: p.coverImageUrl || p.image,
+            coverImageUrl: p.coverImageUrl || p.image,
           }));
           setLiveProjects(mapped);
         }
@@ -240,6 +242,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
                       name={p.name}
                       sector={p.sector}
                       city={p.city}
+                      image={p.image || p.coverImageUrl}
                       accentTone={p.accentTone}
                     />
                     <span className="t-mono absolute left-5 top-5 inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-ink/80 px-3 py-[6px] text-paper backdrop-blur border border-white/10">
@@ -345,6 +348,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
                     name={p.name}
                     sector={p.sector}
                     city={p.city}
+                    image={p.image || p.coverImageUrl}
                     accentTone={p.accentTone}
                   />
                   <span className="t-mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] bg-ink/80 px-2.5 py-1 text-[11px] text-paper backdrop-blur border border-white/10">
@@ -441,6 +445,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
                     name={activeProject.name}
                     sector={activeProject.sector}
                     city={activeProject.city}
+                    image={activeProject.image || activeProject.coverImageUrl}
                     accentTone={activeProject.accentTone}
                   />
                 </div>

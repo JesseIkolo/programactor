@@ -11,7 +11,7 @@
     "status": "PUBLISHED",
     "featured": true,
     "displayOrder": 1,
-    "coverImageUrl": "/projects/fintech.jpg",
+    "coverImageUrl": "",
     "tags": [
       "Mobile Money",
       "Offline-First",
@@ -53,6 +53,72 @@
     "updatedAt": "2026-09-07T12:15:15.316Z"
   },
   {
+    "_id": "proj-bimaround",
+    "slug": "bimaround",
+    "name": "Bimaround",
+    "client": "Produit R&D OnetouchLabs",
+    "sector": "Beauté & Bien-être, BeautyTech, POS",
+    "city": "Douala, Cameroun (avec Libreville)",
+    "year": "2026",
+    "duration": "8 semaines",
+    "status": "PUBLISHED",
+    "featured": true,
+    "displayOrder": 2,
+    "coverImageUrl": "/Projet/bimaroundpro.png",
+    "tags": [
+      "BeautyTech",
+      "Mobile-First",
+      "POS & Caisse",
+      "Mobile Money",
+      "WhatsApp"
+    ],
+    "contentFr": {
+      "tagline": "La suite tout-en-un qui transforme les prestataires de la beauté africains en entrepreneurs organisés et rentables.",
+      "challenge": "En Afrique centrale et de l'ouest, plus de 80% des salons de coiffure, barbiers et esthéticiennes exercent dans l'informel et subissent des pertes financières chroniques (15% à 30% du revenu mensuel). Leurs défis quotidiens sont sévères : encaissements en liquide non tracés et sources de conflits avec les employés, oublis massifs de rendez-vous sans système de relance, et comptabilité manuelle sur cahier papier. Les logiciels SaaS internationaux (Fresha, Treatwell) échouent sur ce marché : ils exigent une connexion permanente à haut débit, ignorent les paiements Mobile Money (Orange Money, MTN MoMo, Wave) et ne s'intègrent pas aux usages WhatsApp, canal central du commerce local.",
+      "solution": "Programactor a conçu et développé Bimaround comme un système d'exploitation métier ultra-léger et centré sur l'humain, adapté aux réalités des smartphones d'entrée de gamme et des connexions instables :\n1. Caisse & POS Hybride : Enregistrement ultra-rapide des prestations en cash ou Mobile Money avec reçus dématérialisés instantanés.\n2. Rappels Automatisés WhatsApp : Système de réservation en ligne synchronisé qui envoie les rappels directement sur WhatsApp pour neutraliser les no-shows.\n3. Gestion d'Équipe & Commissions : Répartition automatique du chiffre d'affaires entre le patron et les coiffeurs/employés pour supprimer tout litige en fin de journée.\n4. Suivi des Stocks & Alertes : Notification des produits critiques (shampooings, mèches, lames) pour éviter les ruptures en plein service.\n5. Design Inclusif & Ergonomie Terrain : Interface mobile tactile conçue pour un usage intensif à une main en salon, bilingue (français/anglais), avec contraste élevé pour écrans d'entrée de gamme et onboarding immédiat sans carte bancaire.",
+      "impact": "+96 professionnels de la beauté pré-inscrits en liste d'attente dès la phase de lancement bêta, un temps de clôture de caisse divisé par 3 (passage de 45 min de calculs manuels à moins de 5 min), et une projection de réduction de 80% des rendez-vous non honorés grâce à l'automatisation des confirmations WhatsApp.",
+      "deliverables": [
+        "Application Web & PWA Responsive : Espaces dédiés aux gérants de salon, collaborateurs indépendants et clients finaux.",
+        "Terminal POS & Module de Caisse : Gestion des encaissements multi-devises (FCFA, devises locales), paiements fractionnés Cash/MoMo et reçus numériques.",
+        "Moteur de Réservation & Passerelle WhatsApp : Tunnel de prise de rendez-vous 24/7 et rappels automatiques.",
+        "Tableau de Bord Analytique Financier : Suivi en direct du chiffre d'affaires, des commissions du staff et de la marge nette.",
+        "Landing Page à Haute Conversion : Tunnel d'acquisition avec liste d'attente progressive en 2 étapes (zéro perte de leads)."
+      ]
+    },
+    "contentEn": {
+      "tagline": "The all-in-one platform turning African beauty professionals into organized, profitable entrepreneurs.",
+      "challenge": "Over 80% of barbers, hair stylists, and beauty salons in Central and West Africa operate informally, losing 15% to 30% of their monthly income to untracked cash payments, frequent client no-shows, and manual paper book-keeping. Western salon software completely fails in this ecosystem: too heavy for erratic 3G connections, zero integration with local Mobile Money networks (Orange Money, MTN MoMo, Wave), and disconnected from WhatsApp where customer interactions actually happen.",
+      "solution": "Programactor engineered Bimaround from the ground up for the African street economy: an ultra-responsive, mobile-first operating system combining a lightweight POS cash register (supporting Cash + Mobile Money), automated booking confirmations via WhatsApp, multi-staff commission calculations, and real-time inventory alerts, packaged in an offline-ready, accessible interface.",
+      "impact": "+96 beauty pros joined the waitlist at pre-launch, daily accounting time cut by 3x, and an estimated 80% drop in no-shows via automated WhatsApp confirmations.",
+      "deliverables": [
+        "Responsive Web App & PWA: Custom dashboards for salon owners, booth renters, and solo stylists.",
+        "Hybrid Point of Sale (POS): Fast checkout flow supporting Cash and Mobile Money with shareable digital receipts.",
+        "Automated WhatsApp Booking Engine: 24/7 client booking pipeline with automatic appointment reminders.",
+        "Financial & Staff Analytics: Real-time visibility on revenue, inventory, and staff commission payouts.",
+        "High-Conversion Acquisition Landing Page: Optimized two-step waitlist engine with zero lead drop-off."
+      ]
+    },
+    "metrics": [
+      {
+        "value": "+96",
+        "labelFr": "Prestataires sur liste d'attente",
+        "labelEn": "Beauty pros on waitlist"
+      },
+      {
+        "value": "< 5 min",
+        "labelFr": "Pour clôturer la caisse du salon",
+        "labelEn": "Daily salon register closing time"
+      },
+      {
+        "value": "2 Villes",
+        "labelFr": "Marchés pilotes (Douala & Libreville)",
+        "labelEn": "Pilot cities (Douala & Libreville)"
+      }
+    ],
+    "createdAt": "2026-09-09T15:18:32.222Z",
+    "updatedAt": "2026-09-09T15:18:32.222Z"
+  },
+  {
     "_id": "proj-logistique-coursier",
     "slug": "logistique-coursier",
     "name": "Yamo Delivery",
@@ -63,8 +129,8 @@
     "duration": "6 semaines",
     "status": "PUBLISHED",
     "featured": true,
-    "displayOrder": 2,
-    "coverImageUrl": "/projects/logistics.jpg",
+    "displayOrder": 3,
+    "coverImageUrl": "",
     "tags": [
       "Logistique",
       "Mobile",
@@ -124,8 +190,8 @@
     "duration": "4 semaines",
     "status": "PUBLISHED",
     "featured": true,
-    "displayOrder": 3,
-    "coverImageUrl": "/projects/health.jpg",
+    "displayOrder": 4,
+    "coverImageUrl": "",
     "tags": [
       "Santé",
       "Prise de RDV",
@@ -180,8 +246,8 @@
     "duration": "2 semaines",
     "status": "PUBLISHED",
     "featured": false,
-    "displayOrder": 4,
-    "coverImageUrl": "/projects/fashion.jpg",
+    "displayOrder": 5,
+    "coverImageUrl": "",
     "tags": [
       "Commerce",
       "E-commerce",

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Mark } from "./ui";
 
 interface ProjectVisualProps {
@@ -19,18 +22,25 @@ export default function ProjectVisual({
   accentTone = "indigo",
   className = "",
 }: ProjectVisualProps) {
-  if (image) {
+  const [imageError, setImageError] = useState(false);
+
+  // Si une image est fournie et n'a pas échoué au chargement
+  if (image && !imageError) {
     return (
-      <div className={`relative h-full w-full overflow-hidden ${className}`}>
+      <div className={`relative h-full w-full overflow-hidden bg-indigo-deep ${className}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
           alt={name}
+          onError={() => setImageError(true)}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
         />
       </div>
     );
   }
+
+  const cleanId = (id || "").toLowerCase();
+  const cleanSector = (sector || "").toLowerCase();
 
   return (
     <div
@@ -58,7 +68,41 @@ export default function ProjectVisual({
 
       {/* Rendu spécifique par projet */}
       <div className="relative z-10 flex w-full max-w-[340px] flex-col items-center">
-        {id.includes("fintech") && (
+        {/* 1. Bimaround & Beauté / POS */}
+        {(cleanId.includes("bimaround") || cleanId.includes("beauty") || cleanSector.includes("beaut")) && (
+          <div className="w-full rounded-[var(--radius-tile)] border border-[color:var(--color-hairline-strong)] bg-ink/90 p-5 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-signal animate-pulse" />
+                <span className="t-mono text-[11px] text-paper">Bimaround POS · Salon</span>
+              </div>
+              <span className="t-mono rounded bg-signal/20 px-2 py-0.5 text-[10px] text-signal font-semibold">LIVE CAISSE</span>
+            </div>
+            <div className="my-3 rounded-xl border border-white/5 bg-white/[0.04] p-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold text-paper">Coupe VIP & Soin Barbe</p>
+                  <p className="t-mono text-[10px] text-[color:var(--color-muted-2)]">Fauteuil 02 · Styliste Eric</p>
+                </div>
+                <div className="text-right">
+                  <p className="t-num text-sm font-bold text-signal">8 500 FCFA</p>
+                  <span className="t-mono text-[9px] text-paper/80">Cash + MoMo</span>
+                </div>
+              </div>
+              <div className="mt-2.5 flex items-center justify-between border-t border-white/5 pt-2 text-[10px]">
+                <span className="t-mono text-[color:var(--color-muted)]">Split Commission</span>
+                <span className="t-mono text-paper font-medium">Coiffeur 40% · Salon 60%</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-[11px]">
+              <span className="t-mono text-signal">💬 Rappel WhatsApp prêt</span>
+              <span className="t-mono text-[color:var(--color-muted-2)]">&lt; 5 min clôture</span>
+            </div>
+          </div>
+        )}
+
+        {/* 2. Fintech & MoMo */}
+        {cleanId.includes("fintech") && (
           <div className="w-full rounded-[var(--radius-tile)] border border-[color:var(--color-hairline-strong)] bg-ink/90 p-5 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
@@ -85,7 +129,8 @@ export default function ProjectVisual({
           </div>
         )}
 
-        {id.includes("logistique") && (
+        {/* 3. Logistique Coursier */}
+        {cleanId.includes("logistique") && (
           <div className="w-full rounded-[var(--radius-tile)] border border-[color:var(--color-hairline-strong)] bg-ink/90 p-5 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <span className="t-mono text-[11px] text-paper">Dispatch Coursier</span>
@@ -114,7 +159,8 @@ export default function ProjectVisual({
           </div>
         )}
 
-        {id.includes("sante") && (
+        {/* 4. Santé RDV */}
+        {cleanId.includes("sante") && (
           <div className="w-full rounded-[var(--radius-tile)] border border-[color:var(--color-hairline-strong)] bg-ink/90 p-5 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <span className="t-mono text-[11px] text-paper">Consultation Réservée</span>
@@ -135,7 +181,8 @@ export default function ProjectVisual({
           </div>
         )}
 
-        {id.includes("commerce") && (
+        {/* 5. Commerce Catalogue */}
+        {cleanId.includes("commerce") && (
           <div className="w-full rounded-[var(--radius-tile)] border border-[color:var(--color-hairline-strong)] bg-ink/90 p-5 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <span className="t-mono text-[11px] text-paper">Catalogue WhatsApp</span>
@@ -157,7 +204,8 @@ export default function ProjectVisual({
           </div>
         )}
 
-        {id.includes("agritech") && (
+        {/* 6. Agritech */}
+        {cleanId.includes("agritech") && (
           <div className="w-full rounded-[var(--radius-tile)] border border-[color:var(--color-hairline-strong)] bg-ink/90 p-5 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <span className="t-mono text-[11px] text-paper">Pesée Cacao · Coopérative</span>
@@ -177,7 +225,8 @@ export default function ProjectVisual({
           </div>
         )}
 
-        {id.includes("education") && (
+        {/* 7. Education */}
+        {cleanId.includes("education") && (
           <div className="w-full rounded-[var(--radius-tile)] border border-[color:var(--color-hairline-strong)] bg-ink/90 p-5 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <span className="t-mono text-[11px] text-paper">Audio Micro-Lesson</span>
@@ -185,7 +234,6 @@ export default function ProjectVisual({
             </div>
             <div className="my-4 rounded-xl border border-white/5 bg-white/[0.04] p-3">
               <p className="text-xs font-semibold text-paper">Module 03 : Négociation B2B</p>
-              {/* Onde audio stylisée */}
               <div className="mt-3 flex h-6 items-center justify-between gap-[3px]">
                 {[4, 12, 18, 8, 22, 14, 24, 16, 20, 10, 18, 24, 14, 8, 16, 6].map((h, idx) => (
                   <span
@@ -202,6 +250,35 @@ export default function ProjectVisual({
             </div>
           </div>
         )}
+
+        {/* 8. Fallback universel */}
+        {!cleanId.includes("fintech") &&
+          !cleanId.includes("logistique") &&
+          !cleanId.includes("sante") &&
+          !cleanId.includes("commerce") &&
+          !cleanId.includes("agritech") &&
+          !cleanId.includes("education") &&
+          !cleanId.includes("bimaround") &&
+          !cleanId.includes("beauty") &&
+          !cleanSector.includes("beaut") && (
+            <div className="w-full rounded-[var(--radius-tile)] border border-[color:var(--color-hairline-strong)] bg-ink/90 p-5 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-signal animate-pulse" />
+                  <span className="t-mono text-[11px] text-paper">{name}</span>
+                </div>
+                <span className="t-mono text-[10px] text-signal font-semibold">EN LIGNE</span>
+              </div>
+              <div className="my-4 rounded-xl border border-white/5 bg-white/[0.04] p-3 text-center">
+                <p className="text-xs font-semibold text-paper">{sector}</p>
+                <p className="t-mono mt-1 text-[11px] text-signal font-bold">{city}</p>
+              </div>
+              <div className="flex items-center justify-between text-[11px] text-[color:var(--color-muted)]">
+                <span className="t-mono">Étude terrain validée</span>
+                <span className="t-mono text-paper">Produit live →</span>
+              </div>
+            </div>
+          )}
       </div>
 
       {/* Badge de secteur en bas à droite */}
