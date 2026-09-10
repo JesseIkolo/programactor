@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
+import { sendServerConversion } from '@/lib/conversions-server';
+
+/**
+ * IP DU VISITEUR, jamais celle du serveur : c'est l'erreur classique qui
+ * fait chuter la note d'appariement des régies.
+ * Sur Netlify, `x-nf-client-connection-ip` porte la vraie IP.
+ */
+function visitorIp(req: NextRequest): string | undefined {
+  return (
+    req.headers.get('x-nf-client-connection-ip') ||
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    undefined
+  );
+}
 
 const dataDir = path.join(process.cwd(), 'data');
 const bookingsFile = path.join(dataDir, 'bookings.json');
@@ -88,6 +102,7 @@ export async function POST(req: NextRequest) {
       date,
       timeSlot,
       lang = 'fr',
+      eventId = '',
     } = body;
 
     if (!clientName || !clientEmail || !clientPhone || !date || !timeSlot) {
@@ -95,6 +110,34 @@ export async function POST(req: NextRequest) {
         { success: false, message: 'Champs obligatoires manquants (nom, email, téléphone, date, créneau).' },
         { status: 400 }
       );
+    }
+
+    /* ----------------------------------------------------------------------
+       Conversion serveur (Meta Conversions API + TikTok Events API).
+       Placée ICI volontairement : la branche VPS ci-dessous sort de la
+       fonction par un return, donc tout code placé après ne s'exécuterait
+       jamais en production. Un échec de mesure n'interrompt pas la
+       réservation.
+       ---------------------------------------------------------------------- */
+    const conversionEventId =
+      eventId || `bk-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    try {
+      await sendServerConversion({
+        event: 'form_reserver_submit',
+        eventId: conversionEventId,
+        eventSourceUrl:
+          req.headers.get('referer') || `https://programactor.pro/${lang}/reserver`,
+        email: clientEmail,
+        phone: clientPhone,
+        clientIp: visitorIp(req),
+        userAgent: req.headers.get('user-agent') || undefined,
+        fbp: req.cookies.get('_fbp')?.value,
+        fbc: req.cookies.get('_fbc')?.value,
+        ttp: req.cookies.get('_ttp')?.value,
+        customData: { meeting_type: meetingType, lang },
+      });
+    } catch (convErr) {
+      console.warn('Conversion serveur ignorée :', convErr);
     }
 
     // Tenter de pousser directement vers l'API VPS MongoDB Atlas

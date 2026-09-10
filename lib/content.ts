@@ -68,6 +68,17 @@ const shared = {
 };
 
 /* --------------------------------------------------------------------------
+   TARIFS AGENCE — les trois seuls montants à renseigner.
+   Laisser la chaîne vide affiche « Sur devis » comme avant.
+   Exemples de format : "350 000 FCFA" · "à partir de 1 800 000 FCFA"
+   -------------------------------------------------------------------------- */
+const AGENCY_PRICES = {
+  diagnostic: "",
+  sprint: "",
+  partner: "",
+};
+
+/* --------------------------------------------------------------------------
    PROJETS — structure commune, libellés traduits plus bas
    TODO: remplacer par les réalisations réelles (Instagram @programactor)
    -------------------------------------------------------------------------- */
@@ -106,6 +117,7 @@ export function getContent(lang: Lang) {
         { label: "Tarifs", href: "#tarifs" },
       ],
       cta: "Parler à un designer",
+      ctaShort: "Réserver",
       menu: "Menu",
       close: "Fermer",
     },
@@ -580,7 +592,8 @@ export function getContent(lang: Lang) {
           title: "Diagnostic produit.",
           subtitle: "Où ton idée tient, et où elle casse.",
           timeline: "5 jours",
-          price: "Sur devis",
+          price: AGENCY_PRICES.diagnostic || "Sur devis",
+          priceLabel: AGENCY_PRICES.diagnostic ? "Prix ferme" : "",
           features: [
             "Entretiens utilisateurs sur le terrain",
             "Analyse de l'existant et des concurrents",
@@ -595,7 +608,8 @@ export function getContent(lang: Lang) {
           title: "Sprint produit.",
           subtitle: "Conçu, construit, mis en ligne.",
           timeline: "4 à 8 semaines",
-          price: "Sur devis",
+          price: AGENCY_PRICES.sprint || "Sur devis",
+          priceLabel: AGENCY_PRICES.sprint ? "À partir de" : "",
           popular: true,
           features: [
             "Tout le diagnostic",
@@ -611,7 +625,8 @@ export function getContent(lang: Lang) {
           title: "Partenaire produit.",
           subtitle: "Ton équipe design, au mois.",
           timeline: "En continu",
-          price: "Sur devis",
+          price: AGENCY_PRICES.partner || "Sur devis",
+          priceLabel: AGENCY_PRICES.partner ? "À partir de" : "",
           features: [
             "Un binôme design + build dédié",
             "Itérations continues sur l'usage",
@@ -704,6 +719,7 @@ export function getContent(lang: Lang) {
         { label: "Pricing", href: "#tarifs" },
       ],
       cta: "Talk to a designer",
+      ctaShort: "Book a call",
       menu: "Menu",
       close: "Close",
     },
@@ -1143,7 +1159,8 @@ export function getContent(lang: Lang) {
           title: "Product audit.",
           subtitle: "Where your idea holds, and where it breaks.",
           timeline: "5 days",
-          price: "On request",
+          price: AGENCY_PRICES.diagnostic || "On request",
+          priceLabel: AGENCY_PRICES.diagnostic ? "Fixed price" : "",
           features: [
             "User interviews in the field",
             "Review of what exists, and of competitors",
@@ -1158,7 +1175,8 @@ export function getContent(lang: Lang) {
           title: "Product sprint.",
           subtitle: "Designed, built, put live.",
           timeline: "4 to 8 weeks",
-          price: "On request",
+          price: AGENCY_PRICES.sprint || "On request",
+          priceLabel: AGENCY_PRICES.sprint ? "From" : "",
           popular: true,
           features: [
             "Everything in the audit",
@@ -1174,7 +1192,8 @@ export function getContent(lang: Lang) {
           title: "Product partner.",
           subtitle: "Your design team, monthly.",
           timeline: "Ongoing",
-          price: "On request",
+          price: AGENCY_PRICES.partner || "On request",
+          priceLabel: AGENCY_PRICES.partner ? "From" : "",
           features: [
             "A dedicated design + build pair",
             "Continuous iteration on real usage",

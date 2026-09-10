@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TrackedLink from "./TrackedLink";
 import { Mark, Pill, Reveal, SectionHead } from "./ui";
 import ProjectVisual from "./ProjectVisual";
 import type { Content, DetailedProject } from "@/lib/content";
@@ -49,7 +50,9 @@ export default function Work({ c, projects: incomingProjects }: WorkProps) {
         <div className="mt-16 grid gap-5 md:mt-24 md:grid-cols-2">
           {projects.map((p, i) => (
             <Reveal key={p.key || p.id} delay={(i % 2) * 90}>
-              <Link
+              <TrackedLink
+                event="cta_case_study"
+                eventProps={{ project: p.id || p.key }}
                 href={`/${c.lang}/realisations/${p.id || p.key}`}
                 className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[color:var(--color-hairline)] bg-surface transition-colors duration-300 hover:border-[color:var(--color-hairline-strong)] block"
               >
@@ -96,7 +99,7 @@ export default function Work({ c, projects: incomingProjects }: WorkProps) {
                     </p>
                   </div>
                 </div>
-              </Link>
+              </TrackedLink>
             </Reveal>
           ))}
         </div>

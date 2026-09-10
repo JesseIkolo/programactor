@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import { track, newEventId } from '@/lib/analytics';
 import {
   Calendar01Icon,
   Clock01Icon,
@@ -121,7 +122,12 @@ export default function BookingForm({ lang }: BookingFormProps) {
     setErrorMessage(null);
 
     try {
+      // Créé avant l'appel : le serveur enverra le même événement avec le
+      // même identifiant, ce qui permet la déduplication chez Meta et TikTok.
+      const eventId = newEventId();
+
       const payload = {
+        eventId,
         clientName,
         clientEmail,
         clientPhone,
@@ -145,6 +151,12 @@ export default function BookingForm({ lang }: BookingFormProps) {
       if (!res.ok || !data.success) {
         throw new Error(data.message || 'Erreur lors de la réservation.');
       }
+
+      track(
+        'form_reserver_submit',
+        { meeting_type: channel, lang },
+        eventId
+      );
 
       setBookingSuccess({
         reference: data.data?.booking?.reference || 'CONFIRMED',

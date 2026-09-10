@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { PlayIcon } from "hugeicons-react";
+import { track, type ConversionEvent, type TrackProps } from "@/lib/analytics";
 
 /* ==========================================================================
    MARK — logo officiel Programactor (public/mark.svg)
@@ -179,11 +180,18 @@ export function Button({
   children,
   variant = "primary",
   className = "",
+  event,
+  eventProps,
+  external = false,
 }: {
   href: string;
   children: React.ReactNode;
   variant?: "primary" | "ghost" | "signal";
   className?: string;
+  /** Point de conversion à déclarer au clic (voir lib/analytics.ts). */
+  event?: ConversionEvent;
+  eventProps?: TrackProps;
+  external?: boolean;
 }) {
   const base =
     "inline-flex items-center justify-center gap-2 rounded-[var(--radius-pill)] px-6 py-[14px] text-[15px] font-medium tracking-[-0.01em] transition-colors duration-200";
@@ -195,7 +203,12 @@ export function Button({
       "border border-[color:var(--color-hairline-strong)] text-paper hover:border-signal hover:text-signal",
   }[variant];
   return (
-    <a href={href} className={`${base} ${styles} ${className}`}>
+    <a
+      href={href}
+      onClick={event ? () => track(event, eventProps) : undefined}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className={`${base} ${styles} ${className}`}
+    >
       {children}
     </a>
   );

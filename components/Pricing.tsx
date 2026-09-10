@@ -75,9 +75,16 @@ export default function Pricing({ c }: { c: Content }) {
                     >
                       {p.cta}
                     </a>
-                    <span className="t-num text-[15px] text-[color:var(--color-muted)]">
-                      {p.price}
-                    </span>
+                    <div className="text-right">
+                      {p.priceLabel ? (
+                        <p className="t-mono mb-1 text-[color:var(--color-muted-2)]">
+                          {p.priceLabel}
+                        </p>
+                      ) : null}
+                      <span className="t-num block text-[19px] leading-none text-paper">
+                        {p.price}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </Reveal>

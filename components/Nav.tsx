@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Mark, Wordmark } from "./ui";
 import type { Content, Lang } from "@/lib/content";
 import { Menu01Icon, Cancel01Icon, ArrowRight01Icon } from "hugeicons-react";
+import { track } from "@/lib/analytics";
 
 export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
   const [scrolled, setScrolled] = useState(false);
@@ -148,9 +149,11 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
 
           <a
             href={c.contact.booking}
-            className="t-mono hidden rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] px-4 py-[9px] text-paper transition-colors hover:border-signal hover:text-signal md:inline-block"
+            onClick={() => track("cta_header_reserver", { surface: "header" })}
+            className="t-mono rounded-[var(--radius-pill)] bg-signal px-4 py-[9px] font-semibold text-ink transition-colors hover:bg-paper"
           >
-            {c.nav.cta}
+            <span className="sm:hidden">{c.nav.ctaShort}</span>
+            <span className="hidden sm:inline">{c.nav.cta}</span>
           </a>
 
           {/* Bouton Hamburger Mobile amélioré */}
@@ -204,7 +207,10 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
             <div className="mt-10 flex flex-col gap-6">
               <a
                 href={c.contact.booking}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  track("cta_header_reserver", { surface: "menu_mobile" });
+                  setOpen(false);
+                }}
                 className="flex items-center justify-center rounded-[var(--radius-pill)] bg-signal px-6 py-4 text-[15px] font-bold text-ink transition-colors hover:bg-paper"
               >
                 {c.nav.cta}

@@ -13,6 +13,7 @@ import Pricing from "@/components/Pricing";
 import Faq from "@/components/Faq";
 import Footer from "@/components/Footer";
 import XpreSiteSection from "@/components/XpreSiteSection";
+import StickyCta from "@/components/StickyCta";
 import {
   About,
   FinalCta,
@@ -55,6 +56,11 @@ export default async function Page({
         <FinalCta c={c} />
       </main>
       <Footer c={c} lang={l} />
+      <StickyCta
+        lang={l}
+        bookingHref={c.contact.booking}
+        bookingLabel={c.hero.ctaPrimary}
+      />
     </>
   );
 }

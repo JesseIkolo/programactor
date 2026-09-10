@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { DM_Mono } from "next/font/google";
 import "../globals.css";
 import { getContent, LANGS, type Lang } from "@/lib/content";
+import Analytics from "@/components/Analytics";
 
 const satoshi = localFont({
   src: [
@@ -175,6 +176,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         {children}
+        <Analytics />
       </body>
     </html>
   );

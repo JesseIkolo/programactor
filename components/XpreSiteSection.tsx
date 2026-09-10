@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import TrackedLink from './TrackedLink';
 import { Pill, Reveal, SectionHead } from './ui';
 import { XPRESITE_INDUSTRIES, XPRESITE_CONFIG, formatFCFA, type XpreSiteConfig } from '@/lib/xpresite-data';
 import { FlashIcon, CreditCardIcon, Globe02Icon } from 'hugeicons-react';
@@ -102,7 +103,9 @@ export default function XpreSiteSection({
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {(cfg.industries && cfg.industries.length > 0 ? cfg.industries : XPRESITE_INDUSTRIES).map((industry, i) => (
             <Reveal key={industry.id} delay={i * 60}>
-              <Link
+              <TrackedLink
+                event="cta_xpresite_configurer"
+                eventProps={{ industry: industry.id }}
                 href={`/${lang}/xpresite#configurateur`}
                 className="group flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-[color:var(--color-hairline)] bg-surface p-6 transition-all duration-300 hover:border-signal/40 hover:bg-surface-2 block"
               >
@@ -158,7 +161,7 @@ export default function XpreSiteSection({
                     <span aria-hidden>→</span>
                   </span>
                 </div>
-              </Link>
+              </TrackedLink>
             </Reveal>
           ))}
 

@@ -36,7 +36,11 @@ export default function Hero({ c }: { c: Content }) {
 
             <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] md:items-end md:gap-16">
               <div className="flex flex-wrap items-center gap-3">
-                <Button href={c.contact.booking} variant="signal">
+                <Button
+                  href={c.contact.booking}
+                  variant="signal"
+                  event="cta_hero_reserver"
+                >
                   {c.hero.ctaPrimary}
                 </Button>
                 <Button href="#realisations" variant="ghost">
