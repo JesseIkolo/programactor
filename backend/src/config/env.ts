@@ -17,7 +17,7 @@ export const ENV = {
     .map((o) => o.trim()),
   RESEND_API_KEY: process.env.RESEND_API_KEY || '',
   NOTIFICATION_EMAIL: process.env.NOTIFICATION_EMAIL || 'hello@programactor.pro',
-  STUDIO_WHATSAPP_NUMBER: process.env.STUDIO_WHATSAPP_NUMBER || '237699000000',
+  STUDIO_WHATSAPP_NUMBER: process.env.STUDIO_WHATSAPP_NUMBER || '237692025552',
   INITIAL_ADMIN_EMAIL: process.env.INITIAL_ADMIN_EMAIL || 'admin@programactor.pro',
   INITIAL_ADMIN_PASSWORD: process.env.INITIAL_ADMIN_PASSWORD || 'ProgramactorAdmin2026!',
   INITIAL_ADMIN_NAME: process.env.INITIAL_ADMIN_NAME || 'Jesse Ikolo',

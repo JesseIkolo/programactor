@@ -13,7 +13,7 @@ services:
       JWT_SECRET: ${JWT_SECRET:-changer_ce_secret_jwt_en_production_64_caracteres}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-changer_ce_secret_refresh_en_production_64_caracteres}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://www.programactor.pro,https://programactor.pro,https://programactor.netlify.app}
-      STUDIO_WHATSAPP_NUMBER: ${STUDIO_WHATSAPP_NUMBER:-237699000000}
+      STUDIO_WHATSAPP_NUMBER: ${STUDIO_WHATSAPP_NUMBER:-237692025552}
       INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL:-admin@programactor.pro}
       INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD:-Programactor2026!}
     ports:

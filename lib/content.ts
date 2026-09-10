@@ -59,10 +59,11 @@ const shared = {
   contact: {
     // TODO: coordonnées réelles
     email: "hello@programactor.pro",
-    whatsapp: "+237 6 00 00 00 00",
+    whatsapp: "+237 6 92 02 55 52",
     instagram: "https://www.instagram.com/programactor/",
     booking: "#contact",
   },
+
   cities: "Douala · Libreville",
 };
 

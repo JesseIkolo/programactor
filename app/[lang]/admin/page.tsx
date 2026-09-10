@@ -75,8 +75,8 @@ export default function AdminDashboardPage() {
 
   // État Gestion Coordonnées & Réseaux Sociaux
   const [contactForm, setContactForm] = useState({
-    phone: '+237 6 99 00 00 00',
-    whatsapp: '+237 6 99 00 00 00',
+    phone: '+237 6 92 02 55 52',
+    whatsapp: '+237 6 92 02 55 52',
     email: 'hello@programactor.pro',
     facebook: 'https://facebook.com/programactor',
     twitter: 'https://x.com/programactor',
@@ -185,8 +185,8 @@ export default function AdminDashboardPage() {
       const json = await res.json();
       if (json.success && json.data) {
         setContactForm({
-          phone: json.data.phone || '+237 6 99 00 00 00',
-          whatsapp: json.data.whatsapp || '+237 6 99 00 00 00',
+          phone: json.data.phone || '+237 6 92 02 55 52',
+          whatsapp: json.data.whatsapp || '+237 6 92 02 55 52',
           email: json.data.email || 'hello@programactor.pro',
           facebook: json.data.facebook || 'https://facebook.com/programactor',
           twitter: json.data.twitter || 'https://x.com/programactor',
@@ -881,7 +881,7 @@ export default function AdminDashboardPage() {
                       type="text"
                       value={contactForm.phone}
                       onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
-                      placeholder="+237 6 99 00 00 00"
+                      placeholder="+237 6 92 02 55 52"
                       className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
                     />
                   </div>
@@ -895,7 +895,7 @@ export default function AdminDashboardPage() {
                       type="text"
                       value={contactForm.whatsapp}
                       onChange={(e) => setContactForm({ ...contactForm, whatsapp: e.target.value })}
-                      placeholder="+237 6 99 00 00 00"
+                      placeholder="+237 6 92 02 55 52"
                       className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-white/20 focus:outline-none focus:border-[#EBFF72]"
                     />
                   </div>
@@ -1043,7 +1043,7 @@ export default function AdminDashboardPage() {
                       </div>
                       <div className="flex items-center gap-2 text-white/80">
                         <WhatsappIcon size={13} className="text-[#EBFF72]" />
-                        <span>{contactForm.whatsapp || '+237 6 99 00 00 00'}</span>
+                        <span>{contactForm.whatsapp || '+237 6 92 02 55 52'}</span>
                       </div>
                       {contactForm.phone && (
                         <div className="flex items-center gap-2 text-white/80">

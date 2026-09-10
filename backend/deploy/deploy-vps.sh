@@ -27,7 +27,7 @@ JWT_REFRESH_SECRET=${REFRESH_SECRET_GEN}
 ALLOWED_ORIGINS=https://www.programactor.pro,https://programactor.pro,https://programactor.netlify.app
 INITIAL_ADMIN_EMAIL=admin@programactor.pro
 INITIAL_ADMIN_PASSWORD=${ADMIN_PASS_GEN}
-STUDIO_WHATSAPP_NUMBER=237699000000
+STUDIO_WHATSAPP_NUMBER=237692025552
 EOF
 
   echo "✅ Fichier .env créé avec MongoDB Atlas & clés cryptographiques 64-caractères !"

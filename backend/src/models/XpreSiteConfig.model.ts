@@ -83,7 +83,7 @@ const XpreSiteConfigSchema = new Schema<IXpreSiteConfig>(
     allowThreeSplits: { type: Boolean, default: true },
     minAmountForThreeSplits: { type: Number, default: 100000 },
     hostingIncludedYears: { type: Number, default: 1 },
-    whatsappContactNumber: { type: String, default: '237699000000' },
+    whatsappContactNumber: { type: String, default: '237692025552' },
     industries: { type: [IndustrySchema], default: [] },
   },
   { timestamps: true }

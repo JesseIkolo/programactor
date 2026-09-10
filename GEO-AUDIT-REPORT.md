@@ -213,7 +213,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   "description": "Agence de design produit centrée humain à Douala et Libreville. Recherche terrain, design d'interface et build en sprints courts, pour des produits pensés pour l'Afrique.",
   "slogan": "L'agence qui transforme l'idée en produit",
   "email": "hello@programactor.pro",
-  "telephone": "+237699000000",
+  "telephone": "+237692025552",
   "areaServed": [
     { "@type": "City", "name": "Douala" },
     { "@type": "City", "name": "Libreville" }

@@ -176,9 +176,10 @@ export async function getXpreSiteConfig(req: Request, res: Response): Promise<vo
         allowThreeSplits: true,
         minAmountForThreeSplits: 100000,
         hostingIncludedYears: 1,
-        whatsappContactNumber: '237699000000',
+        whatsappContactNumber: '237692025552',
         industries: [],
       });
+
     }
 
     res.json({ success: true, data: config });

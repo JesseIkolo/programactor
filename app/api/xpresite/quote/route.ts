@@ -139,8 +139,9 @@ export async function POST(req: NextRequest) {
         : `Bonjour l'équipe Programactor ! 👋\n\nJe viens de configurer mon offre XpreSite sur votre site :\n\n📋 *Réf devis :* ${quoteReference}\n👤 *Nom :* ${clientName} (${companyName || 'Mon projet'})\n📍 *Ville :* ${city || 'Non renseignée'}\n🏷️ *Secteur :* ${industryName}\n\n*Fonctionnalités choisies :*\n${optionsList}\n\n💰 *Total estimé :* ${formattedTotal} FCFA\n💳 *Facilité :* ${paymentSplits} tranches de ~${formattedSplit} FCFA\n⚡ *Délai :* 72h dès remise des éléments\n\nDiscutons des prochaines étapes pour le lancement !`;
     }
 
-    const studioPhone = process.env.NEXT_PUBLIC_STUDIO_WHATSAPP || '237699000000';
+    const studioPhone = process.env.NEXT_PUBLIC_STUDIO_WHATSAPP || '237692025552';
     const whatsappUrl = `https://wa.me/${studioPhone}?text=${encodeURIComponent(whatsappText)}`;
+
 
     return NextResponse.json({
       success: true,

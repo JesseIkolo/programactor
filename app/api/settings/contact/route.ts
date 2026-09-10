@@ -6,9 +6,10 @@ const dataDir = path.join(process.cwd(), 'data');
 const contactFile = path.join(dataDir, 'site-contact.json');
 
 const defaultContact = {
-  phone: '+237 6 99 00 00 00',
-  whatsapp: '+237 6 99 00 00 00',
+  phone: '+237 6 92 02 55 52',
+  whatsapp: '+237 6 92 02 55 52',
   email: 'hello@programactor.pro',
+
   facebook: 'https://facebook.com/programactor',
   twitter: 'https://x.com/programactor',
   instagram: 'https://www.instagram.com/programactor/',

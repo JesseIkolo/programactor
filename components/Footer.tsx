@@ -24,8 +24,9 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
   // État local synchronisé avec l'API de contact
   const [contactInfo, setContactInfo] = useState({
     email: c.contact.email,
-    phone: "+237 6 99 00 00 00",
+    phone: "+237 6 92 02 55 52",
     whatsapp: c.contact.whatsapp,
+
     facebook: "https://facebook.com/programactor",
     twitter: "https://x.com/programactor",
     instagram: c.contact.instagram,

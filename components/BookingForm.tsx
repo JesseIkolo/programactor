@@ -455,9 +455,10 @@ export default function BookingForm({ lang }: BookingFormProps) {
                       <input
                         type="tel"
                         required
-                        placeholder="+237 6 99 00 00 00"
+                        placeholder="+237 6 92 02 55 52"
                         value={clientPhone}
                         onChange={(e) => setClientPhone(e.target.value)}
+
                         className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder:text-white/20 focus:outline-none focus:border-[#EBFF72]"
                       />
                     </div>

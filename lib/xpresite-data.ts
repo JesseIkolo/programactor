@@ -46,7 +46,7 @@ export interface XpreSiteConfig {
   allowThreeSplits?: boolean;
   minAmountForThreeSplits?: number;
   hostingIncludedYears: number;
-  whatsappContactNumber: string; // Ex: 237699000000
+  whatsappContactNumber: string; // Ex: 237692025552
   industries?: XpreSiteIndustry[];
 }
 
@@ -57,9 +57,10 @@ export const XPRESITE_CONFIG: XpreSiteConfig = {
   allowThreeSplits: true,
   minAmountForThreeSplits: 100000,
   hostingIncludedYears: 1,
-  whatsappContactNumber: '237699000000', // À synchroniser avec le numéro du studio
+  whatsappContactNumber: '237692025552', // À synchroniser avec le numéro du studio
   industries: [],
 };
+
 
 
 export const XPRESITE_INDUSTRIES: XpreSiteIndustry[] = [
