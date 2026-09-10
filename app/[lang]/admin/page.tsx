@@ -360,15 +360,15 @@ export default function AdminDashboardPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'NEW':
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-[#EBFF72]/15 text-[#EBFF72] border border-[#EBFF72]/40">NOUVEAU</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#EBFF72]/15 text-[#EBFF72] border border-[#EBFF72]/40">NOUVEAU</span>;
       case 'CONTACTED':
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-blue-500/15 text-blue-400 border border-blue-500/30">CONTACTÉ</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-blue-500/15 text-blue-400 border border-blue-500/30">CONTACTÉ</span>;
       case 'IN_PROGRESS':
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">EN DEV (72H)</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-amber-500/15 text-amber-400 border border-amber-500/30">EN DEV (72H)</span>;
       case 'DELIVERED':
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">LIVRÉ</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">LIVRÉ</span>;
       case 'CANCELLED':
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-red-500/15 text-red-400 border border-red-500/30">ANNULÉ</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-red-500/15 text-red-400 border border-red-500/30">ANNULÉ</span>;
       default:
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-white/10 text-white/70">{status}</span>;
     }
@@ -427,7 +427,7 @@ export default function AdminDashboardPage() {
               <Wordmark className="text-lg leading-none" />
             </Link>
             <span className="hidden sm:inline-block text-xs font-mono text-white/40">/</span>
-            <span className="text-xs font-mono font-semibold tracking-wider text-[#EBFF72] bg-[#EBFF72]/10 px-2.5 py-1 rounded-md flex items-center gap-1.5">
+            <span className="text-xs font-mono font-medium tracking-wider text-[#EBFF72] bg-[#EBFF72]/10 px-2.5 py-1 rounded-md flex items-center gap-1.5">
               <SecurityLockIcon size={14} />
               STUDIO ADMIN
             </span>
@@ -480,7 +480,7 @@ export default function AdminDashboardPage() {
           <button
             type="button"
             onClick={() => setActiveTab('quotes')}
-            className={`py-3.5 text-xs font-mono font-semibold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+            className={`py-3.5 text-xs font-mono font-medium uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
               activeTab === 'quotes'
                 ? 'border-[#EBFF72] text-[#EBFF72]'
                 : 'border-transparent text-white/60 hover:text-white'
@@ -495,7 +495,7 @@ export default function AdminDashboardPage() {
           <button
             type="button"
             onClick={() => setActiveTab('bookings')}
-            className={`py-3.5 text-xs font-mono font-semibold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+            className={`py-3.5 text-xs font-mono font-medium uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
               activeTab === 'bookings'
                 ? 'border-[#EBFF72] text-[#EBFF72]'
                 : 'border-transparent text-white/60 hover:text-white'
@@ -511,7 +511,7 @@ export default function AdminDashboardPage() {
           <button
             type="button"
             onClick={() => setActiveTab('projects')}
-            className={`py-3.5 text-xs font-mono font-semibold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+            className={`py-3.5 text-xs font-mono font-medium uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
               activeTab === 'projects'
                 ? 'border-[#EBFF72] text-[#EBFF72]'
                 : 'border-transparent text-white/60 hover:text-white'
@@ -526,7 +526,7 @@ export default function AdminDashboardPage() {
           <button
             type="button"
             onClick={() => setActiveTab('settings')}
-            className={`py-3.5 text-xs font-mono font-semibold uppercase tracking-wider border-b-2 transition-all ${
+            className={`py-3.5 text-xs font-mono font-medium uppercase tracking-wider border-b-2 transition-all ${
               activeTab === 'settings'
                 ? 'border-[#EBFF72] text-[#EBFF72]'
                 : 'border-transparent text-white/60 hover:text-white'
@@ -538,7 +538,7 @@ export default function AdminDashboardPage() {
           <button
             type="button"
             onClick={() => setActiveTab('contact')}
-            className={`py-3.5 text-xs font-mono font-semibold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+            className={`py-3.5 text-xs font-mono font-medium uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
               activeTab === 'contact'
                 ? 'border-[#EBFF72] text-[#EBFF72]'
                 : 'border-transparent text-white/60 hover:text-white'
@@ -560,7 +560,7 @@ export default function AdminDashboardPage() {
                 <div className="text-xs font-mono uppercase text-white/50 mb-1">
                   {isEn ? 'Total Quotes Received' : 'Total Devis Reçus'}
                 </div>
-                <div className="text-2xl font-mono font-bold text-white">
+                <div className="text-2xl font-mono font-medium text-white">
                   {stats.totalQuotes}
                 </div>
               </div>
@@ -569,7 +569,7 @@ export default function AdminDashboardPage() {
                 <div className="text-xs font-mono uppercase text-white/50 mb-1">
                   {isEn ? 'New Inquiries' : 'Nouveaux Devis'}
                 </div>
-                <div className="text-2xl font-mono font-bold text-[#EBFF72]">
+                <div className="text-2xl font-mono font-medium text-[#EBFF72]">
                   {stats.newQuotes}
                 </div>
               </div>
@@ -578,7 +578,7 @@ export default function AdminDashboardPage() {
                 <div className="text-xs font-mono uppercase text-white/50 mb-1">
                   {isEn ? 'Estimated Pipeline Volume' : 'Volume Estimé du Pipeline'}
                 </div>
-                <div className="text-2xl font-mono font-bold text-white">
+                <div className="text-2xl font-mono font-medium text-white">
                   {formatFCFA(stats.totalVolumeXAF)}
                 </div>
               </div>
@@ -658,7 +658,7 @@ export default function AdminDashboardPage() {
                         }`}
                       >
                         <div className="flex items-center justify-between gap-2 mb-2">
-                          <span className="font-mono text-xs font-bold text-[#EBFF72]">
+                          <span className="font-mono text-xs font-medium text-[#EBFF72]">
                             {q.reference}
                           </span>
                           {getStatusBadge(q.status)}
@@ -695,7 +695,7 @@ export default function AdminDashboardPage() {
                     <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-base font-mono font-bold text-[#EBFF72]">
+                          <span className="text-base font-mono font-medium text-[#EBFF72]">
                             {selectedQuote.reference}
                           </span>
                           {getStatusBadge(selectedQuote.status)}
@@ -814,7 +814,7 @@ export default function AdminDashboardPage() {
                           type="button"
                           disabled={isUpdating}
                           onClick={handleSaveNotes}
-                          className="text-[11px] font-mono font-bold text-[#EBFF72] hover:underline"
+                          className="text-[11px] font-mono font-medium text-[#EBFF72] hover:underline"
                         >
                           {isUpdating ? 'Sauvegarde...' : 'Enregistrer les notes'}
                         </button>

@@ -39,7 +39,7 @@ export default function Work({ c, projects: incomingProjects }: WorkProps) {
           action={
             <Link
               href={`/${c.lang}/realisations`}
-              className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-white/[0.03] px-5 py-3 text-xs font-semibold text-paper transition-colors hover:border-signal hover:text-signal"
+              className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-white/[0.03] px-5 py-3 text-xs font-medium text-paper transition-colors hover:border-signal hover:text-signal"
             >
               <span>{exploreLabel}</span>
               <span aria-hidden>→</span>
@@ -81,7 +81,7 @@ export default function Work({ c, projects: incomingProjects }: WorkProps) {
                         Étude complète →
                       </span>
                     </div>
-                    <p className="t-mono mt-3 text-[color:var(--color-muted-2)]">
+                    <p className="mt-3 text-[14px] leading-snug text-[color:var(--color-muted)]">
                       {p.sector} · {p.city}
                     </p>
                   </div>
@@ -91,7 +91,7 @@ export default function Work({ c, projects: incomingProjects }: WorkProps) {
                         <Pill key={t}>{t}</Pill>
                       ))}
                     </div>
-                    <p className="t-mono text-[color:var(--color-muted-2)]">
+                    <p className="t-num text-[13px] text-[color:var(--color-muted)]">
                       {p.year} ·{" "}
                       {p.duration?.includes(c.work.durationUnit)
                         ? p.duration
@@ -108,7 +108,7 @@ export default function Work({ c, projects: incomingProjects }: WorkProps) {
         <div className="mt-12 flex justify-center md:mt-16">
           <Link
             href={`/${c.lang}/realisations`}
-            className="t-mono inline-flex items-center gap-3 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-surface px-7 py-4 text-xs font-semibold text-paper transition-all hover:border-signal hover:bg-signal hover:text-ink"
+            className="t-mono inline-flex items-center gap-3 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-surface px-7 py-4 text-xs font-medium text-paper transition-all hover:border-signal hover:bg-signal hover:text-ink"
           >
             <span>{exploreLabel}</span>
             <span aria-hidden>→</span>

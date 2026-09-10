@@ -35,9 +35,60 @@ export default async function Page({
   const c = getContent(l);
   const featuredProjects = await getFeaturedProjects(l);
   const xpresiteConfig = await getXpreSiteConfigServer();
+  const isEn = l === "en";
+
+  /* Les six réponses sont déjà dans le DOM (balises <details>), donc
+     indexables : il ne manquait que le balisage qui les déclare. */
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: c.faq.items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+
+  const xpresiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `https://programactor.pro/${l}/xpresite#service`,
+    name: isEn
+      ? "XpreSite — a website built for your trade, live in 72h"
+      : "XpreSite — un site web taillé pour votre métier, livré en 72 h",
+    serviceType: isEn
+      ? "Website design and development"
+      : "Création de site web professionnel",
+    url: `https://programactor.pro/${l}/xpresite`,
+    provider: { "@id": "https://programactor.pro/#organization" },
+    areaServed: [
+      { "@type": "City", name: "Douala" },
+      { "@type": "City", name: "Libreville" },
+      { "@type": "Country", name: isEn ? "Cameroon" : "Cameroun" },
+      { "@type": "Country", name: "Gabon" },
+    ],
+    offers: {
+      "@type": "Offer",
+      price: 75000,
+      priceCurrency: "XAF",
+      url: `https://programactor.pro/${l}/xpresite`,
+      availability: "https://schema.org/InStock",
+      description: isEn
+        ? "Domain and one year of hosting included. Payment in 2 or 3 instalments."
+        : "Domaine et hébergement 1 an inclus. Paiement en 2 ou 3 tranches.",
+    },
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(xpresiteSchema) }}
+      />
       <Nav c={c} lang={l} />
       <main>
         <Hero c={c} />

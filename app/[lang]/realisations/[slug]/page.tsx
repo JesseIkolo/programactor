@@ -125,12 +125,41 @@ export default async function ProjectDetailPage({
     keywords: project.tags.join(", "),
   };
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Programactor",
+        item: `https://programactor.pro/${l}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: isEn ? "Work" : "Réalisations",
+        item: `https://programactor.pro/${l}/realisations`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.name,
+        item: `https://programactor.pro/${l}/realisations/${project.id || project.key}`,
+      },
+    ],
+  };
+
   return (
     <>
       {/* Balise JSON-LD injectée pour Google Search */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
       <Nav c={c} lang={l} />
@@ -166,7 +195,7 @@ export default async function ProjectDetailPage({
             <div className="max-w-4xl">
               <Reveal delay={60}>
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="t-mono rounded-[var(--radius-pill)] bg-signal px-3 py-1 text-xs font-bold text-ink">
+                  <span className="t-mono rounded-[var(--radius-pill)] bg-signal px-3 py-1 text-xs font-medium text-ink">
                     {project.status}
                   </span>
                   <span className="t-mono text-xs text-[color:var(--color-muted-2)]">
@@ -287,7 +316,7 @@ export default async function ProjectDetailPage({
                   <div>
                     <div className="flex items-center gap-2 mb-4">
                       <span className="text-sm">⚠️</span>
-                      <h3 className="t-mono text-xs font-bold text-[color:var(--color-muted-2)]">
+                      <h3 className="t-mono text-xs font-medium text-[color:var(--color-muted-2)]">
                         {isEn ? "THE FIELD CHALLENGE" : "LE DÉFI TERRAIN"}
                       </h3>
                     </div>
@@ -308,7 +337,7 @@ export default async function ProjectDetailPage({
                   <div>
                     <div className="flex items-center gap-2 mb-4">
                       <span className="text-sm">💡</span>
-                      <h3 className="t-mono text-xs font-bold text-signal">
+                      <h3 className="t-mono text-xs font-medium text-signal">
                         {isEn ? "THE PRODUCT ANSWER" : "LA RÉPONSE PRODUIT"}
                       </h3>
                     </div>
@@ -318,7 +347,7 @@ export default async function ProjectDetailPage({
                   </div>
                   <div className="mt-8 pt-6 border-t border-signal/15 flex items-center justify-between text-xs text-signal">
                     <span className="t-mono">Ingénierie & Design UI</span>
-                    <span className="t-mono font-bold">Offline-First ✓</span>
+                    <span className="t-mono font-medium">Offline-First ✓</span>
                   </div>
                 </div>
               </Reveal>
@@ -378,7 +407,7 @@ export default async function ProjectDetailPage({
             <Reveal>
               <div className="flex flex-col md:flex-row items-center justify-between gap-8 rounded-[var(--radius-card)] border border-[color:var(--color-hairline-strong)] bg-gradient-to-r from-indigo-deep via-surface to-surface p-8 md:p-12 relative overflow-hidden">
                 <div className="relative z-10 max-w-xl">
-                  <span className="t-mono text-xs text-signal font-bold">
+                  <span className="t-mono text-xs text-signal font-medium">
                     {isEn ? "PROJECT SCOPING" : "CADRAGE PROJET"}
                   </span>
                   <h3 className="t-section mt-2 text-paper">

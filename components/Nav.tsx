@@ -123,7 +123,7 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
                 href={href}
                 className={`t-mono transition-colors ${
                   isCurrent
-                    ? "text-signal font-semibold"
+                    ? "text-signal font-medium"
                     : "text-[color:var(--color-muted)] hover:text-paper"
                 }`}
               >
@@ -150,7 +150,7 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
           <a
             href={c.contact.booking}
             onClick={() => track("cta_header_reserver", { surface: "header" })}
-            className="t-mono rounded-[var(--radius-pill)] bg-signal px-4 py-[9px] font-semibold text-ink transition-colors hover:bg-paper"
+            className="t-mono rounded-[var(--radius-pill)] bg-signal px-4 py-[9px] font-medium text-ink transition-colors hover:bg-paper"
           >
             <span className="sm:hidden">{c.nav.ctaShort}</span>
             <span className="hidden sm:inline">{c.nav.cta}</span>

@@ -516,9 +516,9 @@ export function getContent(lang: Lang) {
 
     method: {
       label: "Méthode · Lean Product",
-      titleBefore: "Comment on passe de l'idée ",
-      titleMark: "au produit",
-      titleAfter: "",
+      titleBefore: "Comment on passe de l'idée au ",
+      titleMark: "produit",
+      titleAfter: ".",
       steps: [
         {
           title: "Découvrir.",
@@ -1086,7 +1086,7 @@ export function getContent(lang: Lang) {
       label: "Method · Lean Product",
       titleBefore: "How an idea becomes a ",
       titleMark: "product",
-      titleAfter: "",
+      titleAfter: ".",
       steps: [
         {
           title: "Discover.",

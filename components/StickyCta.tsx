@@ -52,7 +52,7 @@ export default function StickyCta({
             href={bookingHref}
             onClick={() => track("cta_sticky_reserver", { surface: "mobile" })}
             tabIndex={shown ? 0 : -1}
-            className="flex flex-1 items-center justify-center rounded-[var(--radius-pill)] bg-signal px-5 py-[13px] text-[15px] font-bold text-ink transition-colors hover:bg-paper"
+            className="flex flex-1 items-center justify-center rounded-[var(--radius-pill)] bg-signal px-5 py-[13px] text-[15px] font-medium text-ink transition-colors hover:bg-paper"
           >
             {bookingLabel}
           </a>
@@ -79,7 +79,7 @@ export default function StickyCta({
         onClick={() => track("cta_whatsapp", { surface: "desktop_float" })}
         aria-hidden={!shown}
         tabIndex={shown ? 0 : -1}
-        className={`fixed bottom-7 right-7 z-40 hidden items-center gap-2.5 rounded-[var(--radius-pill)] border border-signal/40 bg-signal px-5 py-[13px] text-[15px] font-bold text-ink shadow-[0_10px_40px_rgba(0,0,0,0.45)] transition-all duration-300 hover:bg-paper md:flex ${
+        className={`fixed bottom-7 right-7 z-40 hidden items-center gap-2.5 rounded-[var(--radius-pill)] border border-signal/40 bg-signal px-5 py-[13px] text-[15px] font-medium text-ink shadow-[0_10px_40px_rgba(0,0,0,0.45)] transition-all duration-300 hover:bg-paper md:flex ${
           shown ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
         }`}
       >

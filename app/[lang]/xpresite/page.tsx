@@ -227,7 +227,7 @@ export default async function XpreSitePage({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="p-4 rounded-2xl bg-surface-2 border border-white/5">
-                <div className="text-signal font-mono text-sm font-bold mb-1">01. Mobile First</div>
+                <div className="text-signal font-mono text-sm font-medium mb-1">01. Mobile First</div>
                 <div className="text-sm font-semibold text-white mb-1">
                   {isEn ? "Ultra-lightweight" : "Ultra-léger & Rapide"}
                 </div>
@@ -239,7 +239,7 @@ export default async function XpreSitePage({
               </div>
 
               <div className="p-4 rounded-2xl bg-surface-2 border border-white/5">
-                <div className="text-signal font-mono text-sm font-bold mb-1">02. Infrastructure</div>
+                <div className="text-signal font-mono text-sm font-medium mb-1">02. Infrastructure</div>
                 <div className="text-sm font-semibold text-white mb-1">
                   {isEn ? "Domain & Hosting" : "Domaine & Hébergement"}
                 </div>
@@ -251,7 +251,7 @@ export default async function XpreSitePage({
               </div>
 
               <div className="p-4 rounded-2xl bg-surface-2 border border-white/5">
-                <div className="text-signal font-mono text-sm font-bold mb-1">03. WhatsApp Direct</div>
+                <div className="text-signal font-mono text-sm font-medium mb-1">03. WhatsApp Direct</div>
                 <div className="text-sm font-semibold text-white mb-1">
                   {isEn ? "Instant WhatsApp CTA" : "Conversion WhatsApp"}
                 </div>
@@ -263,7 +263,7 @@ export default async function XpreSitePage({
               </div>
 
               <div className="p-4 rounded-2xl bg-surface-2 border border-white/5">
-                <div className="text-signal font-mono text-sm font-bold mb-1">04. Local SEO</div>
+                <div className="text-signal font-mono text-sm font-medium mb-1">04. Local SEO</div>
                 <div className="text-sm font-semibold text-white mb-1">
                   {isEn ? "Local Search Visibility" : "Référencement Local"}
                 </div>
@@ -309,7 +309,7 @@ export default async function XpreSitePage({
 
             <div className="max-w-3xl">
               <div className="flex flex-wrap items-center gap-2.5 mb-4">
-                <span className="t-mono text-xs uppercase tracking-wider font-bold text-ink bg-signal px-3.5 py-1 rounded-full shadow-sm">
+                <span className="t-mono text-xs uppercase tracking-wider font-medium text-ink bg-signal px-3.5 py-1 rounded-full shadow-sm">
                   {isEn ? "★ Bespoke Digital Engineering" : "★ 100% Sur-Mesure"}
                 </span>
                 <span className="t-mono text-xs text-signal">

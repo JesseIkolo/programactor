@@ -48,7 +48,7 @@ export default function Pricing({ c }: { c: Content }) {
                   </div>
 
                   <div className="mt-10">
-                    <p className="t-mono text-[color:var(--color-muted-2)]">
+                    <p className="text-[14px] text-[color:var(--color-muted)]">
                       {c.pricing.timeline} · {p.timeline}
                     </p>
                     <h3 className="t-sub mt-4">{p.title}</h3>
@@ -81,7 +81,7 @@ export default function Pricing({ c }: { c: Content }) {
                           {p.priceLabel}
                         </p>
                       ) : null}
-                      <span className="t-num block text-[19px] leading-none text-paper">
+                      <span className="t-num block text-[21px] font-medium leading-none text-paper">
                         {p.price}
                       </span>
                     </div>

@@ -309,7 +309,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
                           <span className="text-[10px] font-mono tracking-wider opacity-70">
                             {d.weekday}
                           </span>
-                          <span className="text-xs font-mono font-semibold">{d.label}</span>
+                          <span className="text-xs font-mono font-medium">{d.label}</span>
                         </button>
                       );
                     })}
@@ -347,7 +347,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
                               !s.available
                                 ? 'bg-black/20 text-white/20 border-white/5 cursor-not-allowed line-through'
                                 : isSelected
-                                ? 'bg-[#EBFF72] text-[#0E0E0E] border-[#EBFF72] font-bold shadow-md shadow-[#EBFF72]/15'
+                                ? 'bg-[#EBFF72] text-[#0E0E0E] border-[#EBFF72] font-medium shadow-md shadow-[#EBFF72]/15'
                                 : 'bg-black/40 text-white/80 border-white/10 hover:border-white/40 hover:bg-white/5'
                             }`}
                           >

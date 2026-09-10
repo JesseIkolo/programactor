@@ -334,7 +334,7 @@ export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteCon
       {/* Barre de progression / Étapes rapides */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
         <div className="bg-[#141414] border border-white/10 rounded-2xl p-4 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-[#EBFF72] text-[#0E0E0E] flex items-center justify-center font-mono font-bold text-xs">
+          <div className="w-8 h-8 rounded-full bg-[#EBFF72] text-[#0E0E0E] flex items-center justify-center font-mono font-medium text-xs">
             01
           </div>
           <div>
@@ -348,7 +348,7 @@ export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteCon
         </div>
 
         <div className="bg-[#141414] border border-white/10 rounded-2xl p-4 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-[#212282] text-white flex items-center justify-center font-mono font-bold text-xs border border-white/20">
+          <div className="w-8 h-8 rounded-full bg-[#212282] text-white flex items-center justify-center font-mono font-medium text-xs border border-white/20">
             02
           </div>
           <div>
@@ -366,7 +366,7 @@ export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteCon
             <div className="text-xs uppercase tracking-wider text-[#EBFF72] font-mono">
               {isEn ? 'Live Price' : 'Estimation Directe'}
             </div>
-            <div className="text-lg font-mono font-bold text-white">
+            <div className="text-lg font-mono font-medium text-white">
               {formatFCFA(totalPrice)}
             </div>
           </div>
@@ -374,7 +374,7 @@ export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteCon
             <span className="text-[11px] font-mono text-white/60 block">
               {paymentSplits} {isEn ? 'splits' : 'tranches'}
             </span>
-            <span className="text-xs font-mono text-[#EBFF72] font-semibold">
+            <span className="text-xs font-mono text-[#EBFF72] font-medium">
               ~{formatFCFA(splitAmount)}
             </span>
           </div>
@@ -415,7 +415,7 @@ export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteCon
                       <div className={`p-2 rounded-xl ${isSelected ? 'bg-[#EBFF72]/15' : 'bg-white/5'}`}>
                         {renderIcon(industry.iconName, isSelected)}
                       </div>
-                      <span className="text-[10px] font-mono text-[#EBFF72] font-bold bg-[#EBFF72]/10 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] font-mono text-[#EBFF72] font-medium bg-[#EBFF72]/10 px-2 py-0.5 rounded-full">
                         {formatFCFA(sectorBase)}
                       </span>
                     </div>
@@ -442,7 +442,7 @@ export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteCon
               </div>
               <a
                 href={`/${lang}/xpresite/sur-mesure`}
-                className="t-mono text-xs font-bold text-ink bg-signal px-3.5 py-1.5 rounded-xl hover:bg-signal-hover transition-colors shrink-0 flex items-center gap-1 shadow-sm"
+                className="t-mono text-xs font-medium text-ink bg-signal px-3.5 py-1.5 rounded-xl hover:bg-signal-hover transition-colors shrink-0 flex items-center gap-1 shadow-sm"
               >
                 <span>{isEn ? 'Bespoke Scope' : 'Cadrage Sur-Mesure'}</span>
                 <span>→</span>
@@ -477,7 +477,7 @@ export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteCon
                   </div>
                 </div>
               </div>
-              <div className="text-right font-mono text-xs font-semibold text-[#EBFF72]">
+              <div className="text-right font-mono text-xs font-medium text-[#EBFF72]">
                 {formatFCFA(basePrice)}
               </div>
             </div>
@@ -529,7 +529,7 @@ export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteCon
                       </div>
                     </div>
 
-                    <div className="shrink-0 font-mono text-xs font-semibold">
+                    <div className="shrink-0 font-mono text-xs font-medium">
                       {isFree ? (
                         <span className="text-[#EBFF72] bg-[#EBFF72]/10 px-2 py-1 rounded-md">
                           {isEn ? 'Included' : 'Inclus'}

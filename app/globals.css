@@ -168,9 +168,11 @@ body {
 .t-mono {
   font-family: var(--font-mono);
   font-weight: 500;
-  font-size: 10px;
-  line-height: 1.3;
-  letter-spacing: 0.11em;
+  /* 10px en capitales espacées à 0.11em était le pire cas de lisibilité :
+     illisible sur un Android d'entrée de gamme en plein soleil. */
+  font-size: 11.5px;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 

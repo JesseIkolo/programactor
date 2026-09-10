@@ -7,16 +7,7 @@ import Analytics from "@/components/Analytics";
 
 const satoshi = localFont({
   src: [
-    {
-      path: "../fonts/satoshi-300.woff2",
-      weight: "300",
-      style: "normal",
-    },
-    {
-      path: "../fonts/satoshi-500.woff2",
-      weight: "500",
-      style: "normal",
-    },
+    // Satoshi 300 et 500 étaient chargées sans être utilisées nulle part.
     {
       path: "../fonts/satoshi-700.woff2",
       weight: "700",

@@ -117,7 +117,7 @@ export default function AdminLogin({ onSuccess, lang = 'fr' }: AdminLoginProps) 
             <Wordmark className="text-xl leading-none" />
           </div>
           <div className="flex items-center justify-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold tracking-wider text-[#EBFF72] bg-[#EBFF72]/10 border border-[#EBFF72]/30">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium tracking-wider text-[#EBFF72] bg-[#EBFF72]/10 border border-[#EBFF72]/30">
               <SecurityLockIcon size={14} />
               STUDIO BACKOFFICE
             </span>

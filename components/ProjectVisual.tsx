@@ -96,7 +96,7 @@ export default function ProjectVisual({
                 <span className="h-2 w-2 rounded-full bg-signal animate-pulse" />
                 <span className="t-mono text-[11px] text-paper">Bimaround POS · Salon</span>
               </div>
-              <span className="t-mono rounded bg-signal/20 px-2 py-0.5 text-[10px] text-signal font-semibold">LIVE CAISSE</span>
+              <span className="t-mono rounded bg-signal/20 px-2 py-0.5 text-[10px] text-signal font-medium">LIVE CAISSE</span>
             </div>
             <div className="my-3 rounded-xl border border-white/5 bg-white/[0.04] p-3">
               <div className="flex items-center justify-between">
@@ -287,11 +287,11 @@ export default function ProjectVisual({
                   <span className="h-2 w-2 rounded-full bg-signal animate-pulse" />
                   <span className="t-mono text-[11px] text-paper">{name}</span>
                 </div>
-                <span className="t-mono text-[10px] text-signal font-semibold">EN LIGNE</span>
+                <span className="t-mono text-[10px] text-signal font-medium">EN LIGNE</span>
               </div>
               <div className="my-4 rounded-xl border border-white/5 bg-white/[0.04] p-3 text-center">
                 <p className="text-xs font-semibold text-paper">{sector}</p>
-                <p className="t-mono mt-1 text-[11px] text-signal font-bold">{city}</p>
+                <p className="t-mono mt-1 text-[11px] text-signal font-medium">{city}</p>
               </div>
               <div className="flex items-center justify-between text-[11px] text-[color:var(--color-muted)]">
                 <span className="t-mono">Étude terrain validée</span>

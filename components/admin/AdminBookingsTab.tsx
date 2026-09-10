@@ -231,28 +231,28 @@ export default function AdminBookingsTab({ token, showToast, isEn = false }: Adm
           <div className="text-xs font-mono uppercase text-white/50 mb-1">
             {isEn ? 'Total Appointments' : 'Total Rendez-vous'}
           </div>
-          <div className="text-2xl font-mono font-bold text-white">{stats.total}</div>
+          <div className="text-2xl font-mono font-medium text-white">{stats.total}</div>
         </div>
 
         <div className="bg-[#141414] border border-white/10 rounded-2xl p-4">
           <div className="text-xs font-mono uppercase text-white/50 mb-1">
             {isEn ? 'Confirmed' : 'Confirmés'}
           </div>
-          <div className="text-2xl font-mono font-bold text-emerald-400">{stats.confirmed}</div>
+          <div className="text-2xl font-mono font-medium text-emerald-400">{stats.confirmed}</div>
         </div>
 
         <div className="bg-[#141414] border border-white/10 rounded-2xl p-4">
           <div className="text-xs font-mono uppercase text-white/50 mb-1">
             {isEn ? 'Pending' : 'En Attente'}
           </div>
-          <div className="text-2xl font-mono font-bold text-amber-400">{stats.pending}</div>
+          <div className="text-2xl font-mono font-medium text-amber-400">{stats.pending}</div>
         </div>
 
         <div className="bg-[#141414] border border-white/10 rounded-2xl p-4">
           <div className="text-xs font-mono uppercase text-white/50 mb-1">
             {isEn ? 'Follow Up' : 'À Relancer'}
           </div>
-          <div className="text-2xl font-mono font-bold text-[#EBFF72]">{stats.followUp}</div>
+          <div className="text-2xl font-mono font-medium text-[#EBFF72]">{stats.followUp}</div>
         </div>
       </div>
 
@@ -467,7 +467,7 @@ export default function AdminBookingsTab({ token, showToast, isEn = false }: Adm
                     type="button"
                     disabled={isUpdating}
                     onClick={handleSaveNotes}
-                    className="text-[11px] font-mono font-bold text-[#EBFF72] hover:underline"
+                    className="text-[11px] font-mono font-medium text-[#EBFF72] hover:underline"
                   >
                     {isUpdating ? 'Sauvegarde...' : 'Enregistrer'}
                   </button>

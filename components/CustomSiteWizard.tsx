@@ -495,7 +495,7 @@ export function CustomSiteWizard({ lang = 'fr' }: CustomSiteWizardProps) {
               >
                 <div className="flex items-center gap-2">
                   <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center font-mono text-xs font-bold ${
+                    className={`w-6 h-6 rounded-full flex items-center justify-center font-mono text-xs font-medium ${
                       isDone
                         ? 'bg-signal text-ink'
                         : isActive
@@ -598,7 +598,7 @@ export function CustomSiteWizard({ lang = 'fr' }: CustomSiteWizardProps) {
                     : 'Activez les modules indispensables à votre modèle économique.'}
                 </p>
               </div>
-              <div className="t-mono text-xs text-signal font-semibold bg-signal/10 px-3 py-1.5 rounded-full self-start sm:self-auto">
+              <div className="t-mono text-xs text-signal font-medium bg-signal/10 px-3 py-1.5 rounded-full self-start sm:self-auto">
                 {selectedFeatures.length} {isEn ? 'selected' : 'sélectionnées'}
               </div>
             </div>
@@ -724,7 +724,7 @@ export function CustomSiteWizard({ lang = 'fr' }: CustomSiteWizardProps) {
                       <div className="text-xs sm:text-sm font-semibold text-white">{t.label}</div>
                       <span
                         className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
-                          isSelected ? 'bg-signal/20 text-signal font-bold' : 'bg-white/10 text-white/50'
+                          isSelected ? 'bg-signal/20 text-signal font-medium' : 'bg-white/10 text-white/50'
                         }`}
                       >
                         {t.badge}
@@ -771,7 +771,7 @@ export function CustomSiteWizard({ lang = 'fr' }: CustomSiteWizardProps) {
                       onClick={() => setBudgetRange(b)}
                       className={`p-3 rounded-xl border text-left text-xs font-mono transition-all ${
                         isSelected
-                          ? 'bg-[#1C1C1C] border-signal text-signal font-bold shadow-sm shadow-signal/5'
+                          ? 'bg-[#1C1C1C] border-signal text-signal font-medium shadow-sm shadow-signal/5'
                           : 'bg-[#111] border-white/10 text-white/70 hover:text-white hover:border-white/20'
                       }`}
                     >
@@ -940,7 +940,7 @@ export function CustomSiteWizard({ lang = 'fr' }: CustomSiteWizardProps) {
             <button
               type="button"
               onClick={handleNextStep}
-              className="t-mono inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-signal hover:bg-signal-hover text-ink font-bold text-xs transition-all shadow-lg shadow-signal/10"
+              className="t-mono inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-signal hover:bg-signal-hover text-ink font-medium text-xs transition-all shadow-lg shadow-signal/10"
             >
               <span>{isEn ? 'Continue' : 'Continuer'}</span>
               <ArrowRight01Icon size={16} />

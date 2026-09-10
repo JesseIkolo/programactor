@@ -182,7 +182,7 @@ export default async function RealisationsPage({
                 <Reveal delay={180}>
                   <Link
                     href={`/${l}#methode`}
-                    className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-ink px-6 py-4 text-xs font-semibold text-paper transition-all hover:border-signal hover:text-signal"
+                    className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-ink px-6 py-4 text-xs font-medium text-paper transition-all hover:border-signal hover:text-signal"
                   >
                     <span>{t.methodBanner.cta}</span>
                     <span aria-hidden>→</span>

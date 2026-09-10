@@ -46,7 +46,7 @@ export default function XpreSiteSection({
           action={
             <Link
               href={`/${lang}/xpresite`}
-              className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-white/[0.03] px-5 py-3 text-xs font-semibold text-paper transition-colors hover:border-signal hover:text-signal"
+              className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-white/[0.03] px-5 py-3 text-xs font-medium text-paper transition-colors hover:border-signal hover:text-signal"
             >
               <span>{ctaLabel}</span>
               <span aria-hidden>→</span>
@@ -61,7 +61,7 @@ export default function XpreSiteSection({
               <FlashIcon size={20} className="text-signal stroke-[1.5]" />
             </div>
             <div>
-              <div className="t-mono text-xs text-signal font-semibold">
+              <div className="t-mono text-xs text-signal font-medium">
                 {isEn ? '72h Sprint' : '72h Chrono'}
               </div>
               <div className="text-sm text-paper/80 font-medium">
@@ -75,7 +75,7 @@ export default function XpreSiteSection({
               <CreditCardIcon size={20} className="text-signal stroke-[1.5]" />
             </div>
             <div>
-              <div className="t-mono text-xs text-signal font-semibold">
+              <div className="t-mono text-xs text-signal font-medium">
                 {isEn ? 'Cashflow friendly' : 'Facilité de trésorerie'}
               </div>
               <div className="text-sm text-paper/80 font-medium">
@@ -89,7 +89,7 @@ export default function XpreSiteSection({
               <Globe02Icon size={20} className="text-signal stroke-[1.5]" />
             </div>
             <div>
-              <div className="t-mono text-xs text-signal font-semibold">
+              <div className="t-mono text-xs text-signal font-medium">
                 {isEn ? '100% Turnkey' : 'Pack Clé en main'}
               </div>
               <div className="text-sm text-paper/80 font-medium">
@@ -111,7 +111,7 @@ export default function XpreSiteSection({
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="t-mono text-[10px] uppercase tracking-wider text-white/50 bg-white/5 px-2.5 py-1 rounded-full">
+                    <span className="t-mono text-[11px] tracking-wider text-white/60 bg-white/5 px-2.5 py-1 rounded-full">
                       {industry.badge ? (isEn ? industry.badge.en : industry.badge.fr) : (isEn ? 'Express' : 'Formule')}
                     </span>
                     <span className="t-mono text-xs text-signal">
@@ -119,27 +119,27 @@ export default function XpreSiteSection({
                     </span>
                   </div>
 
-                  <h3 className="t-sub text-paper group-hover:text-signal transition-colors mb-2 text-lg">
+                  <h3 className="t-sub text-paper group-hover:text-signal transition-colors mb-2 text-xl">
                     {isEn ? industry.name.en : industry.name.fr}
                   </h3>
 
-                  <p className="text-xs text-white/60 leading-relaxed mb-6">
+                  <p className="text-[13px] text-white/70 leading-relaxed mb-6">
                     {isEn ? industry.tagline.en : industry.tagline.fr}
                   </p>
 
                   <div className="space-y-1.5 border-t border-white/5 pt-4">
                     {industry.addons.slice(0, 3).map((addon) => (
-                      <div key={addon.id} className="flex items-center justify-between text-xs text-white/70">
+                      <div key={addon.id} className="flex items-center justify-between text-[13px] text-white/80">
                         <span className="truncate pr-2">
                           • {isEn ? addon.title.en : addon.title.fr}
                         </span>
-                        <span className="t-mono text-[11px] shrink-0 text-white/40">
+                        <span className="t-num text-[13px] shrink-0 text-white/75">
                           {addon.priceXAF === 0 ? (isEn ? 'Free' : 'Inclus') : `+${formatFCFA(addon.priceXAF)}`}
                         </span>
                       </div>
                     ))}
                     {industry.addons.length > 3 && (
-                      <div className="text-[11px] t-mono text-white/40 pt-1">
+                      <div className="text-[13px] text-white/65 pt-1">
                         +{industry.addons.length - 3} {isEn ? 'more options available' : 'autres options au choix'}
                       </div>
                     )}
@@ -148,15 +148,15 @@ export default function XpreSiteSection({
 
                 <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
                   <div>
-                    <span className="t-mono text-[10px] uppercase tracking-wider text-white/40 block">
+                    <span className="t-mono text-[11px] tracking-wider text-white/55 block">
                       {startingAt}
                     </span>
-                    <span className="t-mono text-sm font-bold text-signal">
+                    <span className="t-num mt-0.5 block text-[19px] font-medium leading-none text-signal">
                       {formatFCFA(industry.basePriceXAF || basePrice)}
                     </span>
                   </div>
 
-                  <span className="t-mono text-xs font-semibold text-paper group-hover:text-signal flex items-center gap-1">
+                  <span className="t-mono text-xs font-medium text-paper group-hover:text-signal flex items-center gap-1">
                     <span>{isEn ? 'Customize' : 'Personnaliser'}</span>
                     <span aria-hidden>→</span>
                   </span>
@@ -175,10 +175,10 @@ export default function XpreSiteSection({
 
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="t-mono text-[10px] uppercase tracking-wider font-bold text-ink bg-signal px-3 py-1 rounded-full inline-block shadow-sm">
+                  <span className="t-mono text-[10px] uppercase tracking-wider font-medium text-ink bg-signal px-3 py-1 rounded-full inline-block shadow-sm">
                     {isEn ? '★ Bespoke Scope' : '★ 100% Sur-Mesure'}
                   </span>
-                  <span className="t-mono text-[11px] font-semibold text-signal">
+                  <span className="t-mono text-[11px] font-medium text-signal">
                     {isEn ? 'Architecture & SaaS' : 'Plateformes & Apps'}
                   </span>
                 </div>
@@ -210,11 +210,11 @@ export default function XpreSiteSection({
               </div>
 
               <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between">
-                <span className="t-mono text-xs font-semibold text-white/70">
+                <span className="t-mono text-xs font-medium text-white/70">
                   {isEn ? 'Interactive 4-Step Scope' : 'Formulaire de cadrage en 4 étapes'}
                 </span>
 
-                <span className="t-mono text-xs font-bold text-ink bg-signal px-4 py-2 rounded-xl group-hover:bg-signal-hover flex items-center gap-1.5 transition-all shadow-md">
+                <span className="t-mono text-xs font-medium text-ink bg-signal px-4 py-2 rounded-xl group-hover:bg-signal-hover flex items-center gap-1.5 transition-all shadow-md">
                   <span>{isEn ? 'Launch Scope' : 'Cadrer mon projet'}</span>
                   <span aria-hidden>→</span>
                 </span>

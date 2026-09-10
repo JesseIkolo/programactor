@@ -100,7 +100,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
               onClick={() => setSelectedSector("all")}
               className={`t-mono rounded-[var(--radius-pill)] px-3.5 py-1.5 text-xs transition-all ${
                 selectedSector === "all"
-                  ? "bg-signal text-ink font-semibold"
+                  ? "bg-signal text-ink font-medium"
                   : "border border-[color:var(--color-hairline)] text-[color:var(--color-muted)] hover:border-white/30 hover:text-paper"
               }`}
             >
@@ -113,7 +113,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
                 onClick={() => setSelectedSector(sec)}
                 className={`t-mono rounded-[var(--radius-pill)] px-3.5 py-1.5 text-xs transition-all ${
                   selectedSector === sec
-                    ? "bg-signal text-ink font-semibold"
+                    ? "bg-signal text-ink font-medium"
                     : "border border-[color:var(--color-hairline)] text-[color:var(--color-muted)] hover:border-white/30 hover:text-paper"
                 }`}
               >
@@ -134,7 +134,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
                 onClick={() => setSelectedCity("all")}
                 className={`t-mono rounded-[var(--radius-pill)] px-2.5 py-1 text-[11px] transition-all ${
                   selectedCity === "all"
-                    ? "bg-white/20 text-paper font-semibold"
+                    ? "bg-white/20 text-paper font-medium"
                     : "text-[color:var(--color-muted-2)] hover:text-paper"
                 }`}
               >
@@ -147,7 +147,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
                   onClick={() => setSelectedCity(ct)}
                   className={`t-mono rounded-[var(--radius-pill)] px-2.5 py-1 text-[11px] transition-all ${
                     selectedCity === ct
-                      ? "bg-white/20 text-paper font-semibold"
+                      ? "bg-white/20 text-paper font-medium"
                       : "text-[color:var(--color-muted-2)] hover:text-paper"
                   }`}
                 >
@@ -285,7 +285,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
                       </div>
                       <Link
                         href={`/${c.lang}/realisations/${p.id}`}
-                        className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-white/[0.04] px-5 py-2.5 text-xs font-semibold text-paper transition-all hover:border-signal hover:bg-signal hover:text-ink"
+                        className="t-mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] bg-white/[0.04] px-5 py-2.5 text-xs font-medium text-paper transition-all hover:border-signal hover:bg-signal hover:text-ink"
                       >
                         <span>{t.viewDetails}</span>
                         <span aria-hidden>→</span>
@@ -344,7 +344,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
                       <span className="t-mono text-[11px] text-[color:var(--color-muted-2)]">
                         {p.duration}
                       </span>
-                      <span className="t-mono text-xs font-semibold text-signal group-hover:underline">
+                      <span className="t-mono text-xs font-medium text-signal group-hover:underline">
                         {t.viewDetails} →
                       </span>
                     </div>

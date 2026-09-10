@@ -424,7 +424,7 @@ export default function AdminSettingsTab({ token, showToast, isEn = false }: Adm
                     ● {ind.isActive !== false ? 'Actif' : 'Inactif'}
                   </span>
 
-                  <span className="font-mono text-xs font-bold text-[#EBFF72]">
+                  <span className="font-mono text-xs font-medium text-[#EBFF72]">
                     {formatFCFA(ind.basePriceXAF || config.defaultBasePriceXAF)}
                   </span>
                 </div>
@@ -515,7 +515,7 @@ export default function AdminSettingsTab({ token, showToast, isEn = false }: Adm
                   </div>
 
                   <div className="flex items-center gap-4 shrink-0">
-                    <div className="font-mono text-xs font-bold text-[#EBFF72]">
+                    <div className="font-mono text-xs font-medium text-[#EBFF72]">
                       {addon.priceXAF === 0 ? '0 FCFA (Inclus)' : formatFCFA(addon.priceXAF)}
                     </div>
 
