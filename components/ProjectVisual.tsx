@@ -22,19 +22,39 @@ export default function ProjectVisual({
   accentTone = "indigo",
   className = "",
 }: ProjectVisualProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
   // Si une image est fournie et n'a pas échoué au chargement
   if (image && !imageError) {
+    const webpSrc = image.endsWith(".webp")
+      ? image
+      : image.replace(/\.(png|jpg|jpeg)$/i, ".webp");
+
     return (
       <div className={`relative h-full w-full overflow-hidden bg-indigo-deep ${className}`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={image}
-          alt={name}
-          onError={() => setImageError(true)}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-        />
+        {/* Skeleton placeholder pendant le chargement */}
+        {!imageLoaded && (
+          <div
+            className="absolute inset-0 animate-pulse bg-gradient-to-r from-surface via-white/5 to-surface"
+            aria-hidden="true"
+          />
+        )}
+        <picture>
+          <source srcSet={webpSrc} type="image/webp" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={image}
+            alt={name}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setImageLoaded(true)}
+            onError={() => setImageError(true)}
+            className={`h-full w-full object-cover transition-all duration-500 group-hover:scale-[1.03] ${
+              imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        </picture>
       </div>
     );
   }

@@ -13,6 +13,9 @@ export interface IProject extends Document {
   featured?: boolean;
   accentTone?: 'indigo' | 'signal' | 'surface';
   coverImageUrl?: string;
+  cardCoverImageUrl?: string;
+  heroCoverImageUrl?: string;
+  gallery?: string[];
   contentFr: {
     tagline: string;
     challenge: string;
@@ -95,6 +98,18 @@ const ProjectSchema = new Schema<IProject>(
     coverImageUrl: {
       type: String,
       default: '',
+    },
+    cardCoverImageUrl: {
+      type: String,
+      default: '',
+    },
+    heroCoverImageUrl: {
+      type: String,
+      default: '',
+    },
+    gallery: {
+      type: [String],
+      default: [],
     },
     contentFr: {
       tagline: { type: String, default: '' },

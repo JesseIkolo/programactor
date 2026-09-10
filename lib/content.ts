@@ -46,6 +46,9 @@ export type DetailedProject = {
   accentTone?: "indigo" | "signal" | "surface";
   image?: string;
   coverImageUrl?: string;
+  cardCoverImageUrl?: string;
+  heroCoverImageUrl?: string;
+  gallery?: string[];
 };
 
 export type Content = ReturnType<typeof getContent>;
@@ -307,8 +310,15 @@ export function getContent(lang: Lang) {
           { value: "2 Villes", label: "Marchés pilotes (Douala & Libreville)" },
         ],
         accentTone: "signal" as const,
-        image: "/Projet/bimaroundpro.png",
-        coverImageUrl: "/Projet/bimaroundpro.png",
+        image: "/Projet/bimaroundpro.webp",
+        coverImageUrl: "/Projet/bimaroundpro.webp",
+        cardCoverImageUrl: "/Projet/bimaroundpro.webp",
+        heroCoverImageUrl: "/Projet/bimaroundpro.webp",
+        gallery: [
+          "/Projet/bimaroundpro.webp",
+          "/projects/bimaround.png",
+          "/projects/bimaroundpro.jpg"
+        ],
       },
       {
         key: "p2",
@@ -864,8 +874,15 @@ export function getContent(lang: Lang) {
           { value: "2 Cities", label: "Pilot launch cities (Douala & Libreville)" },
         ],
         accentTone: "signal" as const,
-        image: "/Projet/bimaroundpro.png",
-        coverImageUrl: "/Projet/bimaroundpro.png",
+        image: "/Projet/bimaroundpro.webp",
+        coverImageUrl: "/Projet/bimaroundpro.webp",
+        cardCoverImageUrl: "/Projet/bimaroundpro.webp",
+        heroCoverImageUrl: "/Projet/bimaroundpro.webp",
+        gallery: [
+          "/Projet/bimaroundpro.webp",
+          "/projects/bimaround.png",
+          "/projects/bimaroundpro.jpg"
+        ],
       },
       {
         key: "p2",

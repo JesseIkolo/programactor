@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { getAllProjectSlugs } from '@/lib/projects-data';
 
 const routes = [
   '',
@@ -12,10 +13,11 @@ const routes = [
 const locales = ['fr', 'en'];
 const baseUrl = 'https://programactor.pro';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date();
+  const projectSlugs = await getAllProjectSlugs();
 
-  return locales.flatMap((locale) =>
+  const staticEntries = locales.flatMap((locale) =>
     routes.map((route) => ({
       url: `${baseUrl}/${locale}${route}`,
       lastModified: currentDate,
@@ -32,4 +34,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     }))
   );
+
+  const projectEntries = locales.flatMap((locale) =>
+    projectSlugs.map((slug) => ({
+      url: `${baseUrl}/${locale}/realisations/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+      alternates: {
+        languages: {
+          fr: `${baseUrl}/fr/realisations/${slug}`,
+          en: `${baseUrl}/en/realisations/${slug}`,
+          'x-default': `${baseUrl}/fr/realisations/${slug}`,
+        },
+      },
+    }))
+  );
+
+  return [...staticEntries, ...projectEntries];
 }
+

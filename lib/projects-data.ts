@@ -18,6 +18,9 @@ export interface ProjectRecord {
   featured?: boolean;
   displayOrder?: number;
   coverImageUrl?: string;
+  cardCoverImageUrl?: string;
+  heroCoverImageUrl?: string;
+  gallery?: string[];
   tags?: string[];
   contentFr?: {
     tagline?: string;
@@ -101,6 +104,9 @@ export function formatProject(p: ProjectRecord, lang: Lang): DetailedProject {
   const statusLabel =
     p.status === 'PUBLISHED' ? (isEn ? 'Live' : 'En ligne') : p.status;
 
+  const cardCover = p.cardCoverImageUrl || p.coverImageUrl || '';
+  const heroCover = p.heroCoverImageUrl || p.coverImageUrl || p.cardCoverImageUrl || '';
+
   return {
     key: p.slug || p._id,
     id: p.slug || p._id,
@@ -118,8 +124,11 @@ export function formatProject(p: ProjectRecord, lang: Lang): DetailedProject {
     deliverables,
     metrics,
     accentTone: 'signal',
-    image: p.coverImageUrl,
+    image: cardCover,
     coverImageUrl: p.coverImageUrl,
+    cardCoverImageUrl: cardCover,
+    heroCoverImageUrl: heroCover,
+    gallery: Array.isArray(p.gallery) && p.gallery.length > 0 ? p.gallery : (cardCover ? [cardCover] : []),
   };
 }
 
@@ -150,4 +159,28 @@ export async function getFeaturedProjects(lang: Lang): Promise<DetailedProject[]
   featured.sort((a, b) => (Number(a.displayOrder) || 99) - (Number(b.displayOrder) || 99));
 
   return featured.map((p) => formatProject(p, lang));
+}
+
+/**
+ * Récupère un projet spécifique par son slug.
+ */
+export async function getProjectBySlug(slug: string, lang: Lang): Promise<DetailedProject | null> {
+  const raw = await getRawProjects();
+  const found = raw.find((p) => p.slug === slug || p._id === slug);
+
+  if (!found || found.status !== 'PUBLISHED') {
+    return null;
+  }
+
+  return formatProject(found, lang);
+}
+
+/**
+ * Retourne la liste de tous les slugs de projets publiés pour la génération statique.
+ */
+export async function getAllProjectSlugs(): Promise<string[]> {
+  const raw = await getRawProjects();
+  return raw
+    .filter((p) => p.status === 'PUBLISHED')
+    .map((p) => p.slug || p._id);
 }

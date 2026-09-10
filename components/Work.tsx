@@ -12,10 +12,16 @@ export default function Work({ c, projects: incomingProjects }: WorkProps) {
   const projects =
     incomingProjects && incomingProjects.length > 0
       ? incomingProjects
-      : c.work.projects.map((p, i) => ({
-          ...p,
-          ...c.projectsMeta[i],
-        }));
+      : c.work.projects.map((p, i) => {
+          const meta = c.projectsMeta[i] || {};
+          const key = (meta as any).key || `project-${i}`;
+          return {
+            ...p,
+            ...meta,
+            key,
+            id: key,
+          };
+        });
 
   const exploreLabel =
     c.lang === "fr"
@@ -42,9 +48,9 @@ export default function Work({ c, projects: incomingProjects }: WorkProps) {
 
         <div className="mt-16 grid gap-5 md:mt-24 md:grid-cols-2">
           {projects.map((p, i) => (
-            <Reveal key={p.key} delay={(i % 2) * 90}>
+            <Reveal key={p.key || p.id} delay={(i % 2) * 90}>
               <Link
-                href={`/${c.lang}/realisations`}
+                href={`/${c.lang}/realisations/${p.id || p.key}`}
                 className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[color:var(--color-hairline)] bg-surface transition-colors duration-300 hover:border-[color:var(--color-hairline-strong)] block"
               >
                 {/* Visuel immersif interactif */}

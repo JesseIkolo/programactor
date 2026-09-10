@@ -12,6 +12,9 @@
     "featured": true,
     "displayOrder": 1,
     "coverImageUrl": "",
+    "cardCoverImageUrl": "",
+    "heroCoverImageUrl": "",
+    "gallery": [],
     "tags": [
       "Mobile Money",
       "Offline-First",
@@ -24,13 +27,23 @@
       "tagline": "Encaissement instantané QR code et USSD pour commerçants de proximité.",
       "challenge": "Réseaux 3G/EDGE instables dans les marchés de Douala, commerçants réticents aux interfaces chargées et retards de notification SMS.",
       "solution": "Architecture offline-first avec synchronisation automatique, génération instantanée de QR codes et confirmation audio bilingue.",
-      "impact": "-40% temps d’encaissement, 100% opérationnel offline, validé en 15 jours."
+      "impact": "-40% temps d’encaissement, 100% opérationnel offline, validé en 15 jours.",
+      "deliverables": [
+        "PWA Offline-First ultra-légère (< 2 Mo)",
+        "Passerelle MTN MoMo & Orange Money",
+        "Feedback vocal bilingue français/pidgin"
+      ]
     },
     "contentEn": {
       "tagline": "Instant QR code and USSD merchant terminal designed for low-connectivity markets.",
       "challenge": "Unstable 3G networks in central markets, complex merchant interfaces, and SMS notification lag.",
       "solution": "Offline-first architecture with automatic background sync, instant dynamic QR generation, and bilingual audio confirmations.",
-      "impact": "-40% transaction time, 100% offline uptime, tested with live merchants in 15 days."
+      "impact": "-40% transaction time, 100% offline uptime, tested with live merchants in 15 days.",
+      "deliverables": [
+        "Ultra-lightweight offline PWA (< 2MB)",
+        "MTN MoMo & Orange Money Gateway",
+        "Bilingual audio confirmations"
+      ]
     },
     "metrics": [
       {
@@ -64,7 +77,14 @@
     "status": "PUBLISHED",
     "featured": true,
     "displayOrder": 2,
-    "coverImageUrl": "/Projet/bimaroundpro.png",
+    "coverImageUrl": "/Projet/bimaroundpro.webp",
+    "cardCoverImageUrl": "/Projet/bimaroundpro.webp",
+    "heroCoverImageUrl": "/Projet/bimaroundpro.webp",
+    "gallery": [
+      "/Projet/bimaroundpro.webp",
+      "/projects/bimaround.png",
+      "/projects/bimaroundpro.jpg"
+    ],
     "tags": [
       "BeautyTech",
       "Mobile-First",
@@ -131,6 +151,9 @@
     "featured": true,
     "displayOrder": 3,
     "coverImageUrl": "",
+    "cardCoverImageUrl": "",
+    "heroCoverImageUrl": "",
+    "gallery": [],
     "tags": [
       "Logistique",
       "Mobile",
@@ -143,9 +166,9 @@
       "solution": "Application coursier basée sur des repères visuels géolocalisés, suivi en temps réel par SMS sans téléchargement obligatoire.",
       "impact": "+52% de courses livrées à temps, temps d’orientation divisé par deux.",
       "deliverables": [
-        "App mobile coursier",
+        "App mobile coursier avec repères visuels",
         "Console dispatch dispatchers",
-        "Tracking SMS direct"
+        "Tracking SMS direct sans téléchargement"
       ]
     },
     "contentEn": {
@@ -154,7 +177,7 @@
       "solution": "Driver mobile app using visual landmark coordinates and no-app customer tracking via direct SMS links.",
       "impact": "+52% on-time deliveries, dispatch resolution time reduced by 50%.",
       "deliverables": [
-        "Courier Mobile App",
+        "Courier Mobile App with landmark cues",
         "Dispatcher Central Console",
         "Direct SMS Tracking Link"
       ]
@@ -192,6 +215,9 @@
     "featured": true,
     "displayOrder": 4,
     "coverImageUrl": "",
+    "cardCoverImageUrl": "",
+    "heroCoverImageUrl": "",
+    "gallery": [],
     "tags": [
       "Santé",
       "Prise de RDV",
@@ -204,9 +230,9 @@
       "solution": "Tunnel de réservation en 3 clics avec confirmation immédiate et rappels programmés par SMS et WhatsApp.",
       "impact": "-65% de rendez-vous non honorés, gain de 2 heures par jour pour le secrétariat.",
       "deliverables": [
-        "Portail de prise de rendez-vous",
+        "Portail de prise de rendez-vous en 3 clics",
         "Synchronisation agenda médecins",
-        "Module de rappels automatiques"
+        "Module de rappels automatiques WhatsApp & SMS"
       ]
     },
     "contentEn": {
@@ -248,6 +274,9 @@
     "featured": false,
     "displayOrder": 5,
     "coverImageUrl": "",
+    "cardCoverImageUrl": "",
+    "heroCoverImageUrl": "",
+    "gallery": [],
     "tags": [
       "Commerce",
       "E-commerce",
@@ -260,9 +289,9 @@
       "solution": "Site catalogue mobile ultra-rapide avec panier persistant et bouton d’envoi direct de la commande formatée sur WhatsApp.",
       "impact": "Conversion multipliée par 2.5, panier moyen en hausse de 35%.",
       "deliverables": [
-        "Catalogue web mobile",
+        "Catalogue web mobile ultra-rapide",
         "Gestion des stocks simplifiée",
-        "Panier WhatsApp direct"
+        "Panier WhatsApp direct sans intermédiaire"
       ]
     },
     "contentEn": {

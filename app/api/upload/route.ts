@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
+import sharp from 'sharp';
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,24 +21,41 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Taille max 5MB
-    if (file.size > 5 * 1024 * 1024) {
+    // Taille max 10MB en entrée
+    if (file.size > 10 * 1024 * 1024) {
       return NextResponse.json(
-        { success: false, message: 'Fichier trop lourd (maximum 5 Mo).' },
+        { success: false, message: 'Fichier trop lourd (maximum 10 Mo).' },
         { status: 400 }
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const ext = path.extname(file.name) || '.jpg';
-    const cleanName = path.basename(file.name, ext).replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
-    const filename = `${cleanName}-${Date.now()}${ext}`;
+    const inputBuffer = Buffer.from(await file.arrayBuffer());
+    const rawExt = path.extname(file.name) || '.jpg';
+    const cleanName = path.basename(file.name, rawExt).replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
 
-    // Enregistrement dans public/uploads
     const uploadDir = path.join(process.cwd(), 'public', 'uploads');
     await fs.mkdir(uploadDir, { recursive: true });
+
+    let outputBuffer: Buffer;
+    let finalExt = '.webp';
+
+    if (file.type === 'image/svg+xml') {
+      outputBuffer = inputBuffer;
+      finalExt = '.svg';
+    } else if (file.type === 'image/gif') {
+      outputBuffer = inputBuffer;
+      finalExt = '.gif';
+    } else {
+      // Compression & optimisation automatique WebP max 1600px
+      outputBuffer = await sharp(inputBuffer)
+        .resize({ width: 1600, withoutEnlargement: true })
+        .webp({ quality: 82, effort: 5 })
+        .toBuffer();
+    }
+
+    const filename = `${cleanName}-${Date.now()}${finalExt}`;
     const filePath = path.join(uploadDir, filename);
-    await fs.writeFile(filePath, buffer);
+    await fs.writeFile(filePath, outputBuffer);
 
     const publicUrl = `/uploads/${filename}`;
 
@@ -45,9 +63,10 @@ export async function POST(req: NextRequest) {
       success: true,
       url: publicUrl,
       filename,
+      sizeBytes: outputBuffer.length,
     });
   } catch (error) {
     console.error('Erreur upload API :', error);
-    return NextResponse.json({ success: false, message: "Erreur lors de l'enregistrement de l'image." }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Erreur lors de l'enregistrement et de l'optimisation de l'image." }, { status: 500 });
   }
 }
