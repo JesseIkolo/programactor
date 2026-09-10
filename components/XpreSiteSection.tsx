@@ -98,9 +98,9 @@ export default function XpreSiteSection({
           </div>
         </div>
 
-        {/* Grille des secteurs XpreSite */}
+        {/* Grille des secteurs XpreSite + Carte Sur-Mesure */}
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {XPRESITE_INDUSTRIES.map((industry, i) => (
+          {(cfg.industries && cfg.industries.length > 0 ? cfg.industries : XPRESITE_INDUSTRIES).map((industry, i) => (
             <Reveal key={industry.id} delay={i * 60}>
               <Link
                 href={`/${lang}/xpresite#configurateur`}
@@ -109,7 +109,7 @@ export default function XpreSiteSection({
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="t-mono text-[10px] uppercase tracking-wider text-white/50 bg-white/5 px-2.5 py-1 rounded-full">
-                      {isEn ? industry.badge.en : industry.badge.fr}
+                      {industry.badge ? (isEn ? industry.badge.en : industry.badge.fr) : (isEn ? 'Express' : 'Formule')}
                     </span>
                     <span className="t-mono text-xs text-signal">
                       {industry.addons.length} {isEn ? 'modules' : 'add-ons'}
@@ -149,7 +149,7 @@ export default function XpreSiteSection({
                       {startingAt}
                     </span>
                     <span className="t-mono text-sm font-bold text-signal">
-                      {formattedPrice}
+                      {formatFCFA(industry.basePriceXAF || basePrice)}
                     </span>
                   </div>
 
@@ -162,32 +162,57 @@ export default function XpreSiteSection({
             </Reveal>
           ))}
 
-          {/* Carte CTA direct vers le configurateur */}
-          <Reveal delay={300}>
+          {/* Carte Premium : "Je veux un site personnalisé" */}
+          <Reveal delay={360}>
             <Link
-              href={`/${lang}/xpresite`}
-              className="group flex h-full flex-col justify-between rounded-[var(--radius-card)] border border-signal/30 bg-gradient-to-br from-indigo-deep/40 to-surface p-6 transition-all duration-300 hover:border-signal block"
+              href={`/${lang}/xpresite/sur-mesure`}
+              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[var(--radius-card)] border-2 border-signal/50 bg-gradient-to-br from-[#1C1C1C] via-surface to-[#111] p-6 sm:p-7 shadow-xl shadow-signal/5 transition-all duration-300 hover:border-signal hover:shadow-signal/15 block"
             >
+              <div className="absolute top-0 right-0 h-32 w-32 bg-signal/10 rounded-full blur-2xl pointer-events-none" />
+
               <div>
-                <span className="t-mono text-[10px] uppercase tracking-wider text-signal bg-signal/15 px-2.5 py-1 rounded-full inline-block mb-4">
-                  {isEn ? 'Custom sector' : 'Autre secteur'}
-                </span>
-                <h3 className="t-sub text-paper group-hover:text-signal transition-colors mb-2 text-lg">
-                  {isEn ? 'Have a different business?' : 'Votre activité n\'est pas dans la liste ?'}
+                <div className="flex items-center justify-between mb-4">
+                  <span className="t-mono text-[10px] uppercase tracking-wider font-bold text-ink bg-signal px-3 py-1 rounded-full inline-block shadow-sm">
+                    {isEn ? '★ Bespoke Scope' : '★ 100% Sur-Mesure'}
+                  </span>
+                  <span className="t-mono text-[11px] font-semibold text-signal">
+                    {isEn ? 'Architecture & SaaS' : 'Plateformes & Apps'}
+                  </span>
+                </div>
+
+                <h3 className="t-sub text-white group-hover:text-signal transition-colors mb-2 text-xl font-bold">
+                  {isEn ? 'I want a custom website.' : 'Je veux un site personnalisé.'}
                 </h3>
-                <p className="text-xs text-white/60 leading-relaxed">
+
+                <p className="text-xs text-white/70 leading-relaxed mb-6">
                   {isEn
-                    ? 'Launch our interactive simulator. We adapt the base showcase to any trade with customized direct conversion features.'
-                    : 'Lancez notre simulateur en direct. Nous adaptons le socle vitrine à tout corps de métier avec des fonctionnalités de conversion sur-mesure.'}
+                    ? 'Your project goes beyond standard packages? Custom SaaS, member portals, multi-vendor platforms, and bespoke software engineering.'
+                    : 'Votre projet dépasse le cadre d\'une vitrine express ? Plateformes SaaS, espaces membres sécurisés, marketplaces ou portails d\'opérations sur-mesure.'}
                 </p>
+
+                <div className="space-y-2 border-t border-white/10 pt-4">
+                  <div className="flex items-center gap-2 text-xs text-white/90">
+                    <span className="text-signal font-bold">✓</span>
+                    <span>{isEn ? 'Custom UX/UI Design & Prototyping' : 'Design UI/UX & Direction Artistique Dédiée'}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-white/90">
+                    <span className="text-signal font-bold">✓</span>
+                    <span>{isEn ? 'Tailored Architecture & API Integrations' : 'Architecture évolutive & Intégrations APIs'}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-white/90">
+                    <span className="text-signal font-bold">✓</span>
+                    <span>{isEn ? 'Mobile Money, Stripe & Multi-currency' : 'Paiements MoMo, Cartes & Espace Client'}</span>
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-                <span className="t-mono text-xs text-white/60">
-                  {isEn ? 'Free instant estimate' : 'Devis instantané gratuit'}
+              <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between">
+                <span className="t-mono text-xs font-semibold text-white/70">
+                  {isEn ? 'Interactive 4-Step Scope' : 'Formulaire de cadrage en 4 étapes'}
                 </span>
-                <span className="t-mono text-xs font-bold text-signal flex items-center gap-1">
-                  <span>{ctaLabel}</span>
+
+                <span className="t-mono text-xs font-bold text-ink bg-signal px-4 py-2 rounded-xl group-hover:bg-signal-hover flex items-center gap-1.5 transition-all shadow-md">
+                  <span>{isEn ? 'Launch Scope' : 'Cadrer mon projet'}</span>
                   <span aria-hidden>→</span>
                 </span>
               </div>

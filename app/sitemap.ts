@@ -6,9 +6,11 @@ const routes = [
   '/realisations',
   '/reserver',
   '/xpresite',
+  '/xpresite/sur-mesure',
   '/mentions-legales',
   '/confidentialite',
 ];
+
 
 const locales = ['fr', 'en'];
 const baseUrl = 'https://programactor.pro';

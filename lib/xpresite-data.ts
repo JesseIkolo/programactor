@@ -15,6 +15,7 @@ export interface XpreSiteAddon {
   };
   priceXAF: number; // 0 = Inclus / Gratuit
   isRecommended?: boolean;
+  isDefaultSelected?: boolean;
 }
 
 export interface XpreSiteIndustry {
@@ -28,27 +29,38 @@ export interface XpreSiteIndustry {
     fr: string;
     en: string;
   };
-  iconName: 'utensils' | 'truck' | 'shirt' | 'car' | 'plane';
-  badge: {
+  iconName: 'utensils' | 'truck' | 'shirt' | 'car' | 'plane' | string;
+  badge?: {
     fr: string;
     en: string;
   };
+  basePriceXAF?: number;
+  isActive?: boolean;
   addons: XpreSiteAddon[];
 }
 
 export interface XpreSiteConfig {
   defaultBasePriceXAF: number;
   deliveryPromiseHours: number;
+  deliveryDelay?: string;
+  allowThreeSplits?: boolean;
+  minAmountForThreeSplits?: number;
   hostingIncludedYears: number;
   whatsappContactNumber: string; // Ex: 237699000000
+  industries?: XpreSiteIndustry[];
 }
 
 export const XPRESITE_CONFIG: XpreSiteConfig = {
   defaultBasePriceXAF: 75000,
   deliveryPromiseHours: 72,
+  deliveryDelay: '72h',
+  allowThreeSplits: true,
+  minAmountForThreeSplits: 100000,
   hostingIncludedYears: 1,
   whatsappContactNumber: '237699000000', // À synchroniser avec le numéro du studio
+  industries: [],
 };
+
 
 export const XPRESITE_INDUSTRIES: XpreSiteIndustry[] = [
   {

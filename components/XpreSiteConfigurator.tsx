@@ -28,20 +28,27 @@ import {
 
 interface XpreSiteConfiguratorProps {
   lang?: 'fr' | 'en';
+  initialConfig?: any;
 }
 
-export function XpreSiteConfigurator({ lang = 'fr' }: XpreSiteConfiguratorProps) {
+export function XpreSiteConfigurator({ lang = 'fr', initialConfig }: XpreSiteConfiguratorProps) {
   const isEn = lang === 'en';
 
   // Configuration dynamique avec fallback
-  const [config, setConfig] = useState<any>({
-    defaultBasePriceXAF: XPRESITE_CONFIG.defaultBasePriceXAF,
-    deliveryDelay: '72h',
-    allowThreeSplits: true,
-    minAmountForThreeSplits: 100000,
-    hostingIncludedYears: 1,
-    industries: XPRESITE_INDUSTRIES,
+  const [config, setConfig] = useState<any>(() => {
+    if (initialConfig && Array.isArray(initialConfig.industries) && initialConfig.industries.length > 0) {
+      return initialConfig;
+    }
+    return {
+      defaultBasePriceXAF: XPRESITE_CONFIG.defaultBasePriceXAF,
+      deliveryDelay: '72h',
+      allowThreeSplits: true,
+      minAmountForThreeSplits: 100000,
+      hostingIncludedYears: 1,
+      industries: XPRESITE_INDUSTRIES,
+    };
   });
+
 
   // Charger la configuration dynamique depuis le backend
   useEffect(() => {
@@ -421,6 +428,25 @@ export function XpreSiteConfigurator({ lang = 'fr' }: XpreSiteConfiguratorProps)
                   </button>
                 );
               })}
+            </div>
+
+            {/* Accès rapide au cadrage sur-mesure */}
+            <div className="mt-3 p-3.5 rounded-2xl bg-gradient-to-r from-signal/10 via-surface-2 to-surface border border-signal/30 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 text-xs text-white/90">
+                <span className="w-2 h-2 rounded-full bg-signal animate-pulse" />
+                <span>
+                  {isEn
+                    ? 'Need a SaaS platform, mobile app or bespoke workflow?'
+                    : 'Besoin d\'une plateforme SaaS, app mobile ou portail sur-mesure ?'}
+                </span>
+              </div>
+              <a
+                href={`/${lang}/xpresite/sur-mesure`}
+                className="t-mono text-xs font-bold text-ink bg-signal px-3.5 py-1.5 rounded-xl hover:bg-signal-hover transition-colors shrink-0 flex items-center gap-1 shadow-sm"
+              >
+                <span>{isEn ? 'Bespoke Scope' : 'Cadrage Sur-Mesure'}</span>
+                <span>→</span>
+              </a>
             </div>
           </div>
 

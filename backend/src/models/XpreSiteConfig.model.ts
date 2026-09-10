@@ -7,6 +7,7 @@ export interface IXpreSiteAddon {
   desc: { fr: string; en: string };
   priceXAF: number;
   isDefaultSelected?: boolean;
+  isRecommended?: boolean;
 }
 
 export interface IXpreSiteIndustry {
@@ -15,6 +16,7 @@ export interface IXpreSiteIndustry {
   name: { fr: string; en: string };
   tagline: { fr: string; en: string };
   iconName: string;
+  badge?: { fr: string; en: string };
   basePriceXAF?: number;
   isActive: boolean;
   addons: IXpreSiteAddon[];
@@ -45,6 +47,7 @@ const AddonSchema = new Schema<IXpreSiteAddon>(
     },
     priceXAF: { type: Number, default: 0 },
     isDefaultSelected: { type: Boolean, default: false },
+    isRecommended: { type: Boolean, default: false },
   },
   { _id: false }
 );
@@ -62,6 +65,10 @@ const IndustrySchema = new Schema<IXpreSiteIndustry>(
       en: { type: String, default: '' },
     },
     iconName: { type: String, default: 'store' },
+    badge: {
+      fr: { type: String, default: '' },
+      en: { type: String, default: '' },
+    },
     basePriceXAF: { type: Number, default: 75000 },
     isActive: { type: Boolean, default: true },
     addons: { type: [AddonSchema], default: [] },

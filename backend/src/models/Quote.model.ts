@@ -1,22 +1,30 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export type QuoteStatus = 'NEW' | 'CONTACTED' | 'IN_PROGRESS' | 'DELIVERED' | 'CANCELLED';
+export type QuoteType = 'XPRESITE_EXPRESS' | 'CUSTOM_BESPOKE';
 
 export interface IQuote extends Document {
   reference: string;
+  quoteType: QuoteType;
   clientName: string;
   clientEmail?: string;
   clientPhone: string;
   companyName?: string;
   city?: string;
-  industryId: string;
-  industryName: string;
-  selectedAddonTitles: string[];
-  basePriceXAF: number;
-  addonsTotalXAF: number;
-  totalPriceXAF: number;
-  paymentSplits: 2 | 3;
-  splitAmount: number;
+  industryId?: string;
+  industryName?: string;
+  selectedAddonTitles?: string[];
+  basePriceXAF?: number;
+  addonsTotalXAF?: number;
+  totalPriceXAF?: number;
+  paymentSplits?: 2 | 3;
+  splitAmount?: number;
+  projectType?: string;
+  features?: string[];
+  timeline?: string;
+  budgetRange?: string;
+  designPreference?: string;
+  description?: string;
   status: QuoteStatus;
   internalNotes?: string;
   lang: 'fr' | 'en';
@@ -31,6 +39,12 @@ const QuoteSchema = new Schema<IQuote>(
       required: true,
       unique: true,
       trim: true,
+      index: true,
+    },
+    quoteType: {
+      type: String,
+      enum: ['XPRESITE_EXPRESS', 'CUSTOM_BESPOKE'],
+      default: 'XPRESITE_EXPRESS',
       index: true,
     },
     clientName: {
@@ -61,11 +75,11 @@ const QuoteSchema = new Schema<IQuote>(
     },
     industryId: {
       type: String,
-      required: true,
+      default: 'custom',
     },
     industryName: {
       type: String,
-      required: true,
+      default: 'Sur-Mesure',
     },
     selectedAddonTitles: {
       type: [String],
@@ -73,7 +87,7 @@ const QuoteSchema = new Schema<IQuote>(
     },
     basePriceXAF: {
       type: Number,
-      required: true,
+      default: 0,
     },
     addonsTotalXAF: {
       type: Number,
@@ -81,7 +95,7 @@ const QuoteSchema = new Schema<IQuote>(
     },
     totalPriceXAF: {
       type: Number,
-      required: true,
+      default: 0,
     },
     paymentSplits: {
       type: Number,
@@ -90,7 +104,31 @@ const QuoteSchema = new Schema<IQuote>(
     },
     splitAmount: {
       type: Number,
-      required: true,
+      default: 0,
+    },
+    projectType: {
+      type: String,
+      default: '',
+    },
+    features: {
+      type: [String],
+      default: [],
+    },
+    timeline: {
+      type: String,
+      default: '',
+    },
+    budgetRange: {
+      type: String,
+      default: '',
+    },
+    designPreference: {
+      type: String,
+      default: '',
+    },
+    description: {
+      type: String,
+      default: '',
     },
     status: {
       type: String,

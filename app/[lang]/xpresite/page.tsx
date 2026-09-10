@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getContent, LANGS, type Lang } from "@/lib/content";
+import { getXpreSiteConfigServer } from "@/lib/xpresite-server";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { Label, Reveal } from "@/components/ui";
@@ -58,6 +59,7 @@ export default async function XpreSitePage({
   const l = lang as Lang;
   const c = getContent(l);
   const isEn = l === "en";
+  const config = await getXpreSiteConfigServer();
 
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -295,13 +297,83 @@ export default async function XpreSitePage({
             </p>
           </div>
 
-          <XpreSiteConfigurator lang={l} />
+          <XpreSiteConfigurator lang={l} initialConfig={config} />
+        </section>
+
+        {/* ====================================================================
+            SECTION SPÉCIALE : "JE VEUX UN SITE PERSONNALISÉ"
+        ==================================================================== */}
+        <section className="shell pb-20">
+          <div className="relative overflow-hidden rounded-[var(--radius-card)] border-2 border-signal/50 bg-gradient-to-br from-[#1C1C1C] via-surface to-[#111] p-8 sm:p-12 shadow-2xl shadow-signal/10">
+            <div className="absolute top-0 right-0 h-64 w-64 bg-signal/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="max-w-3xl">
+              <div className="flex flex-wrap items-center gap-2.5 mb-4">
+                <span className="t-mono text-xs uppercase tracking-wider font-bold text-ink bg-signal px-3.5 py-1 rounded-full shadow-sm">
+                  {isEn ? "★ Bespoke Digital Engineering" : "★ 100% Sur-Mesure"}
+                </span>
+                <span className="t-mono text-xs text-signal">
+                  {isEn ? "Beyond 72h templates" : "Au-delà des formules express"}
+                </span>
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
+                {isEn ? (
+                  <>
+                    Need a custom platform, web app, or specific workflow?
+                  </>
+                ) : (
+                  <>
+                    Vous avez besoin d'une plateforme, d'une app ou d'un outil métier sur-mesure ?
+                  </>
+                )}
+              </h2>
+
+              <p className="text-sm sm:text-base text-white/70 leading-relaxed mb-8 max-w-2xl">
+                {isEn
+                  ? "For complex SaaS platforms, secure member portals, multi-vendor marketplaces, or high-scale web applications, our engineers build tailored architectures with custom APIs, dedicated databases, and bespoke UX/UI design."
+                  : "Pour vos plateformes SaaS, espaces membres sécurisés, marketplaces multi-vendeurs ou outils de gestion interne, nos ingénieurs conçoivent une architecture dédiée avec APIs sur-mesure, base de données évolutive et design UI/UX exclusif."}
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 pt-4 border-t border-white/10">
+                <div className="flex items-center gap-2.5 text-xs text-white/90">
+                  <span className="text-signal font-bold text-base">✓</span>
+                  <span>{isEn ? "Tailored UX/UI & Prototyping" : "Direction Artistique Dédiée"}</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-xs text-white/90">
+                  <span className="text-signal font-bold text-base">✓</span>
+                  <span>{isEn ? "Custom APIs & Integrations" : "Intégrations APIs & Paiements"}</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-xs text-white/90">
+                  <span className="text-signal font-bold text-base">✓</span>
+                  <span>{isEn ? "Full Scale & Maintenance" : "Architecture Scalable & Maintenance"}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <Link
+                  href={`/${l}/xpresite/sur-mesure`}
+                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-signal hover:bg-signal-hover text-ink font-bold text-sm rounded-2xl transition-all shadow-xl shadow-signal/15"
+                >
+                  <span>{isEn ? "Launch Bespoke Scoping Form" : "Lancer le cadrage sur-mesure"}</span>
+                  <span aria-hidden>→</span>
+                </Link>
+
+                <span className="t-mono text-xs text-white/50 text-center sm:text-left">
+                  {isEn
+                    ? "Interactive 4-step wizard · Direct WhatsApp link"
+                    : "Assistant en 4 étapes · Réponse & cadrage direct"}
+                </span>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ====================================================================
             FAQ XPRESITE
         ==================================================================== */}
         <section className="shell pb-24 border-t border-[color:var(--color-hairline)] pt-20">
+
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
               <span className="t-mono text-xs uppercase tracking-widest text-signal block mb-2">

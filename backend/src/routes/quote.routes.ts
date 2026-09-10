@@ -18,18 +18,25 @@ router.get('/config', getXpreSiteConfig);
 router.put('/config', requireAuth, updateXpreSiteConfig);
 
 const createQuoteSchema = z.object({
+  quoteType: z.enum(['XPRESITE_EXPRESS', 'CUSTOM_BESPOKE']).default('XPRESITE_EXPRESS'),
   clientName: z.string().min(2, 'Le nom est requis.'),
   clientEmail: z.string().email().optional().or(z.literal('')),
   clientPhone: z.string().min(6, 'Le numéro WhatsApp est requis.'),
   companyName: z.string().optional().or(z.literal('')),
   city: z.string().optional().or(z.literal('')),
-  industryId: z.string().min(1, 'Le secteur est requis.'),
-  industryName: z.string().min(1, 'Le nom du secteur est requis.'),
+  industryId: z.string().optional(),
+  industryName: z.string().optional(),
   selectedAddonTitles: z.array(z.string()).optional(),
-  basePriceXAF: z.number().positive(),
+  basePriceXAF: z.number().nonnegative().optional(),
   addonsTotalXAF: z.number().nonnegative().optional(),
-  totalPriceXAF: z.number().positive(),
+  totalPriceXAF: z.number().nonnegative().optional(),
   paymentSplits: z.union([z.literal(2), z.literal(3)]).default(2),
+  projectType: z.string().optional(),
+  features: z.array(z.string()).optional(),
+  timeline: z.string().optional(),
+  budgetRange: z.string().optional(),
+  designPreference: z.string().optional(),
+  description: z.string().optional(),
   lang: z.enum(['fr', 'en']).default('fr'),
 });
 
