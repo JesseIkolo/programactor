@@ -73,9 +73,9 @@ const shared = {
    Exemples de format : "350 000 FCFA" · "à partir de 1 800 000 FCFA"
    -------------------------------------------------------------------------- */
 const AGENCY_PRICES = {
-  diagnostic: "",
-  sprint: "",
-  partner: "",
+  diagnostic: "à partir de 250 000 FCFA",
+  sprint: "à partir de 750 000 FCFA",
+  partner: "à partir de 1 500 000 FCFA",
 };
 
 /* --------------------------------------------------------------------------

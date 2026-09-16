@@ -1,69 +1,78 @@
 [
   {
-    "_id": "proj-fintech-momo",
-    "slug": "fintech-momo",
-    "name": "BongoSpace",
-    "client": "Proprietaire",
-    "sector": "Commerce, COmptabilité",
-    "city": "Douala, Kinshasa",
+    "_id": "proj-bongospace",
+    "slug": "bongospace",
+    "name": "Bongo Space",
+    "client": "One Touch Labs & Partenaires Horeca",
+    "sector": "Restauration, Bars & POS",
+    "city": "Douala & Yaoundé, Cameroun",
     "year": "2026",
-    "duration": "3 semaines",
+    "duration": "6 semaines",
     "status": "PUBLISHED",
     "featured": true,
     "displayOrder": 1,
-    "coverImageUrl": "",
-    "cardCoverImageUrl": "",
-    "heroCoverImageUrl": "",
-    "gallery": [],
+    "coverImageUrl": "/Projet/bongospacepro.jpg",
+    "cardCoverImageUrl": "/Projet/bongospacepro.jpg",
+    "heroCoverImageUrl": "/Projet/bongospacepro.jpg",
+    "gallery": [
+      "/Projet/bongospacepro.jpg",
+      "/projects/bongospace.png"
+    ],
     "tags": [
-      "Mobile Money",
+      "Horeca",
+      "POS & Caisse",
+      "Menu QR",
       "Offline-First",
-      "Web",
-      "SAAS",
-      "ERP",
-      "PME"
+      "Mobile Money",
+      "WhatsApp"
     ],
     "contentFr": {
-      "tagline": "Encaissement instantané QR code et USSD pour commerçants de proximité.",
-      "challenge": "Réseaux 3G/EDGE instables dans les marchés de Douala, commerçants réticents aux interfaces chargées et retards de notification SMS.",
-      "solution": "Architecture offline-first avec synchronisation automatique, génération instantanée de QR codes et confirmation audio bilingue.",
-      "impact": "-40% temps d’encaissement, 100% opérationnel offline, validé en 15 jours.",
+      "tagline": "Le système d'exploitation tout-en-un des bars & restaurants africains : menu QR, caisse tactile, stocks et commandes WhatsApp, 100% résilient hors-ligne.",
+      "challenge": "En Afrique subsaharienne, les gérants de bars et restaurants perdent jusqu'à 25% de leurs revenus en fuites de caisse, commandes non comptabilisées et erreurs manuelles sur papier. Les logiciels de caisse occidentaux plantent dès que la 3G faiblit, ignorent le Mobile Money local et n'intègrent pas les commandes WhatsApp.",
+      "solution": "Programactor a conçu Bongo Space comme un OS métier complet et tout-terrain : architecture offline-first garantissant 100% de disponibilité sans réseau, menu QR digital à table avec synchronisation instantanée des stocks, caisse tactile multi-moyens (Cash, Orange Money, MTN MoMo) et passerelle automatisée de commandes WhatsApp.",
+      "impact": "100% de disponibilité continue constatée lors des coupures réseau, zéro écart de caisse non tracé chez les établissements pilotes et +35% de panier moyen grâce à la commande par QR code.",
       "deliverables": [
-        "PWA Offline-First ultra-légère (< 2 Mo)",
-        "Passerelle MTN MoMo & Orange Money",
-        "Feedback vocal bilingue français/pidgin"
+        "Application web progressive PWA multi-rôles (Gérant, Caisse, Serveurs, Cuisine)",
+        "Terminal POS tactile avec encaissement Cash, Orange Money & MTN MoMo",
+        "Générateur de menus QR dynamiques et gestion des ruptures en temps réel",
+        "Module de gestion des stocks et inventaires quotidiens",
+        "Passerelle de notification et facturation automatique WhatsApp",
+        "Landing page d'acquisition B2B avec essai gratuit 7 jours (bongospacepro.netlify.app)"
       ]
     },
     "contentEn": {
-      "tagline": "Instant QR code and USSD merchant terminal designed for low-connectivity markets.",
-      "challenge": "Unstable 3G networks in central markets, complex merchant interfaces, and SMS notification lag.",
-      "solution": "Offline-first architecture with automatic background sync, instant dynamic QR generation, and bilingual audio confirmations.",
-      "impact": "-40% transaction time, 100% offline uptime, tested with live merchants in 15 days.",
+      "tagline": "The all-in-one operating system for African bars & restaurants: QR menu, smart POS, live inventory, and WhatsApp orders — 100% offline-resilient.",
+      "challenge": "African hospitality venues face severe revenue leakage (up to 25%) due to untracked cash sales, unbilled drinks, and pen-and-paper accounting. Western SaaS POS tools crash during internet cutouts, lack Mobile Money support, and ignore WhatsApp customer habits.",
+      "solution": "Programactor engineered Bongo Space: a rugged, offline-first hospitality system featuring real-time kitchen-bar sync, dynamic table QR ordering, multi-channel Cash & Mobile Money POS, and automated WhatsApp order dispatch.",
+      "impact": "100% continuous uptime during network blackouts, zero untracked cash discrepancies, and +35% average ticket size via digital menu ordering.",
       "deliverables": [
-        "Ultra-lightweight offline PWA (< 2MB)",
-        "MTN MoMo & Orange Money Gateway",
-        "Bilingual audio confirmations"
+        "Responsive cross-platform PWA for Managers, Cashiers, Servers, and Kitchen",
+        "Touch POS terminal supporting Cash, Orange Money & MTN MoMo",
+        "Dynamic table QR code menu engine with real-time stock toggles",
+        "Real-time stock deduction, recipe management, and audit logs",
+        "Automated WhatsApp notification and digital receipt engine",
+        "High-converting B2B acquisition landing page with 7-day free trial (bongospacepro.netlify.app)"
       ]
     },
     "metrics": [
       {
-        "value": "-40%",
-        "labelFr": "Temps d'encaissement",
-        "labelEn": "Transaction time"
-      },
-      {
         "value": "100%",
-        "labelFr": "Fonctionnement offline",
-        "labelEn": "Offline uptime"
+        "labelFr": "Fonctionnement hors-ligne garanti",
+        "labelEn": "Offline-first uptime guaranteed"
       },
       {
-        "value": "15j",
-        "labelFr": "Du brief au test marchand",
-        "labelEn": "Brief to live field test"
+        "value": "0 FCFA",
+        "labelFr": "D'écart de caisse non justifié",
+        "labelEn": "Untracked cash discrepancy"
+      },
+      {
+        "value": "+35%",
+        "labelFr": "De panier moyen via menu QR",
+        "labelEn": "Average order value via QR menu"
       }
     ],
     "createdAt": "2026-09-07T12:10:38.041Z",
-    "updatedAt": "2026-09-07T12:15:15.316Z"
+    "updatedAt": "2026-09-16T22:30:00.000Z"
   },
   {
     "_id": "proj-bimaround",
