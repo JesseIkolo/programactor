@@ -101,13 +101,13 @@ export function getContent(lang: Lang) {
     lang: "fr" as const,
     htmlLang: "fr",
     meta: {
-      title: "Programactor — L'agence qui transforme l'idée en produit",
+      title: "Programactor — Agence Web & Studio Produit Digital à Douala & Libreville",
       description:
-        "Agence de design produit centrée humain à Douala et Libreville. Recherche terrain, design d'interface et build en sprints courts, pour des produits pensés pour l'Afrique.",
+        "Agence web & création de sites internet, applications mobiles (PWA, iOS, Android) et logiciels de caisse pour PME à Douala, Yaoundé et Libreville. Sites pros en 72h (XpreSite) & sprints produit sur-mesure.",
     },
 
     nav: {
-      tagline: "Agence produit",
+      tagline: "Agence Web & Produit Digital",
       links: [
         { label: "Réalisations", href: "#realisations" },
         { label: "XpreSite", href: "#xpresite" },
@@ -123,11 +123,11 @@ export function getContent(lang: Lang) {
     },
 
     hero: {
-      eyebrow: "Douala · Libreville · ouvert aux projets",
-      titleBefore: "L'agence qui transforme une idée en ",
-      titleMark: "produit",
-      titleAfter: " que les gens utilisent vraiment.",
-      lead: "Design centré humain, recherche sur le terrain, build en sprints courts. Tu arrives avec une idée et une échéance. Tu repars avec un produit en ligne, entre les mains de tes utilisateurs.",
+      eyebrow: "Agence Web & Studio Digital · Douala · Yaoundé · Libreville",
+      titleBefore: "L'agence web & produit qui transforme votre idée en ",
+      titleMark: "produit rentable",
+      titleAfter: " utilisé par de vrais clients.",
+      lead: "Création de sites internet professionnels, applications web/mobiles et logiciels métiers pensés pour l'Afrique. De l'idée à la mise en ligne en sprints courts, avec paiement Mobile Money (Orange Money, MTN MoMo) et fonctionnement 100% hors-ligne.",
       ctaPrimary: "Réserver un appel",
       ctaSecondary: "Voir les réalisations",
       status: "Statut : ouvert aux projets",
@@ -219,9 +219,9 @@ export function getContent(lang: Lang) {
 
     realisationsPage: {
       meta: {
-        title: "Réalisations · Études de cas — Programactor",
+        title: "Réalisations & Portfolio Web & Mobile — Programactor Douala & Libreville",
         description:
-          "Découvrez les produits conçus et mis en production par Programactor à Douala, Libreville et en Afrique centrale. Recherche terrain, design d'interface et build.",
+          "Découvrez nos créations de sites internet professionnels, applications web/mobiles et logiciels de caisse pour entreprises à Douala, Yaoundé, Libreville et Kinshasa.",
       },
       badge: "Portfolio & Études de cas",
       titleBefore: "Des produits conçus pour le ",
@@ -483,33 +483,33 @@ export function getContent(lang: Lang) {
     services: {
       label: "Services",
       title: "Nos services.",
-      lead: "Cinq métiers, une équipe. Tu briefes une fois, on va jusqu'à la mise en production.",
+      lead: "Création web, applications mobiles et logiciels métiers. Tu briefes une fois, on va jusqu'à la mise en production.",
       cta: "Réserver un appel",
       items: [
         {
-          title: "Recherche terrain.",
-          body: "On va voir tes utilisateurs là où ils sont. Entretiens, observation, test de l'existant sur leur propre téléphone.",
-          tags: ["Entretiens", "Observation", "Test utilisateur", "Benchmark"],
+          title: "Recherche terrain & Cadrage.",
+          body: "Étude de marché locale, entretiens utilisateurs et tests sur smartphones réels à Douala et Libreville pour valider la rentabilité avant de coder.",
+          tags: ["Étude terrain", "Entretiens", "Validation marché", "Benchmark"],
         },
         {
-          title: "Design produit et interface.",
-          body: "Parcours, écrans, design system. Livré dans Figma, documenté, prêt pour le développement.",
-          tags: ["Parcours", "Wireframes", "UI", "Design system"],
+          title: "Design UI/UX & Systèmes d'Interface.",
+          body: "Maquettes Figma complètes, ergonomie mobile tactile et design systems pensés pour un chargement instantané sur connexions lentes.",
+          tags: ["UI/UX Design", "Figma", "Design System", "Mobile-First"],
         },
         {
-          title: "Identité de marque.",
-          body: "Nom, logo, charte, ton de voix. Une marque qui tient sur une enseigne comme sur un avatar WhatsApp de 40 pixels.",
-          tags: ["Logo", "Charte", "Ton de voix", "Guidelines"],
+          title: "Création de Sites Web & XpreSite 72h.",
+          body: "Sites internet professionnels pour entreprises, commerces et restaurants. Formule XpreSite clé en main en 72h chrono avec paiement en 3 fois.",
+          tags: ["Site Vitrine", "Site E-commerce", "XpreSite 72h", "SEO Local"],
         },
         {
-          title: "Build et mise en ligne.",
-          body: "Web et mobile. On construit par morceaux, on teste sur tes données réelles, on met en ligne.",
-          tags: ["Web", "Mobile", "Intégrations", "Mise en ligne"],
+          title: "Développement Web & Applications Mobiles (PWA, Android, iOS).",
+          body: "Applications réactives et légères avec architecture offline-first, intégration Orange Money, MTN MoMo et synchronisation automatique.",
+          tags: ["Application Mobile", "PWA Offline-First", "Mobile Money", "Full-Stack"],
         },
         {
-          title: "Accompagnement produit.",
-          body: "Après le lancement : mesure d'usage, itérations, formation de ton équipe. Tu gardes la main.",
-          tags: ["Mesure", "Itérations", "Formation", "Passation"],
+          title: "Logiciels Métiers, Caisse POS & Automatisation WhatsApp.",
+          body: "Systèmes de caisse tactile, menus QR interactifs, gestion des stocks en temps réel et bots WhatsApp pour éliminer les fuites de caisse.",
+          tags: ["Logiciel de Caisse", "Menu QR Code", "Gestion de Stock", "WhatsApp CRM"],
         },
       ],
     },
@@ -703,13 +703,13 @@ export function getContent(lang: Lang) {
     lang: "en" as const,
     htmlLang: "en",
     meta: {
-      title: "Programactor — The studio that turns an idea into a product",
+      title: "Programactor — Digital Product Studio & Web Agency in Douala & Libreville",
       description:
-        "Human-centred product design studio in Douala and Libreville. Field research, interface design and short build sprints, for products made to work in Africa.",
+        "Web & mobile app development, high-converting websites, and POS software for African businesses. Turnkey 72h website launches (XpreSite) & custom product sprints in Douala, Yaoundé & Libreville.",
     },
 
     nav: {
-      tagline: "Product studio",
+      tagline: "Web Agency & Product Studio",
       links: [
         { label: "Work", href: "#realisations" },
         { label: "XpreSite", href: "#xpresite" },
@@ -725,11 +725,11 @@ export function getContent(lang: Lang) {
     },
 
     hero: {
-      eyebrow: "Douala · Libreville · open for projects",
-      titleBefore: "The studio that turns an idea into a ",
-      titleMark: "product",
-      titleAfter: " people actually use.",
-      lead: "Human-centred design, field research, short build sprints. You arrive with an idea and a deadline. You leave with a product that is live and in your users' hands.",
+      eyebrow: "Web Agency & Digital Studio · Douala · Yaoundé · Libreville",
+      titleBefore: "The web & product studio that turns an idea into a ",
+      titleMark: "profitable product",
+      titleAfter: " that customers actually use.",
+      lead: "Human-centred design, mobile apps, and high-impact websites tailored for African markets. Fast development sprints, Mobile Money integration (Orange Money, MTN MoMo), and 100% offline-ready reliability.",
       ctaPrimary: "Book a call",
       ctaSecondary: "See the work",
       status: "Status: open for projects",
@@ -787,9 +787,9 @@ export function getContent(lang: Lang) {
 
     realisationsPage: {
       meta: {
-        title: "Work · Case studies — Programactor",
+        title: "Case Studies & Web/Mobile Portfolio — Programactor Douala & Libreville",
         description:
-          "Explore products designed and shipped by Programactor in Douala, Libreville, and across Central Africa. Field research, interface design, and build.",
+          "Explore live web applications, mobile platforms, and POS systems built for businesses across Douala, Libreville, Yaoundé and beyond.",
       },
       badge: "Portfolio & Case Studies",
       titleBefore: "Products built for the ",
@@ -1051,33 +1051,33 @@ export function getContent(lang: Lang) {
     services: {
       label: "Services",
       title: "Our services.",
-      lead: "Five crafts, one team. You brief us once and we carry it through to production.",
+      lead: "Web design, mobile apps, and custom business software. You brief us once, we carry it through to production.",
       cta: "Book a call",
       items: [
         {
-          title: "Field research.",
-          body: "We go and watch your users where they are. Interviews, observation, testing what exists on their own handset.",
-          tags: ["Interviews", "Observation", "Usability", "Benchmark"],
+          title: "Field Research & Product Strategy.",
+          body: "Local market study, user interviews, and real smartphone testing in Douala and Libreville to ensure profitability before writing code.",
+          tags: ["Field Study", "User Research", "Validation", "Benchmark"],
         },
         {
-          title: "Product and interface design.",
-          body: "Flows, screens, design system. Delivered in Figma, documented, ready for engineering.",
-          tags: ["Flows", "Wireframes", "UI", "Design system"],
+          title: "UI/UX Design & Interface Systems.",
+          body: "Full Figma mockups, tactile mobile ergonomics, and design systems crafted for instantaneous loading on low-bandwidth networks.",
+          tags: ["UI/UX Design", "Figma", "Design System", "Mobile-First"],
         },
         {
-          title: "Brand identity.",
-          body: "Name, mark, guidelines, tone of voice. A brand that holds up on a shopfront and on a 40-pixel WhatsApp avatar.",
-          tags: ["Logo", "Guidelines", "Tone of voice", "Assets"],
+          title: "Website Creation & XpreSite 72h.",
+          body: "High-converting websites for businesses, shops, and restaurants. Turnkey 72-hour XpreSite package with 3-part flexible installment payments.",
+          tags: ["Business Website", "E-commerce", "XpreSite 72h", "Local SEO"],
         },
         {
-          title: "Build and launch.",
-          body: "Web and mobile. We build in small pieces, test on your real data, and put it live.",
-          tags: ["Web", "Mobile", "Integrations", "Launch"],
+          title: "Web & Mobile App Development (PWA, Android, iOS).",
+          body: "Lightweight, responsive mobile applications featuring offline-first architecture, Orange Money / MTN MoMo integration, and background sync.",
+          tags: ["Mobile App", "Offline-First PWA", "Mobile Money", "Full-Stack"],
         },
         {
-          title: "Product partnership.",
-          body: "After launch: usage measurement, iterations, training for your team. You keep the wheel.",
-          tags: ["Measurement", "Iteration", "Training", "Handover"],
+          title: "POS Cashier Software & WhatsApp Automation.",
+          body: "Touch POS cash registers, interactive table QR menus, live inventory deduction, and WhatsApp bots to eliminate cash leakage.",
+          tags: ["POS Software", "QR Menu", "Stock Tracking", "WhatsApp CRM"],
         },
       ],
     },

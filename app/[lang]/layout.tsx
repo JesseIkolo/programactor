@@ -63,6 +63,34 @@ export async function generateMetadata({
       template: "%s | Programactor",
     },
     description: c.meta.description,
+    keywords: isEn
+      ? [
+          "web agency douala",
+          "website design cameroon",
+          "mobile app development gabon",
+          "digital product studio libreville",
+          "turnkey website 72h",
+          "pos cashier software africa",
+          "restaurant qr menu douala",
+          "mobile money payments mtn orange",
+          "ui ux design central africa",
+          "programactor",
+        ]
+      : [
+          "création site web douala",
+          "agence web cameroun",
+          "création site internet libreville",
+          "développeur application mobile douala",
+          "agence web yaoundé",
+          "prix site internet cameroun",
+          "logiciel caisse restaurant cameroun",
+          "menu qr code restaurant douala",
+          "xpresite création site 72h",
+          "paiement mobile money orange mtn momo",
+          "design ux ui afrique",
+          "studio digital douala",
+          "programactor",
+        ],
     icons: { icon: "/mark.svg", apple: "/mark.svg" },
     alternates: {
       canonical: `https://programactor.pro/${lang}`,
@@ -120,8 +148,8 @@ export default async function RootLayout({
     },
     image: "https://programactor.pro/og-image.png",
     description: isEn
-      ? "Human-centred digital product studio in Douala and Libreville. Field research, UX/UI interface design, and rapid build sprints for Africa."
-      : "Agence de design produit et studio digital à Douala et Libreville. Recherche terrain, design UX/UI et développement en sprints courts, pour des produits pensés pour l'Afrique.",
+      ? "Web agency and digital product studio in Douala and Libreville. High-impact website creation, mobile app development (PWA/iOS/Android), and POS cashier software for African businesses."
+      : "Agence web et studio produit digital à Douala et Libreville. Création de sites internet professionnels, développement d'applications mobiles (PWA/iOS/Android) et logiciels de caisse pour entreprises en Afrique.",
     slogan: isEn
       ? "The studio that turns an idea into a product"
       : "L'agence qui transforme l'idée en produit",
@@ -141,10 +169,49 @@ export default async function RootLayout({
     ],
     areaServed: [
       { "@type": "City", name: "Douala" },
+      { "@type": "City", name: "Yaoundé" },
       { "@type": "City", name: "Libreville" },
       { "@type": "Country", name: "Cameroun" },
       { "@type": "Country", name: "Gabon" },
     ],
+    knowsAbout: [
+      "Création de sites internet",
+      "Développement d'applications mobiles",
+      "Design UX/UI",
+      "Logiciels de caisse POS",
+      "Paiements Mobile Money MTN Orange",
+      "Web design Afrique",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Services Digitaux Programactor",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "XpreSite — Site Internet Clé en Main en 72h",
+            description: "Site web professionnel avec nom de domaine, hébergement 1 an, intégration WhatsApp et paiement en 3 fois sans frais.",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Sprint Produit & Développement Sur-Mesure",
+            description: "Conception UX/UI, développement d'applications web & mobiles et mise en ligne en 4 à 8 semaines.",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Logiciels Métiers & Caisses POS",
+            description: "Systèmes de caisse tactile, menus QR code interactifs et décompte automatique des stocks.",
+          },
+        },
+      ],
+    },
     priceRange: "$$",
     sameAs: [
       "https://facebook.com/programactor",
