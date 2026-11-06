@@ -5,14 +5,15 @@ import { getXpreSiteConfigServer } from "@/lib/xpresite-server";
 
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import Work from "@/components/Work";
+import DemosSection from "@/components/DemosSection";
 import Services from "@/components/Services";
+import XpreSiteSection from "@/components/XpreSiteSection";
+import ProductsSection from "@/components/ProductsSection";
 import Method from "@/components/Method";
-import Labs from "@/components/Labs";
+import OfficeSection from "@/components/OfficeSection";
 import Pricing from "@/components/Pricing";
 import Faq from "@/components/Faq";
 import Footer from "@/components/Footer";
-import XpreSiteSection from "@/components/XpreSiteSection";
 import StickyCta from "@/components/StickyCta";
 import {
   About,
@@ -33,12 +34,9 @@ export default async function Page({
 
   const l = lang as Lang;
   const c = getContent(l);
-  const featuredProjects = await getFeaturedProjects(l);
   const xpresiteConfig = await getXpreSiteConfigServer();
   const isEn = l === "en";
 
-  /* Les six réponses sont déjà dans le DOM (balises <details>), donc
-     indexables : il ne manquait que le balisage qui les déclare. */
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -74,10 +72,13 @@ export default async function Page({
       url: `https://programactor.pro/${l}/xpresite`,
       availability: "https://schema.org/InStock",
       description: isEn
-        ? "Domain and one year of hosting included. Payment in 2 or 3 instalments."
-        : "Domaine et hébergement 1 an inclus. Paiement en 2 ou 3 tranches.",
+        ? "Domain and one year of hosting included. 50% deposit, balance on delivery."
+        : "Domaine et hébergement 1 an inclus. Acompte 50 %, solde à la livraison.",
     },
   };
+
+  const previewWhatsappUrl =
+    l === "fr" ? c.contact.whatsappPreviewFr : c.contact.whatsappPreviewEn;
 
   return (
     <>
@@ -91,26 +92,41 @@ export default async function Page({
       />
       <Nav c={c} lang={l} />
       <main>
+        {/* 1. Hero PME */}
         <Hero c={c} />
+        {/* Phrase-bandeau signature */}
         <Manifesto c={c} />
+        {/* 2. Ce que vous pouvez vérifier */}
         <Stats c={c} />
-        <Rhythm c={c} />
-        <About c={c} />
-        <Work c={c} projects={featuredProjects} />
+        {/* 3. Démos en ligne */}
+        <DemosSection c={c} lang={l} />
+        {/* 4. Ce que nous faisons */}
         <Services c={c} />
+        {/* 5. Tarifs PME */}
         <XpreSiteSection lang={l} config={xpresiteConfig} />
+        {/* 6. Nos produits : Bongo Space et BongoFleet */}
+        <ProductsSection c={c} lang={l} />
+        {/* 7. Comment ça marche */}
         <Method c={c} />
-        <Labs c={c} />
+        {/* 8. Notre bureau, c'est votre établissement */}
+        <OfficeSection c={c} lang={l} />
+        {/* 9. Qui vous répond */}
+        <About c={c} />
+        {/* 10. Étude de cas (masquée tant que pas d'accord client) */}
         <Testimonials c={c} />
-        <Pricing c={c} />
+        {/* 11. FAQ PME */}
         <Faq c={c} />
+        {/* 12. Studio produit avec Le rythme */}
+        <Rhythm c={c} />
+        <Pricing c={c} />
+        {/* 13. CTA final */}
         <FinalCta c={c} />
       </main>
       <Footer c={c} lang={l} />
       <StickyCta
         lang={l}
-        bookingHref={c.contact.booking}
-        bookingLabel={c.hero.ctaPrimary}
+        bookingHref={previewWhatsappUrl}
+        bookingLabel={c.nav.cta}
       />
     </>
   );

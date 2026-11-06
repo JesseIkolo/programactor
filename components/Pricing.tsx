@@ -2,9 +2,17 @@ import { Label, Reveal } from "./ui";
 import type { Content } from "@/lib/content";
 
 export default function Pricing({ c }: { c: Content }) {
+  const isEn = c.lang === "en";
+  const studioMsg = encodeURIComponent(
+    isEn
+      ? "Hello Programactor, I have an app or software project and would like a first call.\nMy project in one sentence: "
+      : "Bonjour Programactor, j'ai un projet d'application ou de logiciel et je souhaite un premier échange.\nMon projet en une phrase : "
+  );
+  const studioWhatsappUrl = `https://wa.me/237692025552?text=${studioMsg}`;
+
   return (
     <section
-      id="tarifs"
+      id="studio"
       className="scroll-mt-24 border-t border-[color:var(--color-hairline)] py-20 md:py-32"
     >
       <div className="shell">
@@ -21,6 +29,13 @@ export default function Pricing({ c }: { c: Content }) {
                 {c.pricing.titleAfter}
               </h2>
             </Reveal>
+            {"lead" in c.pricing && c.pricing.lead ? (
+              <Reveal delay={120}>
+                <p className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-[color:var(--color-muted)]">
+                  {c.pricing.lead}
+                </p>
+              </Reveal>
+            ) : null}
           </div>
         </div>
 
@@ -66,7 +81,9 @@ export default function Pricing({ c }: { c: Content }) {
 
                   <div className="mt-10 flex items-end justify-between gap-4 border-t border-[color:var(--color-hairline)] pt-7">
                     <a
-                      href={c.contact.booking}
+                      href={studioWhatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`t-mono rounded-[var(--radius-pill)] px-5 py-[11px] transition-colors ${
                         popular
                           ? "bg-signal text-ink hover:bg-paper"
@@ -97,6 +114,15 @@ export default function Pricing({ c }: { c: Content }) {
             {c.pricing.note}
           </p>
         </Reveal>
+
+        <div className="mt-8 text-center">
+          <a
+            href={`/${c.lang}/realisations`}
+            className="t-mono text-xs text-[color:var(--color-muted)] underline transition-colors hover:text-paper"
+          >
+            {isEn ? "Explore past studio projects →" : "Voir les projets réalisés par le studio →"}
+          </a>
+        </div>
       </div>
     </section>
   );

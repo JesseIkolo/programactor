@@ -16,6 +16,7 @@ export const CONVERSION_EVENTS = {
   cta_header_reserver: { meta: "Schedule", tiktok: "ClickButton" },
   cta_sticky_reserver: { meta: "Schedule", tiktok: "ClickButton" },
   cta_whatsapp: { meta: "Contact", tiktok: "Contact" },
+  cta_header_apercu: { meta: "Contact", tiktok: "Contact" },
   cta_xpresite_configurer: { meta: "InitiateCheckout", tiktok: "InitiateCheckout" },
   cta_case_study: { meta: "ViewContent", tiktok: "ViewContent" },
   form_reserver_submit: { meta: "Lead", tiktok: "SubmitForm" },

@@ -116,7 +116,10 @@ export async function POST(req: NextRequest) {
 
     // Construction du message WhatsApp
     const formattedTotal = new Intl.NumberFormat('fr-FR').format(totalPriceXAF);
-    const formattedSplit = new Intl.NumberFormat('fr-FR').format(splitAmount);
+    const depositAmount = Math.round(totalPriceXAF * 0.5);
+    const formattedDeposit = new Intl.NumberFormat('fr-FR').format(depositAmount);
+    const balanceAmount = totalPriceXAF - depositAmount;
+    const formattedBalance = new Intl.NumberFormat('fr-FR').format(balanceAmount);
 
     let whatsappText = '';
     const isEn = lang === 'en';
@@ -132,11 +135,11 @@ export async function POST(req: NextRequest) {
     } else {
       const optionsList = selectedAddonTitles && selectedAddonTitles.length > 0
         ? selectedAddonTitles.map((t: string) => `• ${t}`).join('\n')
-        : '• Pack Vitrine Essentiel';
+        : '• Formule Site Vitrine';
 
       whatsappText = isEn
-        ? `Hello Programactor! 👋\n\nI just configured my XpreSite project:\n\n📋 *Ref:* ${quoteReference}\n👤 *Name:* ${clientName} (${companyName || 'Project'})\n📍 *City:* ${city || 'Not specified'}\n🏷️ *Industry:* ${industryName}\n\n*Selected Features:*\n${optionsList}\n\n💰 *Total Price:* ${formattedTotal} FCFA\n💳 *Payment Plan:* ${paymentSplits} installments of ~${formattedSplit} FCFA\n\nLooking forward to getting started within 72h!`
-        : `Bonjour l'équipe Programactor ! 👋\n\nJe viens de configurer mon offre XpreSite sur votre site :\n\n📋 *Réf devis :* ${quoteReference}\n👤 *Nom :* ${clientName} (${companyName || 'Mon projet'})\n📍 *Ville :* ${city || 'Non renseignée'}\n🏷️ *Secteur :* ${industryName}\n\n*Fonctionnalités choisies :*\n${optionsList}\n\n💰 *Total estimé :* ${formattedTotal} FCFA\n💳 *Facilité :* ${paymentSplits} tranches de ~${formattedSplit} FCFA\n⚡ *Délai :* 72h dès remise des éléments\n\nDiscutons des prochaines étapes pour le lancement !`;
+        ? `Hello Programactor,\n\nI just configured my website estimate:\n\n📋 *Ref:* ${quoteReference}\n👤 *Name:* ${clientName} (${companyName || 'Business'})\n📍 *City:* ${city || 'Not specified'}\n🏷️ *Sector:* ${industryName}\n\n*Selected Options:*\n${optionsList}\n\n💰 *Total Price:* ${formattedTotal} FCFA\n💵 *50% Deposit:* ${formattedDeposit} FCFA (balance of ${formattedBalance} FCFA upon delivery)\n\nLooking forward to launching!`
+        : `Bonjour Programactor,\n\nJe viens de configurer mon estimation de site sur votre configurateur :\n\n📋 *Réf devis :* ${quoteReference}\n👤 *Nom :* ${clientName} (${companyName || 'Mon établissement'})\n📍 *Ville :* ${city || 'Non renseignée'}\n🏷️ *Secteur :* ${industryName}\n\n*Options sélectionnées :*\n${optionsList}\n\n💰 *Total estimé :* ${formattedTotal} FCFA\n💵 *Acompte 50 % :* ${formattedDeposit} FCFA (solde de ${formattedBalance} FCFA à la livraison)\n\nDiscutons des prochaines étapes pour le lancement !`;
     }
 
     const studioPhone = process.env.NEXT_PUBLIC_STUDIO_WHATSAPP || '237692025552';
@@ -152,7 +155,8 @@ export async function POST(req: NextRequest) {
         totalPriceXAF,
         formattedTotal: totalPriceXAF > 0 ? `${formattedTotal} FCFA` : (isEn ? 'Custom Quote' : 'Sur Devis'),
         splits: paymentSplits,
-        splitAmount: splitAmount > 0 ? `${formattedSplit} FCFA` : undefined,
+        depositAmount: totalPriceXAF > 0 ? `${formattedDeposit} FCFA` : undefined,
+        balanceAmount: totalPriceXAF > 0 ? `${formattedBalance} FCFA` : undefined,
       },
     });
   } catch (error) {

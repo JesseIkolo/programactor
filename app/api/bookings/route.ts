@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 import { sendServerConversion } from '@/lib/conversions-server';
+import { sendBookingNotificationEmail } from '@/lib/email-service';
+import { generateGoogleCalendarUrl } from '@/lib/calendar';
 
 /**
  * IP DU VISITEUR, jamais celle du serveur : c'est l'erreur classique qui
@@ -105,9 +107,9 @@ export async function POST(req: NextRequest) {
       eventId = '',
     } = body;
 
-    if (!clientName || !clientEmail || !clientPhone || !date || !timeSlot) {
+    if (!clientName || !clientPhone || !date || !timeSlot) {
       return NextResponse.json(
-        { success: false, message: 'Champs obligatoires manquants (nom, email, téléphone, date, créneau).' },
+        { success: false, message: 'Champs obligatoires manquants (nom, téléphone, date, créneau).' },
         { status: 400 }
       );
     }
@@ -171,14 +173,22 @@ export async function POST(req: NextRequest) {
 
     const channelLabel =
       meetingType === 'PRESENTIEL'
-        ? (lang === 'en' ? 'In-Person Meeting' : 'Présentiel (Bureaux Studio / Client)')
-        : (lang === 'en' ? 'Online Video (Google Meet / WhatsApp)' : 'En ligne (Google Meet / WhatsApp)');
+        ? (lang === 'en' ? `At your place in Douala (${locationDetails || 'Douala'})` : `Chez vous à Douala (${locationDetails || 'Douala'})`)
+        : (lang === 'en' ? 'WhatsApp or Google Meet video' : 'Visio WhatsApp ou Google Meet');
 
     const whatsappMessage = lang === 'en'
-      ? `Hello Programactor! 👋\n\nI just scheduled a 30-minute studio strategy session:\n\n📋 *Ref:* ${reference}\n👤 *Name:* ${clientName} (${companyName || 'Project'})\n📅 *Date & Slot:* ${date} at ${timeSlot}\n📍 *Channel:* ${channelLabel}\n🎯 *Topic:* ${topic || 'Digital project'}\n\nLooking forward to speaking with you!`
-      : `Bonjour l'équipe Programactor ! 👋\n\nJe viens de planifier un rendez-vous de cadrage stratégique (30 min) :\n\n📋 *Réf :* ${reference}\n👤 *Nom :* ${clientName} (${companyName || 'Mon projet'})\n📅 *Date & Heure :* ${date} à ${timeSlot}\n📍 *Canal :* ${channelLabel}\n🎯 *Sujet :* ${topic || 'Projet digital'}\n\nÀ très vite pour notre échange !`;
+      ? `Hello Programactor,\n\nI just booked a 30-minute meeting:\n\n📋 *Ref:* ${reference}\n👤 *Name:* ${clientName} (${companyName || 'Business'})\n📅 *Date & Slot:* ${date} at ${timeSlot}\n📍 *Channel:* ${channelLabel}\n🎯 *Need:* ${topic || 'Website / Digital menu'}\n\nLooking forward to speaking with you!`
+      : `Bonjour Programactor,\n\nJe viens de planifier un rendez-vous (30 min) :\n\n📋 *Réf :* ${reference}\n👤 *Nom :* ${clientName} (${companyName || 'Établissement'})\n📅 *Date & Heure :* ${date} à ${timeSlot}\n📍 *Modalité :* ${channelLabel}\n🎯 *Besoin :* ${topic || 'Site web / Menu digital'}\n\nÀ très vite !`;
 
     const whatsappUrl = `https://wa.me/${studioPhone}?text=${encodeURIComponent(whatsappMessage)}`;
+
+    const googleCalendarUrl = generateGoogleCalendarUrl({
+      title: lang === 'en' ? `Programactor Meeting · ${clientName}` : `Rendez-vous Programactor · ${clientName}`,
+      description: `Rendez-vous Programactor (30 min)\n\nClient : ${clientName} (${companyName || 'Établissement'})\nTéléphone : ${clientPhone}\nEmail : ${clientEmail || 'Non renseigné'}\nBesoin : ${topic || 'Site web / Menu digital'}\nModalité : ${channelLabel}\nRéférence : ${reference}`,
+      location: meetingType === 'PRESENTIEL' ? (locationDetails || 'Chez vous à Douala') : 'Google Meet / WhatsApp',
+      date,
+      timeSlot,
+    });
 
     const newBooking = {
       _id: reference,
@@ -209,12 +219,31 @@ export async function POST(req: NextRequest) {
       console.warn('Sauvegarde locale ignorée (environnement serverless read-only) :', fsErr);
     }
 
+    // Déclencher la notification email
+    sendBookingNotificationEmail({
+      reference,
+      clientName,
+      clientEmail,
+      clientPhone,
+      companyName,
+      sector,
+      topic,
+      meetingType,
+      locationDetails,
+      date,
+      timeSlot,
+      lang,
+    }).catch((emailErr) => {
+      console.warn('Notification email ignorée :', emailErr);
+    });
+
     return NextResponse.json({
       success: true,
       message: 'Rendez-vous planifié avec succès.',
       data: {
         booking: newBooking,
         whatsappUrl,
+        googleCalendarUrl,
       },
     });
   } catch (error) {

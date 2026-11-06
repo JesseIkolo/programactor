@@ -24,12 +24,12 @@ export function Stats({ c }: { c: Content }) {
         <Reveal>
           <Label className="mb-12">{c.stats.label}</Label>
         </Reveal>
-        <div className="grid gap-12 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-20">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,18rem)_1fr] lg:gap-16">
           <Reveal>
-            <h2 className="t-sub max-w-[14ch]">{c.stats.title}</h2>
+            <h2 className="t-sub max-w-[16ch]">{c.stats.title}</h2>
           </Reveal>
-          <div className="grid gap-10 sm:grid-cols-3">
-            {c.stats.items.map((s, i) => (
+          <div className="grid gap-6 grid-cols-2 sm:grid-cols-4">
+            {c.stats.items.map((s: any, i: number) => (
               <Reveal key={s.label} delay={i * 90}>
                 <div>
                   <div className="mb-3 flex h-[10px] items-end gap-[3px]" aria-hidden>
@@ -42,10 +42,15 @@ export function Stats({ c }: { c: Content }) {
                       />
                     ))}
                   </div>
-                  <div className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,4.5vw,3.5rem)] font-bold leading-none tracking-[-0.04em]">
-                    <Counter to={s.value} suffix={s.suffix} />
+                  <div className="font-[family-name:var(--font-display)] text-[clamp(2.2rem,4vw,3.2rem)] font-bold leading-none tracking-[-0.04em] text-white">
+                    <Counter
+                      to={s.value}
+                      prefix={s.prefix || ""}
+                      suffix={s.suffix || ""}
+                      raw={s.raw}
+                    />
                   </div>
-                  <p className="t-mono mt-4 max-w-[22ch] text-[color:var(--color-muted-2)]">
+                  <p className="t-mono mt-4 text-xs text-[color:var(--color-muted-2)] uppercase tracking-wider leading-relaxed">
                     {s.label}
                   </p>
                 </div>
@@ -85,7 +90,7 @@ export function Rhythm({ c }: { c: Content }) {
 /* -------------------------------------------------------------------------- */
 export function About({ c }: { c: Content }) {
   return (
-    <section id="agence" className="scroll-mt-24 py-20 md:py-32">
+    <section id="equipe" className="scroll-mt-24 py-20 md:py-32">
       <div className="shell grid gap-14 md:grid-cols-2 md:gap-20">
         <div>
           <Reveal>
@@ -127,6 +132,11 @@ export function About({ c }: { c: Content }) {
 
 /* -------------------------------------------------------------------------- */
 export function Testimonials({ c }: { c: Content }) {
+  // Règle PRD P0 n°4 & C04 : pas d'auto-témoignage. La section n'est rendue que si elle est explicitement publiée avec accord client.
+  if (!c.testimonials?.published) {
+    return null;
+  }
+
   return (
     <section className="border-t border-[color:var(--color-hairline)] py-20 md:py-32">
       <div className="shell">
@@ -184,6 +194,9 @@ export function Testimonials({ c }: { c: Content }) {
 
 /* -------------------------------------------------------------------------- */
 export function FinalCta({ c }: { c: Content }) {
+  const previewHref =
+    c.lang === "fr" ? c.contact.whatsappPreviewFr : c.contact.whatsappPreviewEn;
+
   return (
     <section id="contact" className="scroll-mt-24 pb-8 pt-20 md:pb-12 md:pt-32">
       <div className="shell">
@@ -218,14 +231,20 @@ export function FinalCta({ c }: { c: Content }) {
               </Reveal>
               <Reveal delay={180}>
                 <div className="flex flex-wrap items-center gap-4 md:justify-end">
-                  <Button href={c.contact.booking} variant="signal">
+                  <Button
+                    href={previewHref}
+                    external
+                    variant="signal"
+                  >
                     {c.cta.button}
                   </Button>
                   <a
-                    href={`mailto:${c.contact.email}`}
+                    href="https://wa.me/237692025552"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="t-mono text-white/70 underline underline-offset-4 transition-colors hover:text-signal"
                   >
-                    {c.cta.or} — {c.contact.email}
+                    {c.cta.or} — +237 692 02 55 52
                   </a>
                 </div>
               </Reveal>

@@ -25,10 +25,10 @@
   --color-muted-2: rgba(255, 255, 255, 0.52);
 
   /* --- Typographie --- */
-  --font-display: var(--font-satoshi), "Satoshi", "Inter", "Helvetica Neue", Helvetica, Arial,
-    ui-sans-serif, system-ui, sans-serif;
-  --font-text: var(--font-switzer), "Switzer", "Inter", "Helvetica Neue", Helvetica, Arial,
-    ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-familjen), "Familjen Fallback Android", "Helvetica Neue", Arial,
+    system-ui, sans-serif;
+  --font-text: var(--font-satoshi), "Satoshi Fallback Android", "Helvetica Neue", Arial,
+    system-ui, sans-serif;
   --font-mono: var(--font-dm-mono), "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas,
     monospace;
 
@@ -52,6 +52,28 @@
 
 html {
   scroll-behavior: smooth;
+  font-synthesis: none;
+}
+
+/* Fallbacks Android (Roboto), en complément du fallback Arial généré par next/font.
+   Valeurs du PRD partie C, §2.5. */
+@font-face {
+  font-family: "Familjen Fallback Android";
+  src: local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 700;
+  size-adjust: 98.38%;
+  ascent-override: 104.19%;
+  descent-override: 22.87%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Satoshi Fallback Android";
+  src: local("Roboto"), local("Roboto-Regular");
+  font-weight: 400;
+  size-adjust: 98.86%;
+  ascent-override: 102.17%;
+  descent-override: 24.28%;
+  line-gap-override: 10.12%;
 }
 
 @media (prefers-reduced-motion: reduce) {

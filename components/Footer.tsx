@@ -18,19 +18,28 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
   const other: Lang = lang === "fr" ? "en" : "fr";
   const year = new Date().getFullYear();
   const pathname = usePathname();
-  const isRealisations = pathname?.includes("/realisations");
-  const otherLangHref = isRealisations ? `/${other}/realisations` : `/${other}`;
+  const isHome =
+    !pathname ||
+    pathname === `/${lang}` ||
+    pathname === `/${lang}/` ||
+    pathname === "/";
+  const otherLangHref = pathname
+    ? pathname.replace(new RegExp(`^/${lang}`), `/${other}`)
+    : `/${other}`;
 
   // État local synchronisé avec l'API de contact
   const [contactInfo, setContactInfo] = useState({
     email: c.contact.email,
-    phone: "+237 6 92 02 55 52",
-    whatsapp: c.contact.whatsapp,
+    phone: "+237 692 02 55 52",
+    whatsapp: "+237 692 02 55 52",
 
     facebook: "https://facebook.com/programactor",
-    twitter: "https://x.com/programactor",
+    twitter: "",
     instagram: c.contact.instagram,
-    cities: c.cities,
+    cities:
+      lang === "fr"
+        ? "Douala (sur place) · Libreville (visio)"
+        : "Douala (on-site) · Libreville (remote)",
   });
 
   useEffect(() => {
@@ -44,9 +53,8 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
             phone: res.data.phone || prev.phone,
             whatsapp: res.data.whatsapp || prev.whatsapp,
             facebook: res.data.facebook || prev.facebook,
-            twitter: res.data.twitter || prev.twitter,
+            twitter: "",
             instagram: res.data.instagram || prev.instagram,
-            cities: res.data.cities || prev.cities,
           }));
         }
       })
@@ -56,11 +64,8 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
   }, []);
 
   const getLinkHref = (rawHref: string) => {
-    if (rawHref === "#realisations") {
-      return `/${lang}/realisations`;
-    }
     if (rawHref.startsWith("#")) {
-      return isRealisations ? `/${lang}${rawHref}` : rawHref;
+      return isHome ? rawHref : `/${lang}${rawHref}`;
     }
     return rawHref;
   };
@@ -109,19 +114,6 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
                   title="Facebook"
                 >
                   <Facebook01Icon size={17} />
-                </a>
-              )}
-
-              {contactInfo.twitter && (
-                <a
-                  href={contactInfo.twitter}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="X / Twitter Programactor"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-[color:var(--color-muted)] transition-all hover:border-[#EBFF72] hover:bg-[#EBFF72]/10 hover:text-[#EBFF72]"
-                  title="X (Twitter)"
-                >
-                  <NewTwitterIcon size={16} />
                 </a>
               )}
 
@@ -183,18 +175,18 @@ export default function Footer({ c, lang }: { c: Content; lang: Lang }) {
                   <span>{contactInfo.whatsapp}</span>
                 </a>
               </li>
-              {contactInfo.phone && contactInfo.phone !== contactInfo.whatsapp && (
-                <li>
-                  <a
-                    href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, "")}`}
-                    className="flex items-center gap-2.5 text-[color:var(--color-muted)] transition-colors hover:text-paper"
-                  >
-                    <Call02Icon size={15} className="text-[#EBFF72]/80" />
-                    <span>{contactInfo.phone}</span>
-                  </a>
-                </li>
-              )}
-              <li className="pt-1 text-[color:var(--color-muted-2)]">{contactInfo.cities}</li>
+              <li>
+                <a
+                  href="tel:+237692025552"
+                  className="flex items-center gap-2.5 text-[color:var(--color-muted)] transition-colors hover:text-paper"
+                >
+                  <Call02Icon size={15} className="text-[#EBFF72]/80" />
+                  <span>+237 692 02 55 52</span>
+                </a>
+              </li>
+              <li className="pt-1 text-xs text-[color:var(--color-muted-2)]">
+                {contactInfo.cities}
+              </li>
             </ul>
           </div>
         </div>

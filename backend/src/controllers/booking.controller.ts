@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Booking, BookingStatus } from '../models/Booking.model.js';
+import { sendBookingNotificationEmail } from '../services/email.service.js';
 
 // Créneaux horaires fixes (Option A : 10h00 à 18h00 par pas de 30 minutes)
 export const BUSINESS_SLOTS = [
@@ -91,10 +92,10 @@ export async function createBooking(req: Request, res: Response): Promise<void> 
       lang = 'fr',
     } = req.body;
 
-    if (!clientName || !clientEmail || !clientPhone || !date || !timeSlot) {
+    if (!clientName || !clientPhone || !date || !timeSlot) {
       res.status(400).json({
         success: false,
-        message: 'Champs obligatoires manquants (nom, email, téléphone, date, créneau).',
+        message: 'Champs obligatoires manquants (nom, téléphone, date, créneau).',
       });
       return;
     }
@@ -145,7 +146,7 @@ export async function createBooking(req: Request, res: Response): Promise<void> 
     const studioPhone = '237692025552';
     const channelLabel =
       meetingType === 'PRESENTIEL'
-        ? (lang === 'en' ? 'In-Person Meeting' : 'Présentiel (Bureaux Studio / Client)')
+        ? (lang === 'en' ? 'At your place (Douala)' : 'Chez le client (Douala)')
         : (lang === 'en' ? 'Online Video (Google Meet / WhatsApp)' : 'En ligne (Google Meet / WhatsApp)');
 
     const whatsappMessage = lang === 'en'
@@ -153,6 +154,23 @@ export async function createBooking(req: Request, res: Response): Promise<void> 
       : `Bonjour l'équipe Programactor ! 👋\n\nJe viens de planifier un rendez-vous de cadrage stratégique (30 min) :\n\n📋 *Réf :* ${reference}\n👤 *Nom :* ${clientName} (${companyName || 'Mon projet'})\n📅 *Date & Heure :* ${date} à ${timeSlot}\n📍 *Canal :* ${channelLabel}\n🎯 *Sujet :* ${topic || 'Projet digital'}\n\nÀ très vite pour notre échange !`;
 
     const whatsappUrl = `https://wa.me/${studioPhone}?text=${encodeURIComponent(whatsappMessage)}`;
+
+    // Déclenchement de la notification e-mail
+    sendBookingNotificationEmail({
+      reference,
+      clientName,
+      clientEmail,
+      clientPhone,
+      companyName,
+      meetingType,
+      locationDetails,
+      topic,
+      date,
+      timeSlot,
+      lang,
+    }).catch((mailErr) => {
+      console.warn('Notification e-mail ignorée suite à une erreur :', mailErr);
+    });
 
     res.status(201).json({
       success: true,

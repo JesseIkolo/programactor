@@ -12,9 +12,8 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const isRealisations = pathname?.includes("/realisations");
-  const isXpreSite = pathname?.includes("/xpresite");
-  const isSubpage = isRealisations || isXpreSite;
+  const isHome = !pathname || pathname === `/${lang}` || pathname === `/${lang}/` || pathname === "/";
+  const isSubpage = !isHome;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -48,19 +47,14 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
   }, []);
 
   const other: Lang = lang === "fr" ? "en" : "fr";
-  const otherLangHref = isRealisations
-    ? `/${other}/realisations`
-    : isXpreSite
-    ? `/${other}/xpresite`
+  const otherLangHref = pathname
+    ? pathname.replace(new RegExp(`^/${lang}`), `/${other}`)
     : `/${other}`;
 
+  const previewHref =
+    lang === "fr" ? c.contact.whatsappPreviewFr : c.contact.whatsappPreviewEn;
+
   const getLinkHref = (rawHref: string) => {
-    if (rawHref === "#realisations") {
-      return `/${lang}/realisations`;
-    }
-    if (rawHref === "#xpresite") {
-      return `/${lang}/xpresite`;
-    }
     if (rawHref.startsWith("#")) {
       return isSubpage ? `/${lang}${rawHref}` : rawHref;
     }
@@ -114,18 +108,11 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
         <nav className="hidden items-center gap-8 lg:flex">
           {c.nav.links.map((l) => {
             const href = getLinkHref(l.href);
-            const isCurrent =
-              (l.href === "#realisations" && isRealisations) ||
-              (l.href === "#xpresite" && isXpreSite);
             return (
               <a
                 key={l.href}
                 href={href}
-                className={`t-mono transition-colors ${
-                  isCurrent
-                    ? "text-signal font-medium"
-                    : "text-[color:var(--color-muted)] hover:text-paper"
-                }`}
+                className="t-mono text-[color:var(--color-muted)] transition-colors hover:text-paper"
               >
                 {l.label}
               </a>
@@ -148,8 +135,10 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
           </div>
 
           <a
-            href={c.contact.booking}
-            onClick={() => track("cta_header_reserver", { surface: "header" })}
+            href={previewHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("cta_header_apercu", { surface: "header" })}
             className="t-mono rounded-[var(--radius-pill)] bg-signal px-4 py-[9px] font-medium text-ink transition-colors hover:bg-paper"
           >
             <span className="sm:hidden">{c.nav.ctaShort}</span>
@@ -184,17 +173,12 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
             <nav className="flex flex-col">
               {c.nav.links.map((l) => {
                 const href = getLinkHref(l.href);
-                const isCurrent =
-                  (l.href === "#realisations" && isRealisations) ||
-                  (l.href === "#xpresite" && isXpreSite);
                 return (
                   <a
                     key={l.href}
                     href={href}
                     onClick={(e) => handleMobileNavClick(e, l.href)}
-                    className={`t-sub flex items-center justify-between border-b border-[color:var(--color-hairline)] py-5 text-xl transition-colors ${
-                      isCurrent ? "text-signal font-bold" : "text-paper hover:text-signal"
-                    }`}
+                    className="t-sub flex items-center justify-between border-b border-[color:var(--color-hairline)] py-5 text-xl text-paper transition-colors hover:text-signal"
                   >
                     <span>{l.label}</span>
                     <ArrowRight01Icon size={16} className="text-[color:var(--color-muted-2)]" />
@@ -206,9 +190,11 @@ export default function Nav({ c, lang }: { c: Content; lang: Lang }) {
             {/* Actions et contact */}
             <div className="mt-10 flex flex-col gap-6">
               <a
-                href={c.contact.booking}
+                href={previewHref}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => {
-                  track("cta_header_reserver", { surface: "menu_mobile" });
+                  track("cta_header_apercu", { surface: "menu_mobile" });
                   setOpen(false);
                 }}
                 className="flex items-center justify-center rounded-[var(--radius-pill)] bg-signal px-6 py-4 text-[15px] font-bold text-ink transition-colors hover:bg-paper"

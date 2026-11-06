@@ -15,6 +15,7 @@ import {
   Building01Icon,
   Video01Icon,
 } from 'hugeicons-react';
+import { generateGoogleCalendarUrl } from '@/lib/calendar';
 
 export type BookingStatus =
   | 'CONFIRMÉ'
@@ -426,7 +427,7 @@ export default function AdminBookingsTab({ token, showToast, isEn = false }: Adm
                   <div className="text-white/70">
                     Format :{' '}
                     {selectedBooking.meetingType === 'PRESENTIEL'
-                      ? 'Présentiel (Bureaux / Locaux client)'
+                      ? 'Chez le client (Douala)'
                       : 'En ligne (Google Meet / WhatsApp)'}
                   </div>
                   {selectedBooking.locationDetails && (
@@ -444,8 +445,34 @@ export default function AdminBookingsTab({ token, showToast, isEn = false }: Adm
                 )}
               </div>
 
-              {/* Bouton d'action directe WhatsApp */}
-              <div className="pt-1">
+              {/* Actions Rapides : Google Agenda, Email & WhatsApp */}
+              <div className="pt-1 space-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <a
+                    href={generateGoogleCalendarUrl({
+                      title: `Session Stratégique Programactor : ${selectedBooking.clientName}`,
+                      description: `Rendez-vous de cadrage stratégique Programactor\n\nClient : ${selectedBooking.clientName} (${selectedBooking.companyName || 'Projet'})\nTéléphone : ${selectedBooking.clientPhone}\nEmail : ${selectedBooking.clientEmail}\nSujet : ${selectedBooking.topic || 'Projet digital'}\nFormat : ${selectedBooking.meetingType === 'PRESENTIEL' ? 'Présentiel' : 'En ligne'}\nRéférence : ${selectedBooking.reference}`,
+                      location: selectedBooking.meetingType === 'PRESENTIEL' ? (selectedBooking.locationDetails || 'Chez le client, Douala') : 'Google Meet / WhatsApp',
+                      date: selectedBooking.date,
+                      timeSlot: selectedBooking.timeSlot,
+                    })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-2.5 px-3 bg-[#EBFF72]/10 hover:bg-[#EBFF72]/20 border border-[#EBFF72]/30 text-[#EBFF72] font-mono text-xs rounded-xl transition-all flex items-center justify-center gap-2 font-medium"
+                  >
+                    <Calendar01Icon size={16} />
+                    <span>Google Agenda</span>
+                  </a>
+
+                  <a
+                    href={`mailto:${selectedBooking.clientEmail}?subject=Programactor%20-%20Rendez-vous%20du%20${selectedBooking.date}`}
+                    className="py-2.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 font-mono text-xs rounded-xl transition-all flex items-center justify-center gap-2"
+                  >
+                    <Mail01Icon size={16} />
+                    <span>Envoyer un Email</span>
+                  </a>
+                </div>
+
                 <a
                   href={`https://wa.me/${selectedBooking.clientPhone.replace(/\D/g, '')}`}
                   target="_blank"

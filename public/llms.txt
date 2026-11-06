@@ -1,29 +1,36 @@
-# Programactor — Digital Product Design & Engineering Studio
+# Programactor
 
-> Studio de design produit et d'ingénierie logicielle centré terrain, basé à Douala (Cameroun) et Libreville (Gabon). Spécialiste de la conception d'applications web, mobiles et de plateformes adaptées aux contraintes des marchés africains (faible débit, mobile money, offline-first).
+> Programactor est une agence web basée à Douala (Cameroun), fondée en 2015 par Jesse B. Ikolo. Elle crée des sites web, des menus digitaux QR et des logiciels pour les restaurants, bars, hôtels et loueurs de véhicules du Cameroun et du Gabon. L'équipe se déplace chez le client à Douala ; pour Libreville et l'international, tout se fait à distance (appel, visio, WhatsApp). Programactor n'a pas de bureau ouvert au public.
 
-## Liens Officiels
-- Site web principal : https://programactor.pro
-- Prise de rendez-vous stratégique (30 min) : https://programactor.pro/fr/reserver
-- Offre XpreSite (Sites en 72h) : https://programactor.pro/fr/xpresite
-- Portfolio & Études de cas : https://programactor.pro/fr/realisations
-- Contact WhatsApp & Téléphone : +237 692 025 552 / hello@programactor.pro
+## Faits clés
+- Siège : Douala, Cameroun. Pas de bureau à Libreville. Formule : « Notre bureau, c'est votre établissement ».
+- Fondateur : Jesse B. Ikolo, CEO & Design Leader.
+- Contact unique : +237 692 02 55 52 (téléphone direct et WhatsApp), hello@programactor.pro
+- Langues : français, anglais.
+- Monnaie : FCFA (XAF), identique au Cameroun et au Gabon.
+- Paiement : Orange Money et MTN MoMo (Cameroun), Airtel Money (Gabon), virement bancaire. Acompte de 50 % à la commande, solde à la livraison.
 
-## Offres & Services
+## Tarifs (grille officielle, novembre 2026)
+- Site « Essentiel » : 75 000 FCFA (site 1 page responsive, WhatsApp sur chaque section, domaine et hébergement 1 an, livré en 72h)
+- Site « Complet » : 130 000 FCFA (référencement local SEO, fiche Google et Yango, hébergement 1 an, 10 adresses e-mail, réservation WhatsApp)
+- Options : Devis intelligent +60 000 FCFA ; Calculateur de tarif +80 000 FCFA ; Marketplace +80 000 FCFA
+- Menu digital QR : de 90 000 à 130 000 FCFA (carte sur mobile, QR sur tables, commande WhatsApp)
+- Bongo Space, Pack installation : 250 000 FCFA (paramétrage, saisie du menu, QR de table, formation, 12 mois d'abonnement inclus)
+- Site loueurs BongoFleet : à partir de 130 000 FCFA (flotte, tarifs, caution, réservation WhatsApp)
 
-### 1. Studio Produit sur-mesure (Sprint Produit)
-- **Diagnostic Produit (5 jours)** : Audit terrain, interviews utilisateurs, analyse concurrentielle, parcours cible et plan de lots chiffré.
-- **Sprint Produit (4 à 8 semaines)** : De l'idée au premier écran testé sous 15 jours. Livrable complet : Design UI/UX, développement fullstack (Next.js / Node / Mobile), intégration paiements locaux (Orange Money, MTN MoMo) et mise en production.
-- **Product Partner (Mensuel)** : Équipe produit dédiée en régie ou forfait mensuel pour faire évoluer votre application en continu.
+## Produits
+- Bongo Space : plateforme pour bars et restaurants (menu QR, commandes WhatsApp, caisse hors-ligne). https://bongospace.pro/fr
+- BongoFleet : site et réservation pour loueurs de véhicules. Démo : https://drivo-demo.netlify.app
 
-### 2. XpreSite — Site Web Métier Clé en Main en 72h
-- **Tarif de base** : Dès 75 000 FCFA (nom de domaine .com ou .pro + hébergement sécurisé haute performance inclus pendant 1 an).
-- **Délai garanti** : 72 heures chrono après réception des éléments.
-- **Paiement échelonné** : Possibilité de règlement en 3 tranches (40% acompte / 30% après maquette / 30% à la livraison).
-- **Secteurs couverts** : Restaurants, Blanchisseries / Pressing, Location de véhicules, Transport & Logistique, Agences de voyage & Tourisme, Cabinets & PME.
-- **Intégrations natives** : Prise de commande WhatsApp en direct, géolocalisation Google / Yango Maps, catalogues interactifs, QR codes.
+## Pages utiles
+- Accueil : https://programactor.pro/fr
+- Tarifs : https://programactor.pro/fr#tarifs
+- Site web pour PME : https://programactor.pro/fr/xpresite
+- Réserver un rendez-vous (chez vous à Douala ou visio) : https://programactor.pro/fr/reserver
+- Réalisations & Démos : https://programactor.pro/fr/realisations
 
-## Méthodologie & Valeurs
-- **Conçu pour le terrain réel** : Interfaces optimisées pour smartphones d'entrée de gamme, faible consommation de bande passante et UX sans friction.
-- **Pas de faux semblants** : Pas de maquettes interminables sans code. Démonstration sur de vraies données toutes les deux semaines.
-- **Ancrage territorial** : Présence physique à Douala (Cameroun) et Libreville (Gabon), interventions dans toute l'Afrique centrale et à l'international.
+## Offre secondaire
+- Studio produit (applications web et mobiles sur mesure pour startups et entreprises) : diagnostic à partir de 250 000 FCFA, sprint produit à partir de 750 000 FCFA, partenaire mensuel à partir de 1 500 000 FCFA.
+
+## English
+Programactor is a web agency based in Douala, Cameroon, founded in 2015 by Jesse B. Ikolo. Websites from 75,000 FCFA, digital QR menus from 90,000 FCFA. On-site meetings in Douala; remote service (call, video, WhatsApp) for Libreville, Gabon and abroad. No physical office open to the public ("Our office is your venue"). WhatsApp / Phone: +237 692 02 55 52. https://programactor.pro/en
