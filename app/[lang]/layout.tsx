@@ -5,34 +5,36 @@ import "../globals.css";
 import { getContent, LANGS, type Lang } from "@/lib/content";
 import Analytics from "@/components/Analytics";
 
+// Titres : Familjen Grotesk (OFL). Texte courant : Satoshi (ITF Free Font License).
+// Sous-ensembles latins générés avec pyftsubset (PRD partie C, §2.3), flèches incluses.
+const familjen = localFont({
+  src: [
+    {
+      path: "../fonts/familjen-grotesk-latin-var.woff2",
+      weight: "400 700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-familjen",
+  display: "swap",
+  preload: true,
+  adjustFontFallback: "Arial",
+  fallback: ["Familjen Fallback Android", "system-ui", "sans-serif"],
+});
+
 const satoshi = localFont({
   src: [
-    // Satoshi 300 et 500 étaient chargées sans être utilisées nulle part.
     {
-      path: "../fonts/satoshi-700.woff2",
-      weight: "700",
+      path: "../fonts/satoshi-latin-var.woff2",
+      weight: "300 900",
       style: "normal",
     },
   ],
   variable: "--font-satoshi",
   display: "swap",
-});
-
-const switzer = localFont({
-  src: [
-    {
-      path: "../fonts/switzer-400.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../fonts/switzer-500.woff2",
-      weight: "500",
-      style: "normal",
-    },
-  ],
-  variable: "--font-switzer",
-  display: "swap",
+  preload: true,
+  adjustFontFallback: "Arial",
+  fallback: ["Satoshi Fallback Android", "system-ui", "sans-serif"],
 });
 
 const dmMono = DM_Mono({
@@ -148,82 +150,119 @@ export default async function RootLayout({
     },
     image: "https://programactor.pro/og-image.png",
     description: isEn
-      ? "Web agency and digital product studio in Douala and Libreville. High-impact website creation, mobile app development (PWA/iOS/Android), and POS cashier software for African businesses."
-      : "Agence web et studio produit digital à Douala et Libreville. Création de sites internet professionnels, développement d'applications mobiles (PWA/iOS/Android) et logiciels de caisse pour entreprises en Afrique.",
-    slogan: isEn
-      ? "The studio that turns an idea into a product"
-      : "L'agence qui transforme l'idée en produit",
+      ? "Web agency based in Douala (Cameroon). Websites, digital QR menus, and software for restaurants, bars, hotels, and car rental businesses. On-site meetings in Douala; remote service for Libreville and abroad."
+      : "Agence web basée à Douala (Cameroun). Sites internet, menus digitaux QR et logiciels pour restaurants, bars, hôtels et loueurs de véhicules. Rendez-vous chez le client à Douala ; accompagnement à distance pour Libreville et l'international.",
+    foundingDate: "2015",
+    foundingLocation: {
+      "@type": "Place",
+      name: "Douala, Cameroun",
+    },
+    founder: {
+      "@type": "Person",
+      name: "Jesse B. Ikolo",
+      jobTitle: "CEO & Design Leader",
+      sameAs: [
+        "https://www.linkedin.com/company/programactor",
+        "https://www.behance.net/jesseikolo",
+        "https://dribbble.com/jesseikolo",
+      ],
+    },
     email: "hello@programactor.pro",
     telephone: "+237692025552",
-    address: [
-      {
-        "@type": "PostalAddress",
-        addressLocality: "Douala",
-        addressCountry: "CM",
-      },
-      {
-        "@type": "PostalAddress",
-        addressLocality: "Libreville",
-        addressCountry: "GA",
-      },
-    ],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Douala",
+      addressRegion: "Littoral",
+      addressCountry: "CM",
+    },
     areaServed: [
-      { "@type": "City", name: "Douala" },
-      { "@type": "City", name: "Yaoundé" },
-      { "@type": "City", name: "Libreville" },
-      { "@type": "Country", name: "Cameroun" },
-      { "@type": "Country", name: "Gabon" },
+      {
+        "@type": "City",
+        name: "Douala",
+        description: "Interventions en présentiel chez le client",
+      },
+      {
+        "@type": "Country",
+        name: "Cameroun",
+      },
+      {
+        "@type": "City",
+        name: "Libreville",
+        description: "Accompagnement 100% à distance (visio, appel, WhatsApp)",
+      },
+      {
+        "@type": "Country",
+        name: "Gabon",
+      },
     ],
+    currenciesAccepted: "XAF",
+    paymentAccepted: "Orange Money, MTN Mobile Money, Airtel Money, virement bancaire",
+    priceRange: "75 000 – 250 000 FCFA",
     knowsAbout: [
-      "Création de sites internet",
-      "Développement d'applications mobiles",
-      "Design UX/UI",
-      "Logiciels de caisse POS",
-      "Paiements Mobile Money MTN Orange",
-      "Web design Afrique",
+      "Création de sites internet pour PME",
+      "Menu digital QR code pour restaurants",
+      "Référencement local Google et Yango",
+      "Commande WhatsApp",
+      "Paiement Mobile Money",
+      "Logiciels de gestion et caisse hors-ligne",
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Services Digitaux Programactor",
+      name: isEn ? "Programactor Digital Services" : "Services Digitaux Programactor",
       itemListElement: [
         {
           "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "XpreSite — Site Internet Clé en Main en 72h",
-            description: "Site web professionnel avec nom de domaine, hébergement 1 an, intégration WhatsApp et paiement en 3 fois sans frais.",
-          },
+          name: isEn ? "Essentiel Website" : "Site Essentiel",
+          price: 75000,
+          priceCurrency: "XAF",
+          description: isEn
+            ? "1-page mobile-friendly website with WhatsApp button, domain & hosting for 1 year, delivered in 72h. 50% deposit."
+            : "Site 1 page sur mobile avec bouton WhatsApp, nom de domaine et hébergement 1 an, livré en 72h. Acompte de 50 %.",
         },
         {
           "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Sprint Produit & Développement Sur-Mesure",
-            description: "Conception UX/UI, développement d'applications web & mobiles et mise en ligne en 4 à 8 semaines.",
-          },
+          name: isEn ? "Complet Website" : "Site Complet",
+          price: 130000,
+          priceCurrency: "XAF",
+          description: isEn
+            ? "Complete website with local SEO, Google & Yango listing, hosting 1 year, 10 email addresses, WhatsApp booking. 50% deposit."
+            : "Site complet avec SEO local, fiche Google et Yango, hébergement 1 an, 10 e-mails professionnels, réservation WhatsApp. Acompte de 50 %.",
         },
         {
           "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Logiciels Métiers & Caisses POS",
-            description: "Systèmes de caisse tactile, menus QR code interactifs et décompte automatique des stocks.",
+          name: isEn ? "Digital QR Menu" : "Menu digital QR code",
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            minPrice: 90000,
+            maxPrice: 130000,
+            priceCurrency: "XAF",
           },
+          description: isEn
+            ? "Full menu on mobile, table QR codes, WhatsApp order. 50% deposit."
+            : "Carte complète sur mobile, QR codes de table, commande sur WhatsApp. Acompte de 50 %.",
+        },
+        {
+          "@type": "Offer",
+          name: isEn ? "Bongo Space Setup Pack" : "Pack installation Bongo Space",
+          price: 250000,
+          priceCurrency: "XAF",
+          description: isEn
+            ? "Setup, menu entry, table QR codes, staff training, 12 months subscription included."
+            : "Paramétrage, saisie du menu, QR codes, formation du personnel, 12 mois d'abonnement inclus.",
         },
       ],
     },
-    priceRange: "$$",
     sameAs: [
+      "https://www.linkedin.com/company/programactor",
       "https://facebook.com/programactor",
       "https://instagram.com/programactor",
-      "https://x.com/programactor",
     ],
   };
 
   return (
     <html
       lang={lang}
-      className={`${satoshi.variable} ${switzer.variable} ${dmMono.variable}`}
+      className={`${familjen.variable} ${satoshi.variable} ${dmMono.variable}`}
     >
       <head>
         <meta name="theme-color" content="#0E0E0E" />

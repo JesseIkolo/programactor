@@ -14,7 +14,7 @@ export type MeetingChannel = 'EN_LIGNE' | 'PRESENTIEL';
 export interface IBooking extends Document {
   reference: string;
   clientName: string;
-  clientEmail: string;
+  clientEmail?: string;
   clientPhone: string;
   clientCity?: string;
   companyName?: string;
@@ -50,7 +50,8 @@ const BookingSchema = new Schema<IBooking>(
     },
     clientEmail: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
       lowercase: true,
       trim: true,
     },

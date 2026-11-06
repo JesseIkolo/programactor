@@ -97,11 +97,13 @@ export function Reveal({
 export function Counter({
   to,
   suffix = "",
+  prefix = "",
   raw = false,
   className = "",
 }: {
   to: number;
   suffix?: string;
+  prefix?: string;
   raw?: boolean;
   className?: string;
 }) {
@@ -143,6 +145,7 @@ export function Counter({
 
   return (
     <span ref={ref} className={`t-num ${className}`}>
+      {prefix}
       {value}
       {suffix}
     </span>

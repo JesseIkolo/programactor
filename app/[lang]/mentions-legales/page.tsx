@@ -20,11 +20,11 @@ export async function generateMetadata({
   const isEn = lang === "en";
 
   const title = isEn
-    ? "Legal Notices & Terms | Programactor Studio"
-    : "Mentions Légales | Programactor Studio";
+    ? "Legal notice"
+    : "Mentions légales";
   const description = isEn
-    ? "Official legal disclosures, ownership information and terms for Programactor digital studio in Douala and Libreville."
-    : "Mentions légales, identification de l'éditeur et conditions générales du studio Programactor à Douala et Libreville.";
+    ? "Legal notices and information for Programactor, web agency and product studio in Douala."
+    : "Mentions légales et informations éditeur de Programactor, agence web et studio produit à Douala.";
 
   return {
     title,
@@ -35,12 +35,13 @@ export async function generateMetadata({
       languages: {
         fr: "https://programactor.pro/fr/mentions-legales",
         en: "https://programactor.pro/en/mentions-legales",
+        "x-default": "https://programactor.pro/fr/mentions-legales",
       },
     },
     openGraph: {
       title,
       description,
-      locale: lang === "fr" ? "fr_CM" : "en_GB",
+      locale: lang === "fr" ? "fr_FR" : "en_GB",
       type: "website",
     },
   };
@@ -84,7 +85,7 @@ export default async function MentionsLegalesPage({
             <div className="max-w-3xl">
               <Reveal delay={60}>
                 <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-white md:text-5xl">
-                  {isEn ? "Legal Notices" : "Mentions Légales"}
+                  {isEn ? "Legal Notice" : "Mentions Légales"}
                 </h1>
               </Reveal>
               <Reveal delay={120}>
@@ -108,22 +109,28 @@ export default async function MentionsLegalesPage({
               </h2>
               <div className="space-y-2 text-sm text-[color:var(--color-muted)] leading-relaxed">
                 <p>
-                  <strong>{isEn ? "Company Name:" : "Dénomination :"}</strong> Programactor (Studio de design produit et d&apos;ingénierie numérique)
+                  <strong>{isEn ? "Brand / Activity:" : "Dénomination :"}</strong> Programactor — agence web et studio produit.
                 </p>
                 <p>
-                  <strong>{isEn ? "Direction / Founder:" : "Direction / Fondateur :"}</strong> Jesse Ikolo
+                  <strong>{isEn ? "Founder & Director of Publication:" : "Direction / Fondateur :"}</strong> Jesse Bondenge Ikolo.
                 </p>
                 <p>
-                  <strong>{isEn ? "Operating Hubs:" : "Bureaux d&apos;opération :"}</strong> Douala (Cameroun) &amp; Libreville (Gabon)
+                  <strong>{isEn ? "Place of Business:" : "Lieu d'activité :"}</strong>{" "}
+                  {isEn
+                    ? "Douala, Cameroon. Programactor does not receive the public: meetings take place at our clients' venues in Douala, or by video calls."
+                    : "Douala, Cameroun. Programactor n'accueille pas de public : nos rendez-vous ont lieu chez nos clients à Douala, ou en visio."}
+                </p>
+                <p>
+                  <strong>{isEn ? "Contact Phone & WhatsApp:" : "Téléphone direct & WhatsApp :"}</strong>{" "}
+                  <a href="tel:+237692025552" className="text-white hover:text-[#EBFF72]">
+                    +237 692 02 55 52
+                  </a>
                 </p>
                 <p>
                   <strong>{isEn ? "Contact Email:" : "Email de contact :"}</strong>{" "}
                   <a href="mailto:hello@programactor.pro" className="text-[#EBFF72] hover:underline">
                     hello@programactor.pro
                   </a>
-                </p>
-                <p>
-                  <strong>{isEn ? "Direct Telephone & WhatsApp:" : "Téléphone direct &amp; WhatsApp :"}</strong> +237 692 025 552
                 </p>
               </div>
             </div>
@@ -136,37 +143,37 @@ export default async function MentionsLegalesPage({
               </h2>
               <div className="space-y-2 text-sm text-[color:var(--color-muted)] leading-relaxed">
                 <p>
-                  <strong>{isEn ? "Edge CDN & Static Hosting:" : "CDN Edge &amp; Hébergement Frontend :"}</strong> Netlify, Inc. (512 2nd Street, Suite 200, San Francisco, CA 94107, USA)
+                  <strong>{isEn ? "Edge CDN & Static Hosting:" : "CDN Edge & Hébergement Frontend :"}</strong> Netlify, Inc. (512 2nd Street, Suite 200, San Francisco, CA 94107, USA).
                 </p>
                 <p>
-                  <strong>{isEn ? "Database & API Services:" : "Services API &amp; Base de données :"}</strong> MongoDB Atlas / VPS Sécurisé Cloud (Chiffrement TLS 1.3, isolation des données).
+                  <strong>{isEn ? "Database & API Services:" : "Services API & Base de données :"}</strong> MongoDB Atlas / VPS Cloud sécurisé.
                 </p>
               </div>
             </div>
 
-            {/* 3. Propriété intellectuelle */}
+            {/* 3. Prix et commandes */}
             <div className="rounded-2xl border border-white/10 bg-[#141414] p-6 md:p-8 space-y-4">
               <h2 className="text-xl font-bold text-white flex items-center gap-3">
                 <span className="inline-block w-2 h-2 rounded-full bg-[#EBFF72]" />
-                <span>3. {isEn ? "Intellectual Property" : "Propriété Intellectuelle"}</span>
+                <span>3. {isEn ? "Pricing & Orders" : "Prix et Commandes"}</span>
               </h2>
               <p className="text-sm text-[color:var(--color-muted)] leading-relaxed">
                 {isEn
-                  ? "All elements of this site, including source code, branding, logos, texts, UI mockups, case study formulations, and architectural diagrams, are the exclusive intellectual property of Programactor and its respective clients. Any unauthorized reproduction, distribution, or decompilation is strictly prohibited without prior written consent."
-                  : "L'ensemble des éléments constituant ce site internet (code source, marques, logotypes, textes, maquettes UI/UX, formulations d'études de cas et schémas d'architecture) relève de la législation sur la propriété intellectuelle. Toute reproduction, copie ou représentation intégrale ou partielle sans l'accord préalable écrit de Programactor est formellement interdite."}
+                  ? "Displayed prices are in CFA francs (XAF). A written quotation is provided before starting any work. 50% deposit upon order, balance upon delivery. Estimates provided by the online configurator are indicative: only the signed quotation is binding."
+                  : "Les prix affichés sont en francs CFA (XAF). Un devis écrit est remis avant tout travail. Acompte de 50 % à la commande, solde à la livraison. Les estimations du configurateur sont indicatives : seul le devis accepté engage."}
               </p>
             </div>
 
-            {/* 4. Prestations & Responsabilité */}
+            {/* 4. Propriété intellectuelle */}
             <div className="rounded-2xl border border-white/10 bg-[#141414] p-6 md:p-8 space-y-4">
               <h2 className="text-xl font-bold text-white flex items-center gap-3">
                 <span className="inline-block w-2 h-2 rounded-full bg-[#EBFF72]" />
-                <span>4. {isEn ? "Services & Responsibility" : "Prestations & Responsabilité"}</span>
+                <span>4. {isEn ? "Ownership & Intellectual Property" : "Propriété"}</span>
               </h2>
               <p className="text-sm text-[color:var(--color-muted)] leading-relaxed">
                 {isEn
-                  ? "The estimates provided by the XpreSite interactive configurator or during 30-minute discovery calls constitute non-binding preliminary assessments. Definitive commitments occur solely upon signing a formal proposal and initial installment validation."
-                  : "Les estimations calculées par le configurateur interactif XpreSite ou lors des sessions de cadrage stratégique constituent des évaluations indicatives. L'engagement contractuel définitif intervient exclusivement après signature du bon de commande ou du devis formel."}
+                  ? "The domain name and client-supplied content belong to the client. Elements specific to Programactor (code, design mockups, Programactor, Bongo Space and BongoFleet brands) remain its property unless specified otherwise in the quotation."
+                  : "Le nom de domaine et les contenus fournis par le client lui appartiennent. Les éléments propres à Programactor (code, maquettes, marques Programactor, Bongo Space, BongoFleet) restent sa propriété, sauf mention contraire dans le devis."}
               </p>
             </div>
           </div>

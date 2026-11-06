@@ -6,7 +6,7 @@ import { getXpreSiteConfigServer } from "@/lib/xpresite-server";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { Label, Reveal } from "@/components/ui";
-import { XpreSiteConfigurator } from "@/components/XpreSiteConfigurator";
+import XpreSiteConfigurator from "@/components/XpreSiteConfigurator";
 
 export function generateStaticParams() {
   return LANGS.map((lang) => ({ lang }));
@@ -22,11 +22,11 @@ export async function generateMetadata({
 
   const isEn = lang === "en";
   const title = isEn
-    ? "XpreSite — Express Turnkey Website in 72h | Programactor"
-    : "XpreSite — Votre Site Web Métier Clé en Main en 72h | Programactor";
+    ? "Essentiel or Complet website, pricing"
+    : "Site internet Essentiel ou Complet, prix";
   const description = isEn
-    ? "Turnkey website tailored for restaurants, couriers, laundries, car rentals, and agencies. Starting at 75,000 FCFA with 1-year domain & hosting included. Pay in 2 or 3 installments."
-    : "Formule de site web sur-mesure pour restaurants, livreurs, pressings, agences et loueurs de véhicules. Dès 75.000 FCFA, 1 an de domaine + hébergement inclus, paiement en 2 ou 3 tranches.";
+    ? "Essentiel website 75,000 FCFA in 72 hours, Complet website 130,000 FCFA with Google, Yango and business e-mails. 50% deposit, Mobile Money payment."
+    : "Site Essentiel 75 000 FCFA en 72 h, site Complet 130 000 FCFA avec Google, Yango et e-mails pro. Acompte 50 %, paiement Mobile Money.";
 
   return {
     title,
@@ -65,23 +65,37 @@ export default async function XpreSitePage({
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `https://programactor.pro/${lang}/xpresite/#service`,
-    name: isEn ? "XpreSite — Express Turnkey Website in 72h" : "XpreSite — Site Web Métier Clé en Main en 72h",
+    name: isEn ? "Essentiel or Complet website" : "Site internet Essentiel ou Complet",
     serviceType: "Website design and development package",
     description: isEn
-      ? "Turnkey website package tailored for restaurants, couriers, laundries, car rentals, and agencies. Delivered in 72 hours, with 1-year domain & hosting included."
-      : "Formule de site web sur-mesure pour restaurants, livreurs, pressings, agences et loueurs de véhicules. Livraison garantie en 72h, 1 an de domaine + hébergement inclus.",
+      ? "Website for restaurants, hotels, car rental and service businesses. Essentiel live in 72 hours, Complet in about 2 weeks. Domain and hosting for 1 year included. 50% deposit, balance on delivery."
+      : "Site internet pour restaurants, hôtels, loueurs de véhicules et commerces de service. Essentiel en ligne en 72 h, Complet en 2 semaines environ. Domaine et hébergement 1 an inclus. Acompte 50 %, solde à la livraison.",
     provider: { "@id": "https://programactor.pro/#organization" },
     areaServed: [
       { "@type": "City", name: "Douala" },
       { "@type": "City", name: "Libreville" },
     ],
-    offers: {
-      "@type": "Offer",
-      url: `https://programactor.pro/${lang}/xpresite`,
-      priceCurrency: "XAF",
-      price: "75000",
-      availability: "https://schema.org/InStock",
-    },
+    offers: [
+      {
+        "@type": "Offer",
+        name: isEn ? "Essentiel website" : "Site Essentiel",
+        url: `https://programactor.pro/${lang}/xpresite`,
+        priceCurrency: "XAF",
+        price: 75000,
+        availability: "https://schema.org/InStock",
+      },
+      {
+        "@type": "Offer",
+        name: isEn ? "Complet website" : "Site Complet",
+        url: `https://programactor.pro/${lang}/xpresite`,
+        priceCurrency: "XAF",
+        price: 130000,
+        availability: "https://schema.org/InStock",
+      },
+      { "@type": "Offer", name: isEn ? "Smart quote add-on" : "Option Devis intelligent", priceCurrency: "XAF", price: 60000 },
+      { "@type": "Offer", name: isEn ? "Calculator add-on" : "Option Calculateur", priceCurrency: "XAF", price: 80000 },
+      { "@type": "Offer", name: isEn ? "Marketplace add-on" : "Option Marketplace", priceCurrency: "XAF", price: 80000 },
+    ],
   };
 
   const faqSchema = {
@@ -91,25 +105,25 @@ export default async function XpreSitePage({
       {
         "@type": "Question",
         name: isEn
-          ? "How does the 72-hour delivery guarantee work?"
-          : "Comment fonctionne la garantie de livraison en 72 heures ?",
+          ? "How does the 72-hour delivery work?"
+          : "Comment fonctionne le délai de 72 heures ?",
         acceptedAnswer: {
           "@type": "Answer",
           text: isEn
-            ? "The 72-hour timer starts as soon as you provide your core content: logo, images, price list, and contact details."
-            : "Le chrono de 72 heures démarre dès que vous nous transmettez vos éléments essentiels : logo, photos, grille de prix et coordonnées.",
+            ? "The 72-hour delivery applies to the Essentiel website. It starts once we receive your logo, photos, prices and contact details. The Complet website takes about 2 weeks."
+            : "Le délai de 72 h concerne le site Essentiel. Il démarre dès réception de vos éléments : logo, photos, prix et coordonnées. Le Complet demande environ 2 semaines.",
         },
       },
       {
         "@type": "Question",
         name: isEn
-          ? "How does the 2 or 3 installment payment plan work?"
-          : "Comment se déroule le paiement échelonné en 2 ou 3 tranches ?",
+          ? "How does payment work?"
+          : "Comment se passe le paiement ?",
         acceptedAnswer: {
           "@type": "Answer",
           text: isEn
-            ? "You pay an initial deposit via Mobile Money (Orange Money, MTN MoMo) or bank transfer, followed by milestone payments upon live delivery and approval."
-            : "Vous réglez un premier acompte au lancement par Mobile Money (Orange Money, MTN MoMo) ou virement. Le solde est versé à la livraison et validation de votre site.",
+            ? "50% deposit at kickoff by Orange Money or MTN MoMo (Cameroon), Airtel Money (Gabon), or bank transfer. The balance is paid on delivery, once your site is approved."
+            : "50 % d'acompte au lancement par Orange Money ou MTN MoMo (Cameroun), Airtel Money (Gabon), ou virement. Le solde est versé à la livraison, une fois votre site validé.",
         },
       },
       {
@@ -169,13 +183,13 @@ export default async function XpreSitePage({
               <h1 className="t-display mt-5 text-paper">
                 {isEn ? (
                   <>
-                    Your business website ready in{" "}
-                    <span className="mark-word">72h</span> sharp.
+                    Your website live in{" "}
+                    <span className="mark-word">72 hours</span> or 2 weeks.
                   </>
                 ) : (
                   <>
-                    Votre site web métier prêt en{" "}
-                    <span className="mark-word">72h</span> chrono.
+                    Votre site en ligne en{" "}
+                    <span className="mark-word">72 h</span> ou en 2 semaines.
                   </>
                 )}
               </h1>
@@ -184,8 +198,8 @@ export default async function XpreSitePage({
             <Reveal delay={160}>
               <p className="t-lead mt-6 text-white/70 max-w-2xl leading-relaxed">
                 {isEn
-                  ? "A solid showcase foundation paired with dedicated features for your trade: WhatsApp direct ordering, real-time tracking, table reservation, or appointment scheduling. Starting at 75,000 FCFA with 1-year domain, hosting, and split payment facilities."
-                  : "Un socle vitrine performant enrichi des modules propres à votre métier : commande WhatsApp, suivi de course, réservation de table ou prise de rendez-vous. À partir de 75.000 FCFA avec 1 an de nom de domaine, hébergement et paiement en 2 ou 3 tranches."}
+                  ? "Essentiel at 75,000 FCFA or Complet at 130,000 FCFA, with the add-ons your trade needs. 50% deposit, balance on delivery."
+                  : "Essentiel à 75 000 FCFA ou Complet à 130 000 FCFA, avec les options de votre métier. Acompte 50 %, solde à la livraison."}
               </p>
             </Reveal>
 
@@ -194,11 +208,11 @@ export default async function XpreSitePage({
               <div className="mt-8 flex flex-wrap gap-2.5 t-mono text-xs">
                 <span className="inline-flex items-center gap-2 rounded-full border border-signal/30 bg-signal/10 px-3.5 py-1.5 text-signal">
                   <span className="h-1.5 w-1.5 rounded-full bg-signal" />
-                  {isEn ? "72h Delivery Guarantee" : "Livraison 72h garantie"}
+                  {isEn ? "Essentiel in 72 hours" : "Essentiel en 72 h"}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-white/80">
                   <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
-                  {isEn ? "Pay in 2 or 3 installments" : "Paiement en 2 ou 3 tranches"}
+                  {isEn ? "50% deposit, balance on delivery" : "Acompte 50 %, solde à la livraison"}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-white/80">
                   <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
@@ -292,8 +306,8 @@ export default async function XpreSitePage({
             </h2>
             <p className="text-sm text-white/60 mt-3">
               {isEn
-                ? "Select your trade, toggle specific modules, and view your split breakdown immediately."
-                : "Choisissez votre secteur, activez vos options métier et visualisez vos mensualités instantanément."}
+                ? "Select your trade, toggle specific modules, and see your total and 50% deposit right away."
+                : "Choisissez votre secteur, activez vos options métier et voyez tout de suite le total et l’acompte de 50 %."}
             </p>
           </div>
 
@@ -388,26 +402,26 @@ export default async function XpreSitePage({
               <div className="rounded-[var(--radius-tile)] border border-[color:var(--color-hairline)] bg-surface p-6">
                 <h3 className="text-base font-semibold text-white mb-2">
                   {isEn
-                    ? "How does the 72-hour delivery guarantee work?"
-                    : "Comment fonctionne la garantie de livraison en 72 heures ?"}
+                    ? "How does the 72-hour delivery work?"
+                    : "Comment fonctionne le délai de 72 heures ?"}
                 </h3>
                 <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
                   {isEn
-                    ? "The 72h sprint officially starts once we receive all your assets: logo, pictures/menu, list of services, and contact information. Our team dedicates an intensive sprint to assemble and launch your site."
-                    : "Le chrono de 72 heures démarre dès que vous nous transmettez vos éléments essentiels : logo, photos de vos produits ou plats, grille de prix et coordonnées. Notre équipe se consacre alors en sprint exclusif pour monter, intégrer et mettre votre site en ligne."}
+                    ? "The 72-hour delivery applies to the Essentiel website. It starts once we receive your logo, photos, prices and contact details. The Complet website takes about 2 weeks."
+                    : "Le délai de 72 h concerne le site Essentiel. Il démarre dès réception de vos éléments : logo, photos de vos produits ou plats, prix et coordonnées. Le Complet demande environ 2 semaines."}
                 </p>
               </div>
 
               <div className="rounded-[var(--radius-tile)] border border-[color:var(--color-hairline)] bg-surface p-6">
                 <h3 className="text-base font-semibold text-white mb-2">
                   {isEn
-                    ? "How does the 2 or 3 installment payment work?"
-                    : "Comment se déroule le paiement échelonné en 2 ou 3 tranches ?"}
+                    ? "How does payment work?"
+                    : "Comment se passe le paiement ?"}
                 </h3>
                 <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
                   {isEn
-                    ? "You pay an initial deposit (50% or 33%) at project kickoff via Mobile Money (Orange Money, MTN MoMo) or bank transfer. The remaining balance is paid upon validation and official launch."
-                    : "Vous réglez un premier acompte au lancement (50% pour la formule 2 tranches, ou 33% pour la formule 3 tranches) par Mobile Money (Orange Money, MTN MoMo) ou virement. Le solde est versé à la livraison et validation de votre site."}
+                    ? "50% deposit at kickoff by Orange Money or MTN MoMo (Cameroon), Airtel Money (Gabon), or bank transfer. The balance is paid on delivery, once your site is approved."
+                    : "50 % d'acompte au lancement par Orange Money ou MTN MoMo (Cameroun), Airtel Money (Gabon), ou virement. Le solde est versé à la livraison, une fois votre site validé."}
                 </p>
               </div>
 

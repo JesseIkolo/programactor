@@ -18,6 +18,7 @@ import {
   UserIcon,
 } from 'hugeicons-react';
 import { Mark, Wordmark } from '@/components/ui';
+import { generateGoogleCalendarUrl } from '@/lib/calendar';
 
 interface BookingFormProps {
   lang: 'fr' | 'en';
@@ -73,6 +74,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
   const [bookingSuccess, setBookingSuccess] = useState<{
     reference: string;
     whatsappUrl: string;
+    googleCalendarUrl?: string;
   } | null>(null);
 
   // Charger les créneaux lors du changement de date
@@ -109,7 +111,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
   // Soumission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!clientName || !clientEmail || !clientPhone || !selectedDate || !selectedSlot) {
+    if (!clientName || !clientPhone || !selectedDate || !selectedSlot) {
       setErrorMessage(
         isEn
           ? 'Please fill in all mandatory fields and select a valid time slot.'
@@ -158,16 +160,31 @@ export default function BookingForm({ lang }: BookingFormProps) {
         eventId
       );
 
+      const gCalUrl =
+        data.data?.googleCalendarUrl ||
+        generateGoogleCalendarUrl({
+          title: isEn
+            ? `Programactor meeting · ${clientName}`
+            : `Rendez-vous Programactor · ${clientName}`,
+          description: isEn
+            ? `Programactor meeting (30 min)\n\nClient: ${clientName} (${companyName || 'Business'})\nPhone: ${clientPhone}\nEmail: ${clientEmail || '-'}\nTopic: ${topic || 'Website'}\nFormat: ${channel === 'PRESENTIEL' ? 'At your place (Douala)' : 'Video call'}\nRef: ${data.data?.booking?.reference || 'CONFIRMED'}`
+            : `Rendez-vous Programactor (30 min)\n\nClient : ${clientName} (${companyName || 'Établissement'})\nTéléphone : ${clientPhone}\nEmail : ${clientEmail || '-'}\nSujet : ${topic || 'Site internet'}\nFormat : ${channel === 'PRESENTIEL' ? 'Chez vous (Douala)' : 'Visio'}\nRéf : ${data.data?.booking?.reference || 'CONFIRMED'}`,
+          location: channel === 'PRESENTIEL' ? (locationDetails || 'Chez le client, Douala') : 'Google Meet / WhatsApp',
+          date: selectedDate,
+          timeSlot: selectedSlot,
+        });
+
       setBookingSuccess({
         reference: data.data?.booking?.reference || 'CONFIRMED',
         whatsappUrl: data.data?.whatsappUrl || '#',
+        googleCalendarUrl: gCalUrl,
       });
 
-      // Redirection immédiate vers WhatsApp
+      // Redirection WhatsApp après délai pour laisser le client voir la confirmation
       if (data.data?.whatsappUrl) {
         setTimeout(() => {
           window.location.href = data.data.whatsappUrl;
-        }, 1200);
+        }, 2500);
       }
     } catch (err: any) {
       setErrorMessage(err.message || 'Impossible de confirmer le rendez-vous. Veuillez réessayer.');
@@ -188,7 +205,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
 
           <div className="flex items-center gap-3 text-xs font-mono">
             <span className="hidden sm:inline-block text-white/50">
-              {isEn ? 'Strategy Discovery Session · 30 min' : 'Session de cadrage · 30 min'}
+              {isEn ? 'Meeting · 30 min' : 'Rendez-vous · 30 min'}
             </span>
             <Link
               href={`/${lang}`}
@@ -214,23 +231,23 @@ export default function BookingForm({ lang }: BookingFormProps) {
                 {isEn ? 'Booking Confirmed' : 'Rendez-vous Confirmé'} · {bookingSuccess.reference}
               </span>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                {isEn ? 'Your session is locked in!' : 'Votre créneau est réservé !'}
+                {isEn ? 'Your meeting request is sent!' : 'Votre demande de rendez-vous est envoyée !'}
               </h1>
               <p className="text-sm text-white/60 max-w-md mx-auto">
                 {isEn
-                  ? 'We are redirecting you to WhatsApp with your pre-filled summary to connect directly with the Programactor leadership team.'
-                  : 'Redirection automatique en cours vers WhatsApp avec votre récapitulatif pour échanger directement avec la direction du studio.'}
+                  ? 'We are opening WhatsApp with your summary so we can confirm the meeting with you.'
+                  : 'Nous ouvrons WhatsApp avec votre récapitulatif pour confirmer le rendez-vous avec vous.'}
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-black/50 border border-white/10 font-mono text-xs text-left space-y-2">
               <div className="flex justify-between text-white/60">
                 <span>{isEn ? 'Date & Time:' : 'Date & Heure :'}</span>
-                <span className="text-[#EBFF72] font-semibold">{selectedDate} à {selectedSlot} (GMT+1)</span>
+                <span className="text-[#EBFF72] font-semibold">{selectedDate} {isEn ? 'at' : 'à'} {selectedSlot} (GMT+1)</span>
               </div>
               <div className="flex justify-between text-white/60">
                 <span>{isEn ? 'Format:' : 'Format :'}</span>
-                <span className="text-white">{channel === 'PRESENTIEL' ? (isEn ? 'In-Person' : 'Présentiel') : (isEn ? 'Online Video' : 'Visio en ligne')}</span>
+                <span className="text-white">{channel === 'PRESENTIEL' ? (isEn ? 'At your place (Douala)' : 'Chez vous (Douala)') : (isEn ? 'Video call' : 'Visio')}</span>
               </div>
               <div className="flex justify-between text-white/60">
                 <span>{isEn ? 'Contact:' : 'Contact :'}</span>
@@ -238,18 +255,29 @@ export default function BookingForm({ lang }: BookingFormProps) {
               </div>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-2 flex flex-col sm:flex-row gap-3">
               <a
                 href={bookingSuccess.whatsappUrl}
-                className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-2xl bg-[#EBFF72] hover:bg-[#d9ec61] text-[#0E0E0E] font-bold text-sm transition-all shadow-xl shadow-[#EBFF72]/20"
+                className="inline-flex items-center justify-center gap-2 flex-1 py-3.5 px-6 rounded-2xl bg-[#EBFF72] hover:bg-[#d9ec61] text-[#0E0E0E] font-bold text-sm transition-all shadow-xl shadow-[#EBFF72]/20"
               >
                 <WhatsappIcon size={20} />
-                <span>{isEn ? 'Open WhatsApp Immediately' : 'Ouvrir WhatsApp immédiatement'}</span>
+                <span>{isEn ? 'Open WhatsApp' : 'Ouvrir WhatsApp'}</span>
               </a>
-              <p className="text-[11px] font-mono text-white/40 mt-3">
-                {isEn ? 'Click the button if redirection did not trigger automatically.' : 'Cliquez sur le bouton si la redirection ne démarre pas.'}
-              </p>
+              {bookingSuccess.googleCalendarUrl && (
+                <a
+                  href={bookingSuccess.googleCalendarUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 flex-1 py-3.5 px-6 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-sm transition-all"
+                >
+                  <Calendar01Icon size={20} className="text-[#EBFF72]" />
+                  <span>{isEn ? 'Add to Google Calendar' : 'Ajouter à Google Agenda'}</span>
+                </a>
+              )}
             </div>
+            <p className="text-[11px] font-mono text-white/40 mt-3">
+              {isEn ? 'Automatic WhatsApp redirection in progress...' : 'Redirection WhatsApp automatique en cours...'}
+            </p>
           </div>
         ) : (
           /* Formulaire de Réservation */
@@ -258,15 +286,15 @@ export default function BookingForm({ lang }: BookingFormProps) {
             <div className="max-w-2xl space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBFF72]/10 border border-[#EBFF72]/20 text-[#EBFF72] text-xs font-mono">
                 <Calendar01Icon size={14} />
-                <span>{isEn ? 'Studio Strategic Intake' : 'Cadrage Stratégique Studio'}</span>
+                <span>{isEn ? 'Free meeting · 30 min' : 'Rendez-vous gratuit · 30 min'}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-                {isEn ? 'Book your 30-min strategy call' : 'Planifiez votre session de 30 minutes'}
+                {isEn ? 'Book a meeting (30 min, free)' : 'Prendre rendez-vous (30 min, gratuit)'}
               </h1>
               <p className="text-sm sm:text-base text-white/60 leading-relaxed">
                 {isEn
-                  ? 'A dedicated 30-minute session with a Programactor lead to evaluate your technical roadmap, budget, and business timeline.'
-                  : 'Un échange de cadrage direct avec la direction technique de Programactor pour analyser vos besoins, valider votre architecture et chiffrer votre délai de livraison.'}
+                  ? 'We come to your place in Douala, or meet by video. We look at your business and what customers see online, then send you a written offer with its price.'
+                  : 'Nous venons chez vous à Douala, ou nous faisons le point en visio. Nous regardons ensemble votre établissement et ce que vos clients voient en ligne, puis nous vous proposons une offre écrite avec son prix.'}
               </p>
             </div>
 
@@ -363,32 +391,10 @@ export default function BookingForm({ lang }: BookingFormProps) {
                 <div className="bg-[#141414] border border-white/10 rounded-3xl p-6 space-y-4">
                   <label className="text-xs font-mono uppercase tracking-wider text-white/70 flex items-center gap-2">
                     <Globe02Icon size={15} className="text-[#EBFF72]" />
-                    <span>3. {isEn ? 'Meeting Channel' : 'Modalité du rendez-vous'}</span>
+                    <span>3. {isEn ? 'Meeting format' : 'Modalité du rendez-vous'}</span>
                   </label>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setChannel('EN_LIGNE')}
-                      className={`p-4 rounded-2xl border text-left transition-all flex items-start gap-3 ${
-                        channel === 'EN_LIGNE'
-                          ? 'bg-[#EBFF72]/10 border-[#EBFF72] text-white'
-                          : 'bg-black/30 border-white/10 text-white/60 hover:border-white/30'
-                      }`}
-                    >
-                      <div className={`p-2 rounded-xl mt-0.5 ${channel === 'EN_LIGNE' ? 'bg-[#EBFF72] text-black' : 'bg-white/10 text-white'}`}>
-                        <Video01Icon size={18} />
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold text-white">
-                          {isEn ? 'Online Video Call' : 'Visio en ligne'}
-                        </div>
-                        <div className="text-[11px] text-white/50 mt-0.5">
-                          Google Meet ou WhatsApp Vidéo
-                        </div>
-                      </div>
-                    </button>
-
                     <button
                       type="button"
                       onClick={() => setChannel('PRESENTIEL')}
@@ -403,10 +409,32 @@ export default function BookingForm({ lang }: BookingFormProps) {
                       </div>
                       <div>
                         <div className="text-xs font-bold text-white">
-                          {isEn ? 'In-Person Meeting' : 'En présentiel'}
+                          {isEn ? 'At your place in Douala' : 'Chez vous, à Douala'}
                         </div>
                         <div className="text-[11px] text-white/50 mt-0.5">
-                          Douala / Libreville (Bureaux ou chez vous)
+                          {isEn ? 'We travel to your venue' : 'Nous nous déplaçons chez vous'}
+                        </div>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setChannel('EN_LIGNE')}
+                      className={`p-4 rounded-2xl border text-left transition-all flex items-start gap-3 ${
+                        channel === 'EN_LIGNE'
+                          ? 'bg-[#EBFF72]/10 border-[#EBFF72] text-white'
+                          : 'bg-black/30 border-white/10 text-white/60 hover:border-white/30'
+                      }`}
+                    >
+                      <div className={`p-2 rounded-xl mt-0.5 ${channel === 'EN_LIGNE' ? 'bg-[#EBFF72] text-black' : 'bg-white/10 text-white'}`}>
+                        <Video01Icon size={18} />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">
+                          {isEn ? 'WhatsApp or Google Meet video' : 'Visio WhatsApp ou Google Meet'}
+                        </div>
+                        <div className="text-[11px] text-white/50 mt-0.5">
+                          {isEn ? 'Libreville, abroad & remote' : 'Libreville, international ou à distance'}
                         </div>
                       </div>
                     </button>
@@ -414,12 +442,14 @@ export default function BookingForm({ lang }: BookingFormProps) {
 
                   {channel === 'PRESENTIEL' && (
                     <div className="pt-2 animate-in fade-in duration-200">
-                      <label className="block text-xs font-mono text-white/50 mb-1.5">
-                        {isEn ? 'Meeting location details' : 'Précisions sur le lieu (Ville, quartier, locaux)'}
+                      <label htmlFor="bookingLocation" className="block text-xs font-mono text-white/50 mb-1.5">
+                        {isEn ? 'Your address or neighborhood in Douala' : 'Votre adresse ou quartier à Douala (ex. Akwa, Bonamoussadi, Bonapriso...)'}
                       </label>
                       <input
+                        id="bookingLocation"
+                        name="location"
                         type="text"
-                        placeholder="Ex: Douala, Bonanjo ou Libreville, Glass..."
+                        placeholder={isEn ? 'e.g. Bonapriso, near Pharmacie du Rond-Point' : 'Ex: Bonapriso, près de la pharmacie du Rond-Point'}
                         value={locationDetails}
                         onChange={(e) => setLocationDetails(e.target.value)}
                         className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs font-mono text-white placeholder:text-white/25 focus:outline-none focus:border-[#EBFF72]"
@@ -438,20 +468,23 @@ export default function BookingForm({ lang }: BookingFormProps) {
                     </h3>
                     <p className="text-xs text-white/50">
                       {isEn
-                        ? 'We will send confirmation and prepare your strategic deck.'
-                        : 'Permet de préparer le dossier technique avant le début du call.'}
+                        ? 'We prepare your tailored preview before our call.'
+                        : 'Permet de préparer votre aperçu personnalisé avant notre échange.'}
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
+                      <label htmlFor="clientName" className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
                         <UserIcon size={14} className="text-[#EBFF72]" />
                         <span>{isEn ? 'FULL NAME *' : 'NOM & PRÉNOM *'}</span>
                       </label>
                       <input
+                        id="clientName"
+                        name="name"
                         type="text"
                         required
+                        autoComplete="name"
                         placeholder="Ex: Paul Mbarga"
                         value={clientName}
                         onChange={(e) => setClientName(e.target.value)}
@@ -460,44 +493,36 @@ export default function BookingForm({ lang }: BookingFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
+                      <label htmlFor="clientPhone" className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
                         <Call02Icon size={14} className="text-[#EBFF72]" />
-                        <span>{isEn ? 'WHATSAPP / PHONE NUMBER *' : 'TÉLÉPHONE / WHATSAPP *'}</span>
+                        <span>{isEn ? 'WHATSAPP NUMBER *' : 'NUMÉRO WHATSAPP *'}</span>
                       </label>
                       <input
+                        id="clientPhone"
+                        name="tel"
                         type="tel"
+                        inputMode="tel"
                         required
-                        placeholder="+237 6 92 02 55 52"
+                        autoComplete="tel"
+                        placeholder="6 XX XX XX XX ou +237 6..."
                         value={clientPhone}
                         onChange={(e) => setClientPhone(e.target.value)}
-
                         className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder:text-white/20 focus:outline-none focus:border-[#EBFF72]"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
-                        <Mail01Icon size={14} className="text-[#EBFF72]" />
-                        <span>{isEn ? 'BUSINESS EMAIL *' : 'EMAIL PROFESSIONNEL *'}</span>
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="paul@entreprise.cm"
-                        value={clientEmail}
-                        onChange={(e) => setClientEmail(e.target.value)}
-                        className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder:text-white/20 focus:outline-none focus:border-[#EBFF72]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
+                      <label htmlFor="companyName" className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
                         <Building01Icon size={14} className="text-[#EBFF72]" />
-                        <span>{isEn ? 'COMPANY / PROJECT NAME' : 'ENTREPRISE / NOM DU PROJET'}</span>
+                        <span>{isEn ? 'BUSINESS NAME *' : "NOM DE L'ÉTABLISSEMENT *"}</span>
                       </label>
                       <input
+                        id="companyName"
+                        name="organization"
                         type="text"
-                        placeholder="Ex: Douala Logistics SARL"
+                        required
+                        autoComplete="organization"
+                        placeholder={isEn ? 'e.g. Restaurant Le Gourmet, Douala Auto...' : 'Ex: Le Gourmet Resto, Douala Auto...'}
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
                         className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder:text-white/20 focus:outline-none focus:border-[#EBFF72]"
@@ -505,12 +530,31 @@ export default function BookingForm({ lang }: BookingFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono text-white/70 mb-1.5">
-                        {isEn ? 'OBJECTIVE / PROBLEM SUMMARY' : 'OBJECTIF DU PROJET / SUJET'}
+                      <label htmlFor="clientEmail" className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
+                        <Mail01Icon size={14} className="text-[#EBFF72]" />
+                        <span>{isEn ? 'EMAIL (OPTIONAL)' : 'EMAIL (FACULTATIF)'}</span>
+                      </label>
+                      <input
+                        id="clientEmail"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        placeholder="contact@etablissement.cm"
+                        value={clientEmail}
+                        onChange={(e) => setClientEmail(e.target.value)}
+                        className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder:text-white/20 focus:outline-none focus:border-[#EBFF72]"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="bookingTopic" className="block text-xs font-mono text-white/70 mb-1.5">
+                        {isEn ? 'WHAT YOU WANT TO IMPROVE (OPTIONAL)' : 'CE QUE VOUS VOULEZ AMÉLIORER (FACULTATIF)'}
                       </label>
                       <textarea
+                        id="bookingTopic"
+                        name="topic"
                         rows={3}
-                        placeholder={isEn ? 'Tell us about your needs, timeline, or current bottlenecks...' : 'Décrivez brièvement votre projet, vos objectifs ou vos attentes...'}
+                        placeholder={isEn ? 'e.g. Digital menu on tables, new website, WhatsApp booking...' : 'Ex: Menu digital sur les tables, nouveau site internet, réservations sur WhatsApp...'}
                         value={topic}
                         onChange={(e) => setTopic(e.target.value)}
                         className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs font-mono text-white placeholder:text-white/20 focus:outline-none focus:border-[#EBFF72]"
@@ -523,7 +567,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
                     <div className="text-white/40 uppercase tracking-wider">{isEn ? 'Summary' : 'Créneau choisi'}</div>
                     <div className="text-white font-bold flex items-center justify-between">
                       <span>{selectedDate || '—'} à {selectedSlot || '—'}</span>
-                      <span className="text-[#EBFF72]">{channel === 'PRESENTIEL' ? 'Présentiel' : 'Visio'}</span>
+                      <span className="text-[#EBFF72]">{channel === 'PRESENTIEL' ? (isEn ? 'At your place (Douala)' : 'Chez vous (Douala)') : 'Visio'}</span>
                     </div>
                   </div>
 
@@ -545,10 +589,10 @@ export default function BookingForm({ lang }: BookingFormProps) {
                     )}
                   </button>
 
-                  <p className="text-[10px] font-mono text-center text-white/40 leading-relaxed">
+                  <p className="text-[10px] font-mono text-center text-white/50 leading-relaxed">
                     {isEn
-                      ? 'No spam guaranteed. Immediate confirmation and reminder via WhatsApp & Email.'
-                      : 'Confirmation immédiate. Le créneau est verrouillé et synchronisé avec le studio.'}
+                      ? 'Jesse confirms on WhatsApp in under 2 hours (Mon–Sat). Questions? +237 692 02 55 52'
+                      : 'Jesse vous confirme le rendez-vous sur WhatsApp en moins de 2 h (lun.–sam.). Une question ? +237 692 02 55 52'}
                   </p>
                 </div>
               </div>

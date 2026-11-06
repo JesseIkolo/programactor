@@ -55,13 +55,18 @@ export type Content = ReturnType<typeof getContent>;
 
 const shared = {
   brand: "Programactor",
-  founded: "2023",
+  founded: "2015",
   contact: {
-    // TODO: coordonnées réelles
     email: "hello@programactor.pro",
-    whatsapp: "+237 6 92 02 55 52",
+    phone: "+237 692 02 55 52",
+    whatsapp: "+237 692 02 55 52",
+    whatsappUrl: "https://wa.me/237692025552",
+    whatsappPreviewFr:
+      "https://wa.me/237692025552?text=Bonjour%20Programactor%2C%20j%27aimerais%20un%20aper%C3%A7u%20gratuit%20pour%20mon%20entreprise%20%3A%20%5BNom%2C%20Activit%C3%A9%2C%20Ville%5D",
+    whatsappPreviewEn:
+      "https://wa.me/237692025552?text=Hello%20Programactor%2C%20I%27d%20like%20a%20free%20preview%20for%20my%20business%3A%20%5BName%2C%20Industry%2C%20City%5D",
     instagram: "https://www.instagram.com/programactor/",
-    booking: "#contact",
+    booking: "/fr/reserver",
   },
 
   cities: "Douala · Libreville",
@@ -91,6 +96,14 @@ const projectsBase = [
   { key: "p6", year: "2024", duration: "3", image: undefined },
 ];
 
+type Testimonial = {
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+  date?: string;
+};
+
 export function getContent(lang: Lang) {
   const fr = {
     ...shared,
@@ -101,84 +114,82 @@ export function getContent(lang: Lang) {
     lang: "fr" as const,
     htmlLang: "fr",
     meta: {
-      title: "Programactor — Agence Web & Studio Produit Digital à Douala & Libreville",
+      title: "Sites web et menus digitaux à Douala · Programactor",
       description:
-        "Agence web & création de sites internet, applications mobiles (PWA, iOS, Android) et logiciels de caisse pour PME à Douala, Yaoundé et Libreville. Sites pros en 72h (XpreSite) & sprints produit sur-mesure.",
+        "Site internet, menu digital et fiche Google pour restaurants, hôtels et loueurs de véhicules. Nous venons chez vous à Douala, en visio pour Libreville. Aperçu gratuit.",
     },
 
     nav: {
-      tagline: "Agence Web & Produit Digital",
+      tagline: "Sites web & Menus digitaux",
       links: [
-        { label: "Réalisations", href: "#realisations" },
-        { label: "XpreSite", href: "#xpresite" },
-        { label: "Services", href: "#services" },
-        { label: "Méthode", href: "#methode" },
-        { label: "One Touch Labs", href: "#labs" },
+        { label: "Démos", href: "#demos" },
         { label: "Tarifs", href: "#tarifs" },
+        { label: "Ce que nous faisons", href: "#services" },
+        { label: "Comment ça marche", href: "#methode" },
+        { label: "Studio produit", href: "#studio" },
       ],
-      cta: "Parler à un designer",
-      ctaShort: "Réserver",
+      cta: "Aperçu gratuit",
+      ctaShort: "Aperçu",
       menu: "Menu",
       close: "Fermer",
     },
 
     hero: {
-      eyebrow: "Agence Web & Studio Digital · Douala · Yaoundé · Libreville",
-      titleBefore: "L'agence web & produit qui transforme votre idée en ",
-      titleMark: "produit rentable",
-      titleAfter: " utilisé par de vrais clients.",
-      lead: "Création de sites internet professionnels, applications web/mobiles et logiciels métiers pensés pour l'Afrique. De l'idée à la mise en ligne en sprints courts, avec paiement Mobile Money (Orange Money, MTN MoMo) et fonctionnement 100% hors-ligne.",
-      ctaPrimary: "Réserver un appel",
-      ctaSecondary: "Voir les réalisations",
-      status: "Statut : ouvert aux projets",
-      since: "Depuis 2023",
+      eyebrow: "AGENCE WEB · RENDEZ-VOUS CHEZ VOUS À DOUALA · VISIO POUR LIBREVILLE",
+      titleBefore: "Plus de réservations et de commandes sur WhatsApp pour votre ",
+      titleMark: "restaurant, hôtel",
+      titleAfter: " ou agence de location.",
+      lead: "Nous créons votre site, votre menu digital et votre fiche Google, puis nous les relions à votre WhatsApp. Vos clients voient vos plats, vos chambres ou vos véhicules, choisissent, et vous recevez une demande prête à traiter.",
+      ctaPrimary: "Recevoir l'aperçu gratuit de mon établissement",
+      ctaSecondary: "Tester une démo",
+      status: "NOUS VENONS CHEZ VOUS À DOUALA · VISIO POUR LIBREVILLE",
+      since: "PAIEMENT MOBILE MONEY",
     },
 
     manifesto:
-      "Une agence de design produit qui part du terrain, pas du moodboard. On dessine pour des gens qui ont un Android d'entrée de gamme, un forfait data compté et dix secondes d'attention.",
+      "NOUS CONCEVONS POUR VOS CLIENTS TELS QU'ILS SONT : UN ANDROID D'ENTRÉE DE GAMME, UN FORFAIT DATA COMPTÉ ET DIX SECONDES POUR SE DÉCIDER. VOTRE SITE S'OUVRE VITE, ET LA COMMANDE ARRIVE SUR VOTRE WHATSAPP.",
 
     stats: {
-      label: "Par les chiffres",
-      title: "Ce que ça donne, en vrai.",
-      // TODO: chiffres réels — ceux-ci sont des espaces réservés
+      label: "Ce que vous pouvez vérifier",
+      title: "Ce que vous pouvez vérifier, maintenant.",
       items: [
-        { value: 12, suffix: "", label: "Produits mis en ligne" },
-        { value: 3, suffix: "", label: "Pays où nos produits tournent" },
-        { value: 15, suffix: "j", label: "Du kickoff au premier écran testé" },
+        { value: 2, suffix: "", label: "Démos en ligne à tester sur votre téléphone" },
+        { value: 2, prefix: "< ", suffix: "h", label: "Pour vous répondre sur WhatsApp (lun–sam)" },
+        { value: 72, suffix: "h", label: "Pour mettre en ligne un site Essentiel" },
+        { value: 50, suffix: "%", label: "D'acompte, le solde à la livraison" },
       ],
     },
 
     rhythm: {
       label: "Le rythme",
       title: "3 phases / boucles de 2 semaines / 1 produit en ligne.",
-      body: "Toutes les deux semaines on ouvre et on ferme une boucle : un atelier pour cadrer, une démo pour valider. Entre les deux, tu nous joins sur WhatsApp. + À chaque fin de phase tu vois le produit tourner sur tes vraies données, pas sur une maquette.",
+      body: "Toutes les deux semaines nous ouvrons et nous fermons une boucle : un atelier pour cadrer, une démo pour valider. Entre les deux, vous nous joignez sur WhatsApp. À chaque fin de phase vous voyez le produit tourner sur vos vraies données, pas sur une maquette.",
       marquee: [
-        "Découvrir",
-        "Cadrer",
-        "Dessiner",
-        "Construire",
-        "Tester",
-        "Lancer",
+        "Aperçu gratuit",
+        "Rendez-vous",
+        "Acompte 50%",
+        "Mise en ligne",
+        "Formation",
       ],
     },
 
     about: {
-      label: "L'agence",
-      title: "Un studio qui livre.",
+      label: "Qui vous répond",
+      title: "Jesse B. Ikolo, fondateur.",
       body: [
-        "Programactor est né à Douala en 2023. On travaille avec des founders au Cameroun, au Gabon et ailleurs, sur des produits qui doivent marcher là où le réseau tombe, où le paiement passe par mobile money et où l'utilisateur découvre l'application sur WhatsApp.",
-        "Recherche utilisateur sur le terrain, design d'interface, build jusqu'à la mise en ligne. Une équipe, un interlocuteur, un produit.",
+        "Programactor a été fondée en 2015 par Jesse B. Ikolo. Designer produit et développeur, il a enseigné le développement et le design UI/UX en université et forme des équipes informatiques. C'est lui qui vient chez vous à Douala, qui conçoit votre site et qui vous répond sur WhatsApp.",
+        "Notre engagement : aucune fausse promesse, aucun bureau factice. Nous venons dans votre établissement ou nous faisons le point en visio.",
       ],
       figures: [
-        { value: 3, suffix: " pays", label: "Cameroun, Gabon et au-delà" },
-        { value: 2023, suffix: "", label: "Année de création", raw: true },
+        { value: 2015, suffix: "", label: "Année de fondation", raw: true },
+        { value: 50, suffix: "%", label: "Acompte à la commande", raw: false },
       ],
     },
 
     work: {
       label: "Réalisations",
       title: "Réalisations.",
-      lead: "Des projets réels, avec le secteur, la ville et ce qui a été livré. Rien ici n'est un concept.",
+      lead: "Nos projets, avec le secteur, la ville et ce qui a été livré.",
       durationUnit: "semaines",
       statusLive: "En ligne",
       cta: "Voir le projet",
@@ -219,7 +230,7 @@ export function getContent(lang: Lang) {
 
     realisationsPage: {
       meta: {
-        title: "Réalisations & Portfolio Web & Mobile — Programactor Douala & Libreville",
+        title: "Réalisations et démos",
         description:
           "Découvrez nos créations de sites internet professionnels, applications web/mobiles et logiciels de caisse pour entreprises à Douala, Yaoundé, Libreville et Kinshasa.",
       },
@@ -228,7 +239,7 @@ export function getContent(lang: Lang) {
       titleMark: "terrain",
       titleAfter: ", pas pour la galerie.",
       lead:
-        "Ni concepts théoriques, ni maquettes oubliées dans un dossier. Des applications et plateformes qui tournent sur de vrais réseaux, avec de vrais utilisateurs et de vrais paiements.",
+        "Des sites, des applications et nos propres produits, conçus pour des téléphones Android et des réseaux mobiles d'Afrique centrale.",
       filterAllSectors: "Tous les secteurs",
       filterAllCities: "Toutes les villes",
       viewCards: "Vue détaillée",
@@ -481,60 +492,60 @@ export function getContent(lang: Lang) {
     ],
 
     services: {
-      label: "Services",
-      title: "Nos services.",
-      lead: "Création web, applications mobiles et logiciels métiers. Tu briefes une fois, on va jusqu'à la mise en production.",
-      cta: "Réserver un appel",
+      label: "Ce que nous faisons",
+      title: "Ce que nous faisons pour votre établissement.",
+      lead: "Vous nous montrez votre activité une fois, nous nous occupons du reste jusqu'à la mise en ligne.",
+      cta: "Recevoir l'aperçu gratuit",
       items: [
         {
-          title: "Recherche terrain & Cadrage.",
-          body: "Étude de marché locale, entretiens utilisateurs et tests sur smartphones réels à Douala et Libreville pour valider la rentabilité avant de coder.",
-          tags: ["Étude terrain", "Entretiens", "Validation marché", "Benchmark"],
+          title: "Votre site internet.",
+          body: "Un site rapide sur téléphone, avec vos services, vos prix, vos photos et un bouton WhatsApp à chaque étape. En ligne en 72 h (Essentiel) ou en 2 semaines (Complet).",
+          tags: ["Site vitrine", "WhatsApp", "72 h"],
         },
         {
-          title: "Design UI/UX & Systèmes d'Interface.",
-          body: "Maquettes Figma complètes, ergonomie mobile tactile et design systems pensés pour un chargement instantané sur connexions lentes.",
-          tags: ["UI/UX Design", "Figma", "Design System", "Mobile-First"],
+          title: "Votre menu digital.",
+          body: "Votre carte sur téléphone, un QR code sur chaque table, la commande envoyée sur votre WhatsApp. Fini les photos de menu floues.",
+          tags: ["Menu QR", "Commande WhatsApp"],
         },
         {
-          title: "Création de Sites Web & XpreSite 72h.",
-          body: "Sites internet professionnels pour entreprises, commerces et restaurants. Formule XpreSite clé en main en 72h chrono avec paiement en 3 fois.",
-          tags: ["Site Vitrine", "Site E-commerce", "XpreSite 72h", "SEO Local"],
+          title: "Votre visibilité sur Google et Yango.",
+          body: "Fiche Google créée ou corrigée, itinéraire en un clic, référencement local pour apparaître quand on cherche « restaurant Bonamoussadi » ou « location voiture Douala ».",
+          tags: ["Google", "Yango", "SEO local"],
         },
         {
-          title: "Développement Web & Applications Mobiles (PWA, Android, iOS).",
-          body: "Applications réactives et légères avec architecture offline-first, intégration Orange Money, MTN MoMo et synchronisation automatique.",
-          tags: ["Application Mobile", "PWA Offline-First", "Mobile Money", "Full-Stack"],
+          title: "Réservations et devis en ligne.",
+          body: "Le client choisit sa date, son véhicule ou sa prestation, voit le prix et vous envoie une demande complète.",
+          tags: ["Réservation", "Devis", "Calculateur"],
         },
         {
-          title: "Logiciels Métiers, Caisse POS & Automatisation WhatsApp.",
-          body: "Systèmes de caisse tactile, menus QR interactifs, gestion des stocks en temps réel et bots WhatsApp pour éliminer les fuites de caisse.",
-          tags: ["Logiciel de Caisse", "Menu QR Code", "Gestion de Stock", "WhatsApp CRM"],
+          title: "La caisse et la gestion de votre restaurant (Bongo Space).",
+          body: "Prise de commande, caisse, stocks, même quand le réseau coupe.",
+          tags: ["Bongo Space", "Caisse", "Hors-ligne"],
         },
       ],
     },
 
     method: {
-      label: "Méthode · Lean Product",
-      titleBefore: "Comment on passe de l'idée au ",
-      titleMark: "produit",
-      titleAfter: ".",
+      label: "Comment ça marche",
+      titleBefore: "Vous voyez votre établissement en ligne ",
+      titleMark: "avant",
+      titleAfter: " de payer.",
       steps: [
         {
-          title: "Découvrir.",
-          body: "On part du problème, pas de la solution. Entretiens terrain, analyse de l'existant, et on écrit noir sur blanc ce qui est vrai.",
+          title: "Aperçu gratuit.",
+          body: "Envoyez-nous le nom de votre établissement sur WhatsApp. Nous vous renvoyons un aperçu de ce que vos clients verront sous 48 h ouvrées.",
         },
         {
-          title: "Cadrer.",
-          body: "On réduit à un produit minimum qui tient une seule promesse. Tu valides le périmètre et le prix avant qu'on dessine un écran.",
+          title: "Rendez-vous chez vous ou en visio.",
+          body: "À Douala, nous passons dans votre établissement (30 min). À Libreville ou ailleurs, en visio WhatsApp ou Google Meet. Nous validons l'offre et le prix ensemble, par écrit.",
         },
         {
-          title: "Construire et tester.",
-          body: "Sprints de deux semaines. À chaque fin de boucle tu vois quelque chose qui marche, sur tes données, pas une maquette cliquable.",
+          title: "Acompte de 50 %.",
+          body: "Par Mobile Money ou virement. Nous lançons le travail le jour même.",
         },
         {
-          title: "Lancer et transmettre.",
-          body: "Mise en ligne, mesure, formation. Tu repars avec les fichiers, le code et la documentation. Aucune dépendance à nous.",
+          title: "Mise en ligne et formation.",
+          body: "Nous livrons, nous vous montrons comment faire les mises à jour, et vous réglez le solde à la livraison. Le nom de domaine et vos contenus vous appartiennent.",
         },
       ],
     },
@@ -553,53 +564,39 @@ export function getContent(lang: Lang) {
     },
 
     testimonials: {
+      published: false,
       label: "Ce qu'ils en disent",
-      titleBefore: "Des founders qui ont ",
-      titleMark: "livré",
+      titleBefore: "Ce que disent nos ",
+      titleMark: "clients",
       titleAfter: ".",
-      lead: "On demande un retour 90 jours après la mise en ligne, quand le produit a vécu.",
+      lead: "Des retours d'expérience concrets sur nos déploiements.",
       placeholder: "",
-      items: [
-        {
-          quote: "Programactor a structuré notre produit de zéro. En 3 semaines, notre système d'encaissement et de gestion tournait sur le terrain à Douala sans friction.",
-          author: "Christian T.",
-          role: "Co-fondateur",
-          company: "BongoSpace (Fintech PME)",
-          date: "90j post-kickoff"
-        },
-        {
-          quote: "La formule XpreSite en 72h nous a permis de digitaliser notre flotte de transport immédiatement avec un système de commande WhatsApp clair et professionnel.",
-          author: "Marcelle E.",
-          role: "Directrice des Opérations",
-          company: "TransExpress Douala",
-          date: "60j post-lancement"
-        },
-      ],
+      items: [] as Testimonial[],
     },
 
     pricing: {
-      label: "Tarifs",
-      titleBefore: "Trois façons de ",
-      titleMark: "commencer",
-      titleAfter: ".",
-      popular: "Le plus demandé",
+      label: "Studio produit",
+      titleBefore: "Vous lancez une application ou un ",
+      titleMark: "logiciel",
+      titleAfter: " ?",
+      lead: "Programactor est aussi un studio produit : recherche terrain, design et développement d'applications web et mobiles. C'est avec cette méthode que nous avons conçu nos propres produits, Bongo Space et BongoFleet.",
+      popular: "",
       timeline: "Durée",
-      note: "Chaque mission démarre par un périmètre écrit et un prix fixe. Tu valides le plan avant qu'on dessine ou qu'on code quoi que ce soit.",
-      // TODO: remplace "Sur devis" par un montant si tu veux afficher des prix
+      note: "CHAQUE MISSION DÉMARRE PAR UN PÉRIMÈTRE ÉCRIT ET UN PRIX FIXE. VOUS VALIDEZ LE PLAN AVANT QUE NOUS DESSINIONS OU CODIONS QUOI QUE CE SOIT.",
       items: [
         {
           n: "01",
           title: "Diagnostic produit.",
-          subtitle: "Où ton idée tient, et où elle casse.",
+          subtitle: "Où votre idée tient, et où elle casse.",
           timeline: "5 jours",
-          price: AGENCY_PRICES.diagnostic || "Sur devis",
-          priceLabel: AGENCY_PRICES.diagnostic ? "Prix ferme" : "",
+          price: AGENCY_PRICES.diagnostic || "250 000 FCFA",
+          priceLabel: "À partir de",
           features: [
             "Entretiens utilisateurs sur le terrain",
             "Analyse de l'existant et des concurrents",
             "Parcours cible en un schéma",
             "Plan de lots chiffré",
-            "Recommandation écrite que tu gardes",
+            "Recommandation écrite que vous gardez",
           ],
           cta: "Lancer un diagnostic",
         },
@@ -608,9 +605,9 @@ export function getContent(lang: Lang) {
           title: "Sprint produit.",
           subtitle: "Conçu, construit, mis en ligne.",
           timeline: "4 à 8 semaines",
-          price: AGENCY_PRICES.sprint || "Sur devis",
-          priceLabel: AGENCY_PRICES.sprint ? "À partir de" : "",
-          popular: true,
+          price: AGENCY_PRICES.sprint || "750 000 FCFA",
+          priceLabel: "À partir de",
+          popular: false,
           features: [
             "Tout le diagnostic",
             "Design produit et interface complets",
@@ -623,15 +620,15 @@ export function getContent(lang: Lang) {
         {
           n: "03",
           title: "Partenaire produit.",
-          subtitle: "Ton équipe design, au mois.",
+          subtitle: "Votre équipe design, au mois.",
           timeline: "En continu",
-          price: AGENCY_PRICES.partner || "Sur devis",
-          priceLabel: AGENCY_PRICES.partner ? "À partir de" : "",
+          price: AGENCY_PRICES.partner || "1 500 000 FCFA",
+          priceLabel: "Par mois · À partir de",
           features: [
             "Un binôme design + build dédié",
             "Itérations continues sur l'usage",
             "Design system maintenu",
-            "Formation de ton équipe",
+            "Formation de votre équipe",
           ],
           cta: "En discuter",
         },
@@ -640,52 +637,64 @@ export function getContent(lang: Lang) {
 
     faq: {
       label: "FAQ",
-      title: "Avant l'appel.",
+      title: "Les questions qu'on nous pose avant de commencer.",
       items: [
         {
-          q: "Vous travaillez avec des startups qui démarrent tout juste ?",
-          a: "Oui, c'est même notre terrain. La plupart de nos clients arrivent avec une idée et un problème mal formulé. Le diagnostic sert justement à transformer cette intuition en périmètre chiffré, avant d'engager du budget de build.",
+          q: "Combien ça coûte ?",
+          a: "Le site Essentiel coûte 75 000 FCFA et le site Complet 130 000 FCFA. Le menu digital va de 90 000 à 130 000 FCFA selon la taille de votre carte, et le Pack installation Bongo Space coûte 250 000 FCFA. Le prix est écrit avant de commencer et ne bouge plus.",
         },
         {
-          q: "En combien de temps on voit quelque chose ?",
-          a: "Un premier écran testé auprès de vrais utilisateurs sous quinze jours. Une première version en ligne entre quatre et huit semaines, selon la complexité et la disponibilité de tes données.",
+          q: "Comment je paie ?",
+          a: "50 % d'acompte à la commande, le solde à la livraison. Au Cameroun : Orange Money ou MTN MoMo. Au Gabon : Airtel Money. Virement bancaire possible.",
         },
         {
-          q: "Vous faites le développement ou seulement le design ?",
-          a: "Les deux. On peut s'arrêter à la remise des fichiers Figma si tu as déjà une équipe technique, ou aller jusqu'à la mise en production. On le décide au cadrage, pas en cours de route.",
+          q: "Où se passe le rendez-vous ?",
+          a: "Chez vous. À Douala, nous venons dans votre établissement, c'est là que nous voyons comment vos clients commandent et que nous prenons les photos. Pour Libreville et l'international, tout se fait en visio.",
         },
         {
-          q: "On travaille à distance ou sur place ?",
-          a: "Les ateliers de cadrage et la recherche terrain se font sur place, à Douala, Libreville ou chez toi. Le reste tourne à distance, avec deux points fixes par boucle de deux semaines et WhatsApp entre les deux.",
+          q: "En combien de temps mon site est en ligne ?",
+          a: "72 h pour l'Essentiel et environ 2 semaines pour le Complet, à partir du moment où nous avons vos éléments (logo, photos, prix).",
         },
         {
-          q: "À qui appartiennent les fichiers et le code ?",
-          a: "À toi, entièrement, dès la fin de la mission. Fichiers sources, code, documentation, accès aux hébergements. On ne garde aucune clé et on ne facture aucun abonnement pour te laisser l'accès à ton propre produit.",
+          q: "Je n'ai pas de photos ni de logo.",
+          a: "Ce n'est pas un problème : nous prenons les photos pendant le rendez-vous à Douala et nous partons de votre enseigne.",
         },
         {
-          q: "Vous travaillez en français ou en anglais ?",
-          a: "Les deux, nativement. On écrit chaque langue dans son rythme propre plutôt que de traduire l'une à partir de l'autre — pour nos livrables comme pour les produits qu'on conçoit.",
+          q: "À qui appartiennent le site et le nom de domaine ?",
+          a: "À vous. Le nom de domaine est à votre nom, et vous gardez vos textes et vos photos.",
+        },
+        {
+          q: "Et après la première année ?",
+          a: "L'hébergement et le nom de domaine coûtent ensuite environ 35 000 FCFA par an.",
+        },
+        {
+          q: "Vous travaillez au Gabon ?",
+          a: "Oui, à Libreville : rendez-vous en visio, paiement en Airtel Money, même grille de prix en FCFA.",
+        },
+        {
+          q: "J'ai un projet d'application, pas un commerce.",
+          a: "Programactor est aussi un studio produit : nous concevons et développons des applications sur mesure. Voir la section Studio en bas de page.",
         },
       ],
       skip: {
-        title: "Pas envie de lire la FAQ ?",
-        body: "Écris directement à l'équipe.",
-        cta: "Poser une question",
+        title: "Une autre question ?",
+        body: "Écrivez-nous directement sur WhatsApp.",
+        cta: "Poser une question sur WhatsApp",
       },
     },
 
     cta: {
-      label: "Une idée en tête ?",
-      titleBefore: "Montre-nous le problème que tu veux ",
-      titleMark: "résoudre",
-      titleAfter: ".",
-      body: "Dis-nous en une phrase ce que tes utilisateurs n'arrivent pas à faire aujourd'hui. Au premier appel, on te dit gratuitement si c'est un problème de produit, de marque ou de canal — et ce qu'il faudrait pour le régler.",
-      button: "Réserver un appel",
-      or: "ou écris-nous",
+      label: "Aperçu gratuit",
+      titleBefore: "Recevez l'aperçu gratuit de votre ",
+      titleMark: "futur site",
+      titleAfter: " en 48 h.",
+      body: "Envoyez-nous le nom de votre établissement, votre ville et votre activité sur WhatsApp. Nous vous renvoyons un premier aperçu sans engagement.",
+      button: "Recevoir mon aperçu gratuit",
+      or: "ou écrivez-nous sur WhatsApp",
     },
 
     footer: {
-      tagline: "Agence de design produit. Cameroun, Gabon, monde.",
+      tagline: "Sites internet, menus digitaux et visibilité pour PME. Douala · Libreville.",
       nav: "Navigation",
       contactLabel: "Contact",
       social: "Suivre",
@@ -703,76 +712,76 @@ export function getContent(lang: Lang) {
     lang: "en" as const,
     htmlLang: "en",
     meta: {
-      title: "Programactor — Digital Product Studio & Web Agency in Douala & Libreville",
+      title: "Websites & digital menus in Douala · Programactor",
       description:
-        "Web & mobile app development, high-converting websites, and POS software for African businesses. Turnkey 72h website launches (XpreSite) & custom product sprints in Douala, Yaoundé & Libreville.",
+        "Website, digital menu and Google listing for restaurants, hotels and car rental businesses. We come to you in Douala, video calls for Libreville. Free preview.",
     },
 
     nav: {
-      tagline: "Web Agency & Product Studio",
+      tagline: "Websites & Digital Menus",
       links: [
-        { label: "Work", href: "#realisations" },
-        { label: "XpreSite", href: "#xpresite" },
-        { label: "Services", href: "#services" },
-        { label: "Method", href: "#methode" },
-        { label: "One Touch Labs", href: "#labs" },
+        { label: "Demos", href: "#demos" },
         { label: "Pricing", href: "#tarifs" },
+        { label: "What we do", href: "#services" },
+        { label: "How it works", href: "#methode" },
+        { label: "Product studio", href: "#studio" },
       ],
-      cta: "Talk to a designer",
-      ctaShort: "Book a call",
+      cta: "Free preview",
+      ctaShort: "Preview",
       menu: "Menu",
       close: "Close",
     },
 
     hero: {
-      eyebrow: "Web Agency & Digital Studio · Douala · Yaoundé · Libreville",
-      titleBefore: "The web & product studio that turns an idea into a ",
-      titleMark: "profitable product",
-      titleAfter: " that customers actually use.",
-      lead: "Human-centred design, mobile apps, and high-impact websites tailored for African markets. Fast development sprints, Mobile Money integration (Orange Money, MTN MoMo), and 100% offline-ready reliability.",
-      ctaPrimary: "Book a call",
-      ctaSecondary: "See the work",
-      status: "Status: open for projects",
-      since: "Since 2023",
+      eyebrow: "WEB AGENCY · WE COME TO YOU IN DOUALA · VIDEO CALLS FOR LIBREVILLE",
+      titleBefore: "More bookings and WhatsApp orders for your ",
+      titleMark: "restaurant, hotel",
+      titleAfter: " or car rental business.",
+      lead: "We build your website, your digital menu and your Google listing, and connect them to your WhatsApp. Customers see your dishes, rooms or vehicles, choose, and you receive a request that is ready to handle.",
+      ctaPrimary: "Get my free business preview",
+      ctaSecondary: "Try a live demo",
+      status: "WE COME TO YOU IN DOUALA · VIDEO CALLS FOR LIBREVILLE",
+      since: "MOBILE MONEY PAYMENTS",
     },
 
     manifesto:
-      "A product design studio that starts in the field, not on a moodboard. We design for people on entry-level Android phones, metered data plans and ten seconds of patience.",
+      "WE DESIGN FOR YOUR CUSTOMERS AS THEY ARE: AN ENTRY-LEVEL ANDROID, A METERED DATA PLAN AND TEN SECONDS TO DECIDE. YOUR SITE LOADS FAST, AND THE ORDER LANDS ON YOUR WHATSAPP.",
 
     stats: {
-      label: "By the numbers",
-      title: "What it adds up to.",
+      label: "Verify for yourself",
+      title: "What you can verify, right now.",
       items: [
-        { value: 12, suffix: "", label: "Products shipped" },
-        { value: 3, suffix: "", label: "Countries running our work" },
-        { value: 15, suffix: "d", label: "From kickoff to first tested screen" },
+        { value: 2, suffix: "", label: "Live demos to try on your phone" },
+        { value: 2, prefix: "< ", suffix: "h", label: "WhatsApp reply, Monday to Saturday" },
+        { value: 72, suffix: "h", label: "To put an Essentiel site online" },
+        { value: 50, suffix: "%", label: "Deposit, balance on delivery" },
       ],
     },
 
     rhythm: {
       label: "The rhythm",
       title: "3 phases / 2-week loops / 1 product live.",
-      body: "Every two weeks we open and close a loop: one workshop to frame it, one demo to sign it off. In between, you reach us on WhatsApp. + At the end of each phase you watch the product run on your real data, not on a prototype.",
-      marquee: ["Discover", "Frame", "Design", "Build", "Test", "Ship"],
+      body: "Every two weeks we open and close a loop: one workshop to frame it, one demo to sign it off. In between, you reach us on WhatsApp. At the end of each phase you watch the product run on your real data, not on a prototype.",
+      marquee: ["Free preview", "Meeting", "50% deposit", "Go live", "Training"],
     },
 
     about: {
-      label: "The studio",
-      title: "A studio that ships.",
+      label: "Who answers you",
+      title: "Jesse B. Ikolo, founder.",
       body: [
-        "Programactor started in Douala in 2023. We work with founders in Cameroon, Gabon and beyond, on products that have to hold up where the network drops, where payment runs through mobile money, and where users meet the app on WhatsApp first.",
-        "Field research, interface design, build through to launch. One team, one point of contact, one product.",
+        "Programactor was founded in 2015 by Jesse B. Ikolo. A product designer and developer, he has taught software development and UI/UX design at university level and trains corporate IT teams. He is the one who visits you in Douala, designs your site and answers you on WhatsApp.",
+        "Our promise: no hollow claims, no fake offices. We come to your business venue or meet by video.",
       ],
       figures: [
-        { value: 3, suffix: " countries", label: "Cameroon, Gabon and beyond" },
-        { value: 2023, suffix: "", label: "Founded", raw: true },
+        { value: 2015, suffix: "", label: "Founded", raw: true },
+        { value: 50, suffix: "%", label: "Deposit upon order", raw: false },
       ],
     },
 
     work: {
       label: "Case studies",
       title: "Selected work.",
-      lead: "Real projects, with the sector, the city and what shipped. Nothing here is a concept.",
+      lead: "Our projects, with the sector, the city and what shipped.",
       durationUnit: "weeks",
       statusLive: "Live",
       cta: "View project",
@@ -787,7 +796,7 @@ export function getContent(lang: Lang) {
 
     realisationsPage: {
       meta: {
-        title: "Case Studies & Web/Mobile Portfolio — Programactor Douala & Libreville",
+        title: "Projects and demos",
         description:
           "Explore live web applications, mobile platforms, and POS systems built for businesses across Douala, Libreville, Yaoundé and beyond.",
       },
@@ -796,7 +805,7 @@ export function getContent(lang: Lang) {
       titleMark: "ground",
       titleAfter: ", not for a moodboard.",
       lead:
-        "No theoretical concepts, no forgotten prototypes. Real applications running on real cellular networks, with real users and real transactions.",
+        "Websites, apps and our own products, designed for Android phones and mobile networks in Central Africa.",
       filterAllSectors: "All sectors",
       filterAllCities: "All cities",
       viewCards: "Detailed story view",
@@ -1049,60 +1058,60 @@ export function getContent(lang: Lang) {
     ],
 
     services: {
-      label: "Services",
-      title: "Our services.",
-      lead: "Web design, mobile apps, and custom business software. You brief us once, we carry it through to production.",
-      cta: "Book a call",
+      label: "What we do",
+      title: "What we do for your business.",
+      lead: "Show us your business once, we handle everything until it goes live.",
+      cta: "Get my free preview",
       items: [
         {
-          title: "Field Research & Product Strategy.",
-          body: "Local market study, user interviews, and real smartphone testing in Douala and Libreville to ensure profitability before writing code.",
-          tags: ["Field Study", "User Research", "Validation", "Benchmark"],
+          title: "Your website.",
+          body: "A fast mobile site with your services, prices, photos and a WhatsApp button at every step. Live in 72 hours (Essentiel) or 2 weeks (Complet).",
+          tags: ["Showcase website", "WhatsApp", "72 hours"],
         },
         {
-          title: "UI/UX Design & Interface Systems.",
-          body: "Full Figma mockups, tactile mobile ergonomics, and design systems crafted for instantaneous loading on low-bandwidth networks.",
-          tags: ["UI/UX Design", "Figma", "Design System", "Mobile-First"],
+          title: "Your digital menu.",
+          body: "Your menu on the phone, a QR code on every table, orders sent to your WhatsApp. No more blurry menu photos.",
+          tags: ["QR menu", "WhatsApp ordering"],
         },
         {
-          title: "Website Creation & XpreSite 72h.",
-          body: "High-converting websites for businesses, shops, and restaurants. Turnkey 72-hour XpreSite package with 3-part flexible installment payments.",
-          tags: ["Business Website", "E-commerce", "XpreSite 72h", "Local SEO"],
+          title: "Your visibility on Google and Yango.",
+          body: "Google listing created or fixed, one-tap directions, local SEO so you show up when people search \"restaurant Bonamoussadi\" or \"car rental Douala\".",
+          tags: ["Google", "Yango", "Local SEO"],
         },
         {
-          title: "Web & Mobile App Development (PWA, Android, iOS).",
-          body: "Lightweight, responsive mobile applications featuring offline-first architecture, Orange Money / MTN MoMo integration, and background sync.",
-          tags: ["Mobile App", "Offline-First PWA", "Mobile Money", "Full-Stack"],
+          title: "Online bookings and quotes.",
+          body: "Customers pick a date, a vehicle or a service, see the price and send you a complete request.",
+          tags: ["Booking", "Quotes", "Calculator"],
         },
         {
-          title: "POS Cashier Software & WhatsApp Automation.",
-          body: "Touch POS cash registers, interactive table QR menus, live inventory deduction, and WhatsApp bots to eliminate cash leakage.",
-          tags: ["POS Software", "QR Menu", "Stock Tracking", "WhatsApp CRM"],
+          title: "Your restaurant's till and management (Bongo Space).",
+          body: "Order taking, till, stock, even when the network drops.",
+          tags: ["Bongo Space", "Till", "Offline-first"],
         },
       ],
     },
 
     method: {
-      label: "Method · Lean Product",
-      titleBefore: "How an idea becomes a ",
-      titleMark: "product",
-      titleAfter: ".",
+      label: "How it works",
+      titleBefore: "See your business online ",
+      titleMark: "before",
+      titleAfter: " you pay.",
       steps: [
         {
-          title: "Discover.",
-          body: "We start from the problem, not the solution. Field interviews, a look at what already exists, and a written account of what is actually true.",
+          title: "Free preview.",
+          body: "Send us your business name on WhatsApp. We send back a preview of what your customers will see within 48 business hours.",
         },
         {
-          title: "Frame.",
-          body: "We cut it down to a minimum product that holds one promise. You approve scope and price before we draw a single screen.",
+          title: "Meeting at your place or by video.",
+          body: "In Douala, we come to your venue (30 min). In Libreville or elsewhere, by WhatsApp video or Google Meet. We agree on the offer and the price together, in writing.",
         },
         {
-          title: "Build and test.",
-          body: "Two-week sprints. At the close of every loop you see something that works, on your data, not a clickable mockup.",
+          title: "50% deposit.",
+          body: "By Mobile Money or bank transfer. We start the same day.",
         },
         {
-          title: "Ship and hand over.",
-          body: "Launch, measurement, training. You leave with the files, the code and the documentation. No dependency on us.",
+          title: "Go-live and training.",
+          body: "We deliver, show you how to update everything, and you pay the balance on delivery. Your domain name and your content belong to you.",
         },
       ],
     },
@@ -1121,69 +1130,56 @@ export function getContent(lang: Lang) {
     },
 
     testimonials: {
+      published: false,
       label: "What they say",
-      titleBefore: "Founders who ",
-      titleMark: "shipped",
-      titleAfter: ".",
-      lead: "We ask for feedback 90 days after launch, once the product has had a real life in users' hands.",
+      titleBefore: "What our ",
+      titleMark: "clients",
+      titleAfter: " say.",
+      lead: "Real feedback from our live deployments.",
       placeholder: "",
-      items: [
-        {
-          quote: "Programactor framed our product from scratch. Within 3 weeks, our merchant payment and management system was live on the ground in Douala with zero friction.",
-          author: "Christian T.",
-          role: "Co-founder",
-          company: "BongoSpace (SME Fintech)",
-          date: "90d post-kickoff"
-        },
-        {
-          quote: "The 72h XpreSite package allowed us to launch our vehicle rental operations immediately with seamless, professional WhatsApp lead intake.",
-          author: "Marcelle E.",
-          role: "Operations Lead",
-          company: "TransExpress Douala",
-          date: "60d post-launch"
-        },
-      ],
+      items: [] as Testimonial[],
     },
 
     pricing: {
-      label: "Pricing",
-      titleBefore: "Three ways to ",
-      titleMark: "start",
-      titleAfter: ".",
-      popular: "Most requested",
+      label: "Product studio",
+      titleBefore: "Are you launching an app or a ",
+      titleMark: "software",
+      titleAfter: " ?",
+      lead: "Programactor is also a product studio: field research, design and development of web and mobile apps. That's how we designed our own products, Bongo Space and BongoFleet.",
+      popular: "",
       timeline: "Timeline",
-      note: "Every engagement starts with a written scope and a fixed price. You approve the plan before we design or code anything.",
+      note: "EVERY ENGAGEMENT STARTS WITH A WRITTEN SCOPE AND A FIXED PRICE. YOU APPROVE THE PLAN BEFORE WE DESIGN OR CODE ANYTHING.",
       items: [
         {
           n: "01",
           title: "Product audit.",
-          subtitle: "Where your idea holds, and where it breaks.",
+          subtitle: "Where your idea holds up, and where it breaks.",
           timeline: "5 days",
-          price: AGENCY_PRICES.diagnostic || "On request",
-          priceLabel: AGENCY_PRICES.diagnostic ? "Fixed price" : "",
+          price: AGENCY_PRICES.diagnostic || "250,000 FCFA",
+          priceLabel: "From",
           features: [
             "User interviews in the field",
-            "Review of what exists, and of competitors",
+            "Review of existing systems and competitors",
             "Target journey in one diagram",
-            "Costed plan of work",
-            "A written recommendation you keep",
+            "Costed delivery plan",
+            "Written recommendation you keep",
           ],
           cta: "Start an audit",
         },
         {
           n: "02",
           title: "Product sprint.",
-          subtitle: "Designed, built, put live.",
+          subtitle: "Designed, built, shipped.",
           timeline: "4 to 8 weeks",
-          price: AGENCY_PRICES.sprint || "On request",
-          priceLabel: AGENCY_PRICES.sprint ? "From" : "",
-          popular: true,
+          price: AGENCY_PRICES.sprint || "750,000 FCFA",
+          priceLabel: "From",
+          popular: false,
           features: [
             "Everything in the audit",
-            "Full product and interface design",
+            "Full product & interface design",
             "Web or mobile build",
             "Testing on real data",
-            "Launch and handover",
+            "Go-live and handover",
           ],
           cta: "Plan a sprint",
         },
@@ -1192,12 +1188,12 @@ export function getContent(lang: Lang) {
           title: "Product partner.",
           subtitle: "Your design team, monthly.",
           timeline: "Ongoing",
-          price: AGENCY_PRICES.partner || "On request",
-          priceLabel: AGENCY_PRICES.partner ? "From" : "",
+          price: AGENCY_PRICES.partner || "1,500,000 FCFA",
+          priceLabel: "Per month · From",
           features: [
-            "A dedicated design + build pair",
+            "Dedicated design + build pair",
             "Continuous iteration on real usage",
-            "Design system kept alive",
+            "Maintained design system",
             "Training for your team",
           ],
           cta: "Talk to us",
@@ -1207,56 +1203,68 @@ export function getContent(lang: Lang) {
 
     faq: {
       label: "FAQ",
-      title: "Before the call.",
+      title: "What people ask us before starting.",
       items: [
         {
-          q: "Do you work with startups that are only just starting?",
-          a: "Yes — that is our ground. Most of our clients arrive with an idea and a badly framed problem. The audit exists to turn that instinct into a costed scope before you commit build budget.",
+          q: "How much does it cost?",
+          a: "The Essentiel website is 75,000 FCFA and the Complet website 130,000 FCFA. A digital menu costs 90,000 to 130,000 FCFA depending on the size of your menu, and the Bongo Space installation pack is 250,000 FCFA. The price is written down before we start and does not change.",
         },
         {
-          q: "How fast do we see something?",
-          a: "A first screen tested with real users inside two weeks. A first version live in four to eight weeks, depending on complexity and how ready your data is.",
+          q: "How do I pay?",
+          a: "50% deposit when you order, the balance on delivery. In Cameroon: Orange Money or MTN MoMo. In Gabon: Airtel Money. Bank transfer also accepted.",
         },
         {
-          q: "Do you build, or only design?",
-          a: "Both. We can stop at the Figma handover if you already have engineers, or carry it all the way to production. That gets decided during framing, not halfway through.",
+          q: "Where do we meet?",
+          a: "At your place. In Douala, we come to your venue: that's where we see how your customers order and take the photos. For Libreville and abroad, everything happens by video call.",
         },
         {
-          q: "Do we work remotely or on site?",
-          a: "Framing workshops and field research happen on site, in Douala, Libreville or wherever you are. The rest runs remotely, with two fixed calls per two-week loop and WhatsApp in between.",
+          q: "How fast is my site live?",
+          a: "72 hours for Essentiel and about 2 weeks for Complet, once we have your logo, photos and prices.",
         },
         {
-          q: "Who owns the files and the code?",
-          a: "You do, entirely, from the end of the engagement. Source files, code, documentation, hosting access. We keep no keys and charge no subscription for access to your own product.",
+          q: "I don't have photos or a logo.",
+          a: "No problem: we take photos during the meeting in Douala and work from your signage.",
         },
         {
-          q: "Do you work in French or English?",
-          a: "Both, natively. We write each language in its own rhythm rather than translating one from the other — for our own deliverables and for the products we design.",
+          q: "Who owns the site and domain?",
+          a: "You do. The domain is registered in your name and you keep your texts and photos.",
+        },
+        {
+          q: "What happens after year one?",
+          a: "Hosting and domain then cost about 35,000 FCFA per year.",
+        },
+        {
+          q: "Do you work in Gabon?",
+          a: "Yes, in Libreville: video meetings, payment by Airtel Money, same FCFA price list.",
+        },
+        {
+          q: "I have an app project, not a shop.",
+          a: "Programactor is also a product studio: we design and develop custom web and mobile apps. See the Studio section below.",
         },
       ],
       skip: {
-        title: "Rather skip the FAQ?",
-        body: "Write to the team directly.",
-        cta: "Ask a question",
+        title: "Another question?",
+        body: "Message the team directly on WhatsApp.",
+        cta: "Ask a question on WhatsApp",
       },
     },
 
     cta: {
-      label: "Got an idea?",
-      titleBefore: "Show us the problem you want to ",
-      titleMark: "solve",
-      titleAfter: ".",
-      body: "Tell us in one sentence what your users cannot do today. On the first call we will tell you, for free, whether it is a product problem, a brand problem or a channel problem — and what it would take to fix it.",
-      button: "Book a call",
-      or: "or email us",
+      label: "Free preview",
+      titleBefore: "Get a free preview of your ",
+      titleMark: "future website",
+      titleAfter: " in 48 hours.",
+      body: "Send us your business name, your city and your activity on WhatsApp. We send back a first preview with zero commitment.",
+      button: "Get my free preview",
+      or: "or message us on WhatsApp",
     },
 
     footer: {
-      tagline: "Product design studio. Cameroon, Gabon, the world.",
+      tagline: "Websites, digital menus and online visibility for SMEs. Douala · Libreville.",
       nav: "Navigation",
       contactLabel: "Contact",
       social: "Follow",
-      legal: "Legal",
+      legal: "Legal notice",
       rights: "All rights reserved.",
     },
   };

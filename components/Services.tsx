@@ -2,6 +2,9 @@ import { Button, Pill, Reveal, SectionHead } from "./ui";
 import type { Content } from "@/lib/content";
 
 export default function Services({ c }: { c: Content }) {
+  const previewHref =
+    c.lang === "fr" ? c.contact.whatsappPreviewFr : c.contact.whatsappPreviewEn;
+
   return (
     <section
       id="services"
@@ -13,7 +16,11 @@ export default function Services({ c }: { c: Content }) {
           title={c.services.title}
           lead={c.services.lead}
           action={
-            <Button href={c.contact.booking} variant="signal">
+            <Button
+              href={previewHref}
+              variant="signal"
+              external
+            >
               {c.services.cta}
             </Button>
           }

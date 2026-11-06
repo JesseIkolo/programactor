@@ -2,8 +2,11 @@ import { Label, Reveal } from "./ui";
 import type { Content } from "@/lib/content";
 
 export default function Faq({ c }: { c: Content }) {
+  const whatsappUrl =
+    c.lang === "fr" ? c.contact.whatsappPreviewFr : c.contact.whatsappPreviewEn;
+
   return (
-    <section className="py-20 md:py-32">
+    <section id="faq" className="scroll-mt-24 py-20 md:py-32">
       <div className="shell grid gap-14 md:grid-cols-[minmax(0,22rem)_1fr] md:gap-20">
         <div>
           <Reveal>
@@ -20,7 +23,9 @@ export default function Faq({ c }: { c: Content }) {
                 {c.faq.skip.body}
               </p>
               <a
-                href={`mailto:${c.contact.email}`}
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="t-mono mt-6 inline-block rounded-[var(--radius-pill)] border border-[color:var(--color-hairline-strong)] px-5 py-[11px] transition-colors hover:border-signal hover:text-signal"
               >
                 {c.faq.skip.cta}

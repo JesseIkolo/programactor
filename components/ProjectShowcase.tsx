@@ -125,7 +125,7 @@ export default function ProjectShowcase({ c, initialProjects }: ProjectShowcaseP
           {/* Filtre Villes & Commutateur de Vue */}
           <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-4 lg:border-t-0 lg:pt-0">
             {/* Villes */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 max-w-full">
               <span className="t-mono text-[11px] text-[color:var(--color-muted-2)]">
                 {t.filterCityLabel} :
               </span>

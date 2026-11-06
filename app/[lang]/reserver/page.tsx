@@ -17,11 +17,11 @@ export async function generateMetadata({
 
   const isEn = lang === "en";
   const title = isEn
-    ? "Book a 30-Min Strategy Call | Programactor Studio"
-    : "Réserver une session de cadrage 30 min | Programactor Studio";
+    ? "Book a meeting"
+    : "Prendre rendez-vous";
   const description = isEn
-    ? "Schedule a 30-minute technical and product discovery session with Programactor leads in Douala, Libreville or online via Meet/WhatsApp."
-    : "Planifiez un échange de 30 minutes avec l'équipe de direction de Programactor à Douala, Libreville ou en visio pour cadrer votre produit.";
+    ? "30-minute meeting at your place in Douala or by video. Confirmation on WhatsApp."
+    : "Rendez-vous de 30 min chez vous à Douala ou en visio. Confirmation sur WhatsApp.";
 
   return {
     title,

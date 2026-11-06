@@ -30,7 +30,7 @@
       "tagline": "Le système d'exploitation tout-en-un des bars & restaurants africains : menu QR, caisse tactile, stocks et commandes WhatsApp, 100% résilient hors-ligne.",
       "challenge": "En Afrique subsaharienne, les gérants de bars et restaurants perdent jusqu'à 25% de leurs revenus en fuites de caisse, commandes non comptabilisées et erreurs manuelles sur papier. Les logiciels de caisse occidentaux plantent dès que la 3G faiblit, ignorent le Mobile Money local et n'intègrent pas les commandes WhatsApp.",
       "solution": "Programactor a conçu Bongo Space comme un OS métier complet et tout-terrain : architecture offline-first garantissant 100% de disponibilité sans réseau, menu QR digital à table avec synchronisation instantanée des stocks, caisse tactile multi-moyens (Cash, Orange Money, MTN MoMo) et passerelle automatisée de commandes WhatsApp.",
-      "impact": "100% de disponibilité continue constatée lors des coupures réseau, zéro écart de caisse non tracé chez les établissements pilotes et +35% de panier moyen grâce à la commande par QR code.",
+      "impact": "",
       "deliverables": [
         "Application web progressive PWA multi-rôles (Gérant, Caisse, Serveurs, Cuisine)",
         "Terminal POS tactile avec encaissement Cash, Orange Money & MTN MoMo",
@@ -44,7 +44,7 @@
       "tagline": "The all-in-one operating system for African bars & restaurants: QR menu, smart POS, live inventory, and WhatsApp orders — 100% offline-resilient.",
       "challenge": "African hospitality venues face severe revenue leakage (up to 25%) due to untracked cash sales, unbilled drinks, and pen-and-paper accounting. Western SaaS POS tools crash during internet cutouts, lack Mobile Money support, and ignore WhatsApp customer habits.",
       "solution": "Programactor engineered Bongo Space: a rugged, offline-first hospitality system featuring real-time kitchen-bar sync, dynamic table QR ordering, multi-channel Cash & Mobile Money POS, and automated WhatsApp order dispatch.",
-      "impact": "100% continuous uptime during network blackouts, zero untracked cash discrepancies, and +35% average ticket size via digital menu ordering.",
+      "impact": "",
       "deliverables": [
         "Responsive cross-platform PWA for Managers, Cashiers, Servers, and Kitchen",
         "Touch POS terminal supporting Cash, Orange Money & MTN MoMo",
@@ -54,23 +54,7 @@
         "High-converting B2B acquisition landing page with 7-day free trial (bongospacepro.netlify.app)"
       ]
     },
-    "metrics": [
-      {
-        "value": "100%",
-        "labelFr": "Fonctionnement hors-ligne garanti",
-        "labelEn": "Offline-first uptime guaranteed"
-      },
-      {
-        "value": "0 FCFA",
-        "labelFr": "D'écart de caisse non justifié",
-        "labelEn": "Untracked cash discrepancy"
-      },
-      {
-        "value": "+35%",
-        "labelFr": "De panier moyen via menu QR",
-        "labelEn": "Average order value via QR menu"
-      }
-    ],
+    "metrics": [],
     "createdAt": "2026-09-07T12:10:38.041Z",
     "updatedAt": "2026-09-16T22:30:00.000Z"
   },
@@ -105,7 +89,7 @@
       "tagline": "La suite tout-en-un qui transforme les prestataires de la beauté africains en entrepreneurs organisés et rentables.",
       "challenge": "En Afrique centrale et de l'ouest, plus de 80% des salons de coiffure, barbiers et esthéticiennes exercent dans l'informel et subissent des pertes financières chroniques (15% à 30% du revenu mensuel). Leurs défis quotidiens sont sévères : encaissements en liquide non tracés et sources de conflits avec les employés, oublis massifs de rendez-vous sans système de relance, et comptabilité manuelle sur cahier papier. Les logiciels SaaS internationaux (Fresha, Treatwell) échouent sur ce marché : ils exigent une connexion permanente à haut débit, ignorent les paiements Mobile Money (Orange Money, MTN MoMo, Wave) et ne s'intègrent pas aux usages WhatsApp, canal central du commerce local.",
       "solution": "Programactor a conçu et développé Bimaround comme un système d'exploitation métier ultra-léger et centré sur l'humain, adapté aux réalités des smartphones d'entrée de gamme et des connexions instables :\n1. Caisse & POS Hybride : Enregistrement ultra-rapide des prestations en cash ou Mobile Money avec reçus dématérialisés instantanés.\n2. Rappels Automatisés WhatsApp : Système de réservation en ligne synchronisé qui envoie les rappels directement sur WhatsApp pour neutraliser les no-shows.\n3. Gestion d'Équipe & Commissions : Répartition automatique du chiffre d'affaires entre le patron et les coiffeurs/employés pour supprimer tout litige en fin de journée.\n4. Suivi des Stocks & Alertes : Notification des produits critiques (shampooings, mèches, lames) pour éviter les ruptures en plein service.\n5. Design Inclusif & Ergonomie Terrain : Interface mobile tactile conçue pour un usage intensif à une main en salon, bilingue (français/anglais), avec contraste élevé pour écrans d'entrée de gamme et onboarding immédiat sans carte bancaire.",
-      "impact": "+96 professionnels de la beauté pré-inscrits en liste d'attente dès la phase de lancement bêta, un temps de clôture de caisse divisé par 3 (passage de 45 min de calculs manuels à moins de 5 min), et une projection de réduction de 80% des rendez-vous non honorés grâce à l'automatisation des confirmations WhatsApp.",
+      "impact": "",
       "deliverables": [
         "Application Web & PWA Responsive : Espaces dédiés aux gérants de salon, collaborateurs indépendants et clients finaux.",
         "Terminal POS & Module de Caisse : Gestion des encaissements multi-devises (FCFA, devises locales), paiements fractionnés Cash/MoMo et reçus numériques.",
@@ -118,7 +102,7 @@
       "tagline": "The all-in-one platform turning African beauty professionals into organized, profitable entrepreneurs.",
       "challenge": "Over 80% of barbers, hair stylists, and beauty salons in Central and West Africa operate informally, losing 15% to 30% of their monthly income to untracked cash payments, frequent client no-shows, and manual paper book-keeping. Western salon software completely fails in this ecosystem: too heavy for erratic 3G connections, zero integration with local Mobile Money networks (Orange Money, MTN MoMo, Wave), and disconnected from WhatsApp where customer interactions actually happen.",
       "solution": "Programactor engineered Bimaround from the ground up for the African street economy: an ultra-responsive, mobile-first operating system combining a lightweight POS cash register (supporting Cash + Mobile Money), automated booking confirmations via WhatsApp, multi-staff commission calculations, and real-time inventory alerts, packaged in an offline-ready, accessible interface.",
-      "impact": "+96 beauty pros joined the waitlist at pre-launch, daily accounting time cut by 3x, and an estimated 80% drop in no-shows via automated WhatsApp confirmations.",
+      "impact": "",
       "deliverables": [
         "Responsive Web App & PWA: Custom dashboards for salon owners, booth renters, and solo stylists.",
         "Hybrid Point of Sale (POS): Fast checkout flow supporting Cash and Mobile Money with shareable digital receipts.",
@@ -127,23 +111,7 @@
         "High-Conversion Acquisition Landing Page: Optimized two-step waitlist engine with zero lead drop-off."
       ]
     },
-    "metrics": [
-      {
-        "value": "+96",
-        "labelFr": "Prestataires sur liste d'attente",
-        "labelEn": "Beauty pros on waitlist"
-      },
-      {
-        "value": "< 5 min",
-        "labelFr": "Pour clôturer la caisse du salon",
-        "labelEn": "Daily salon register closing time"
-      },
-      {
-        "value": "2 Villes",
-        "labelFr": "Marchés pilotes (Douala & Libreville)",
-        "labelEn": "Pilot cities (Douala & Libreville)"
-      }
-    ],
+    "metrics": [],
     "createdAt": "2026-09-09T15:18:32.222Z",
     "updatedAt": "2026-09-09T15:18:32.222Z"
   },
@@ -173,7 +141,7 @@
       "tagline": "Système de dispatch coursier et guidage sans adressage postal formel.",
       "challenge": "Absence d’adresses formelles à Libreville, repérage empirique par carrefours, écoles et pharmacies.",
       "solution": "Application coursier basée sur des repères visuels géolocalisés, suivi en temps réel par SMS sans téléchargement obligatoire.",
-      "impact": "+52% de courses livrées à temps, temps d’orientation divisé par deux.",
+      "impact": "",
       "deliverables": [
         "App mobile coursier avec repères visuels",
         "Console dispatch dispatchers",
@@ -184,30 +152,14 @@
       "tagline": "Courier dispatch and navigation system designed for unmapped urban cities.",
       "challenge": "Lack of formal street addresses in Libreville, where navigation relies on landmark cues and local descriptions.",
       "solution": "Driver mobile app using visual landmark coordinates and no-app customer tracking via direct SMS links.",
-      "impact": "+52% on-time deliveries, dispatch resolution time reduced by 50%.",
+      "impact": "",
       "deliverables": [
         "Courier Mobile App with landmark cues",
         "Dispatcher Central Console",
         "Direct SMS Tracking Link"
       ]
     },
-    "metrics": [
-      {
-        "value": "+52%",
-        "labelFr": "Livraisons à l’heure",
-        "labelEn": "On-time deliveries"
-      },
-      {
-        "value": "0 app",
-        "labelFr": "Requis pour le destinataire",
-        "labelEn": "Required for receiver"
-      },
-      {
-        "value": "6 sem.",
-        "labelFr": "Délai total de livraison",
-        "labelEn": "Total turnaround time"
-      }
-    ],
+    "metrics": [],
     "createdAt": "2026-09-07T12:10:38.041Z",
     "updatedAt": "2026-09-07T12:10:38.041Z"
   },
@@ -237,7 +189,7 @@
       "tagline": "Prise de rendez-vous médical sans friction via WhatsApp et rappels automatisés.",
       "challenge": "Taux élevé de rendez-vous manqués (no-show de 35%) et secrétariat médical surchargé d’appels répétitifs.",
       "solution": "Tunnel de réservation en 3 clics avec confirmation immédiate et rappels programmés par SMS et WhatsApp.",
-      "impact": "-65% de rendez-vous non honorés, gain de 2 heures par jour pour le secrétariat.",
+      "impact": "",
       "deliverables": [
         "Portail de prise de rendez-vous en 3 clics",
         "Synchronisation agenda médecins",
@@ -248,25 +200,14 @@
       "tagline": "Zero-friction medical appointment booking with automated WhatsApp reminders.",
       "challenge": "High 35% patient no-show rate and medical receptionists overloaded with routine booking calls.",
       "solution": "3-click web appointment flow with automated SMS and WhatsApp confirmations and 24h reminders.",
-      "impact": "-65% patient no-show rate, saving 2 hours daily for reception staff.",
+      "impact": "",
       "deliverables": [
         "Patient Booking Web Portal",
         "Doctor Calendar Sync",
         "Automated Reminder Engine"
       ]
     },
-    "metrics": [
-      {
-        "value": "-65%",
-        "labelFr": "Taux de non-présentation",
-        "labelEn": "No-show reduction"
-      },
-      {
-        "value": "3 clics",
-        "labelFr": "Pour réserver",
-        "labelEn": "To book appointment"
-      }
-    ],
+    "metrics": [],
     "createdAt": "2026-09-07T12:10:38.041Z",
     "updatedAt": "2026-09-07T12:10:38.041Z"
   },
@@ -296,7 +237,7 @@
       "tagline": "Catalogue interactif mobile avec synchronisation directe du panier WhatsApp.",
       "challenge": "Clients qui demandent les prix un par un en DM Instagram et perte de ventes lors de ruptures de stock non signalées.",
       "solution": "Site catalogue mobile ultra-rapide avec panier persistant et bouton d’envoi direct de la commande formatée sur WhatsApp.",
-      "impact": "Conversion multipliée par 2.5, panier moyen en hausse de 35%.",
+      "impact": "",
       "deliverables": [
         "Catalogue web mobile ultra-rapide",
         "Gestion des stocks simplifiée",
@@ -307,25 +248,14 @@
       "tagline": "Interactive mobile product catalogue with direct WhatsApp cart handoff.",
       "challenge": "Customer friction asking individual prices in Instagram DMs and lost sales from untracked inventory.",
       "solution": "Fast mobile web showcase with persistent shopping bag and instant WhatsApp order formatting.",
-      "impact": "2.5x conversion boost, 35% increase in average order value.",
+      "impact": "",
       "deliverables": [
         "Mobile Web Catalogue",
         "Stock Management UI",
         "WhatsApp Direct Checkout"
       ]
     },
-    "metrics": [
-      {
-        "value": "x2.5",
-        "labelFr": "Taux de conversion",
-        "labelEn": "Conversion rate"
-      },
-      {
-        "value": "+35%",
-        "labelFr": "Panier moyen",
-        "labelEn": "Average order value"
-      }
-    ],
+    "metrics": [],
     "createdAt": "2026-09-07T12:10:38.041Z",
     "updatedAt": "2026-09-07T12:10:38.041Z"
   }
